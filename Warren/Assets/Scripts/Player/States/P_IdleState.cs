@@ -16,9 +16,14 @@ public class P_IdleState : IState
 
     public void Update()
     {
-        if (_player.InputDirection != Vector2.zero)
+        if (_player.PlayerInput.ReadInput() != Vector2.zero)
         {
             _player.TransitionTo(new P_WalkState(_player));
+        }
+
+        if (_player.PlayerInput.Attack())
+        {
+            _player.TransitionTo(new AttackState(_player));
         }
     }
 

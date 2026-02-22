@@ -24,4 +24,12 @@ public class StateMachine : MonoBehaviour
             CurrentState.Update();
         }
     }
+
+    public void FixedUpdate()
+    {
+        if (CurrentState != null)
+        {
+            CurrentState.FixedUpdate();
+        }
+    }
 }

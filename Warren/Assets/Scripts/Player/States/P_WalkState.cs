@@ -5,6 +5,8 @@ public class P_WalkState : IState
     SM_Player _player;
 
     float _currentSpeed;
+    int _inputBuffer;
+    Vector2 _inputDirection;
 
     // player variabes
     Rigidbody2D rb;
@@ -27,20 +29,36 @@ public class P_WalkState : IState
 
     public void Update()
     {
-        if(_currentSpeed < maxSpeed) { _currentSpeed += acceleration * Time.deltaTime; }
-        else { _currentSpeed = maxSpeed; }
-
-        rb.linearVelocity = _player.InputDirection * _currentSpeed;
-
-        Transition();
+        _inputDirection = _player.PlayerInput.ReadInput();
+   
+        Transition(_inputDirection);       
     }
 
-    private void Transition()
+    public void FixedUpdate()
     {
-        if (_player.InputDirection == Vector2.zero)
+        if (_currentSpeed < maxSpeed) { _currentSpeed += acceleration * Time.deltaTime; }
+        else { _currentSpeed = maxSpeed; }
+
+        rb.linearVelocity = _inputDirection * _currentSpeed;
+    }
+
+    private void Transition(Vector2 dir)
+    {
+        //movement
+        if (dir == Vector2.zero)
         {
+            if (_inputBuffer < 6) { _inputBuffer++; _currentSpeed = 0; return; }
+
             _player.TransitionTo(new P_IdleState(_player));
+        } 
+        else { _inputBuffer = 0; }
+
+        //attack
+        if (_player.PlayerInput.Attack())
+        {
+            _player.TransitionTo(new AttackState(_player));
         }
+
     }
 
     public void Exit()

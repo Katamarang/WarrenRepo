@@ -12,6 +12,11 @@ public interface IState
         // per-frame logic, include condition to transition to a new state
     }
 
+    public void FixedUpdate()
+    {
+        // per physics update
+    }
+
     public void Exit()
     {
         // code that runs when we exit the state
