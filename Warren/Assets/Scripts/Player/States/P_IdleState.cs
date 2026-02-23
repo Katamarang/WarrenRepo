@@ -23,7 +23,7 @@ public class P_IdleState : IState
 
         if (_player.PlayerInput.Attack())
         {
-            _player.TransitionTo(new AttackState(_player));
+            _player.TransitionTo(new P_AttackState(_player));
         }
     }
 

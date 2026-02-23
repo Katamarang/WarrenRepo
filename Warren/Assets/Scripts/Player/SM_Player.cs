@@ -10,6 +10,8 @@ public class SM_Player : StateMachine
     public PlayerInput PlayerInput { get; private set; }
     public Rigidbody2D RB {  get; private set; }
 
+    public Weapon Weapon;
+
     private void Start()
     {
         RB = GetComponent<Rigidbody2D>();
