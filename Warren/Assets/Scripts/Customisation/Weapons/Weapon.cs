@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     public WeaponValues Values;
-    [SerializeField] Animator anim;
+    public Animator Anim;
 
     public abstract void OnAttack();
     

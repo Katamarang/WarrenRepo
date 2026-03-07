@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Longsword
   Description: The default weapon
   Damage: 3
-  AttackCooldown: 0.3
+  AttackCooldown: 0.4
   ComboCooldown: 0.2

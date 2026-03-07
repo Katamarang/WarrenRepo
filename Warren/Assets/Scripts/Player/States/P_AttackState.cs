@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class P_AttackState : IState
 {
-    SM_Player player;
+    SM_Player _player;
 
     float attackCooldown;
     float comboCooldown;
@@ -11,14 +11,14 @@ public class P_AttackState : IState
 
     public P_AttackState(SM_Player player)
     {
-        this.player = player;
+        _player = player;
         attackCooldown = player.Weapon.Values.AttackCooldown;
         comboCooldown = player.Weapon.Values.ComboCooldown;
     }
 
     public void Enter()
     {
-        player.Weapon.OnAttack();
+        _player.Weapon.OnAttack();
     }
 
     public void Update()
@@ -27,20 +27,21 @@ public class P_AttackState : IState
 
         if (_comboCooldownTime < comboCooldown)
         {
-            if (player.PlayerInput.Attack())
+            if (_player.PlayerInput.Attack())
             {
-                player.TransitionTo(new P_AttackState(player));
+                _player.TransitionTo(_player.AttackState);
             }
 
             _comboCooldownTime += Time.deltaTime;
         } else
         {
-            player.TransitionTo(new P_IdleState(player));
+            _player.TransitionTo(_player.IdleState);
         }                
     }
 
     public void Exit()
     {
-
+        _attackCooldownTime = 0;
+        _comboCooldownTime = 0;
     }
 }
