@@ -3,22 +3,29 @@ using UnityEngine;
 public class P_AttackState : IState
 {
     SM_Player _player;
+    PlayerStats _playerStats;
 
     float attackCooldown;
     float comboCooldown;
     float _attackCooldownTime;
     float _comboCooldownTime;
 
-    public P_AttackState(SM_Player player)
+    Animator _anim;
+
+    public P_AttackState(SM_Player player, PlayerStats playerStats)
     {
         _player = player;
-        attackCooldown = player.Weapon.Values.AttackCooldown;
-        comboCooldown = player.Weapon.Values.ComboCooldown;
+        _playerStats = playerStats;
+
+        _anim = _player.Animator;
+        
+        attackCooldown = playerStats.MeleeCooldown;
+        comboCooldown = playerStats.ComboCooldown;
     }
 
     public void Enter()
     {
-        _player.Weapon.OnAttack();
+        _player.Animator.SetTrigger("IsAttacking");
     }
 
     public void Update()

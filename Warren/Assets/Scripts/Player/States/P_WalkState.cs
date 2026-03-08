@@ -3,6 +3,7 @@ using UnityEngine;
 public class P_WalkState : IState
 {
     SM_Player _player;
+    PlayerStats _playerStats;
 
     float _currentSpeed;
     int _inputBuffer;
@@ -14,14 +15,15 @@ public class P_WalkState : IState
     float maxSpeed;
     float acceleration;
 
-    public P_WalkState(SM_Player player)
+    public P_WalkState(SM_Player player, PlayerStats playerStats)
     {
         _player = player;
+        _playerStats = playerStats;
 
         rb = player.RB;
         anim = player.Animator;
-        maxSpeed = player.MaxSpeed;
-        acceleration = player.Acceleration;
+        maxSpeed = playerStats.MaxSpeed;
+        acceleration = playerStats.Acceleration;
     }
 
     public void Enter()
@@ -42,8 +44,8 @@ public class P_WalkState : IState
 
     public void FixedUpdate()
     {
-        if (_currentSpeed < _player.MaxSpeed) { _currentSpeed += acceleration * Time.deltaTime; }
-        else { _currentSpeed = _player.MaxSpeed; }
+        if (_currentSpeed < _playerStats.MaxSpeed) { _currentSpeed += _playerStats.Acceleration * Time.deltaTime; }
+        else { _currentSpeed = _playerStats.MaxSpeed; }
 
         rb.linearVelocity = _inputDirection * _currentSpeed;
     }
@@ -63,6 +65,12 @@ public class P_WalkState : IState
         if (_player.PlayerInput.Attack())
         {
             _player.TransitionTo(_player.AttackState);
+        }
+
+        //parry
+        if (_player.PlayerInput.Parry())
+        {
+            _player.TransitionTo(_player.ParryStartState);
         }
 
     }

@@ -3,10 +3,12 @@ using UnityEngine;
 public class P_IdleState : IState
 {
     SM_Player _player;
+    PlayerStats _playerStats;
 
-    public P_IdleState(SM_Player player)
+    public P_IdleState(SM_Player player, PlayerStats playerStats)
     {
-       _player = player;
+        _player = player;
+        _playerStats = playerStats;
     }
 
     public void Enter()
@@ -24,6 +26,11 @@ public class P_IdleState : IState
         if (_player.PlayerInput.Attack())
         {
             _player.TransitionTo(_player.AttackState);
+        }
+
+        if (_player.PlayerInput.Parry())
+        {
+            _player.TransitionTo(_player.ParryStartState);
         }
     }
 
