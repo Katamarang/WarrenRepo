@@ -16,22 +16,23 @@ public class PlayerStats : MonoBehaviour
     [Space(25)]
     public float ParryWindow = 0.6f;
 
-    CardManager CardManager;
     List<Card> Cards;
     Animator Animator;
 
     #region Initialization
     private void Awake()
     {
-        CardManager = CardManager.Instance;
-        CardManager.SendPlayerCards += OnPlayerCardsRecieved;
-
         Animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        CardManager.Instance.SendPlayerCards += OnPlayerCardsRecieved;       
     }
 
     private void OnDestroy()
     {
-        CardManager.SendPlayerCards -= OnPlayerCardsRecieved;
+        CardManager.Instance.SendPlayerCards -= OnPlayerCardsRecieved;
     }
     #endregion
 

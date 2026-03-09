@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class CardManager : Singleton<CardManager>
+public class CardManager : MonoBehaviour
 {
     public List<Card> AllCards;
 
@@ -12,6 +12,18 @@ public class CardManager : Singleton<CardManager>
 
     public event Action<List<Card>> SendPlayerCards;
     public event Action<List<Card>> SendWorldCards;
+
+    public static CardManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+        print(Instance);
+
+        /*if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }*/
+    }
+
 
     [ContextMenu("Load Cards")]
     public void LoadCards()

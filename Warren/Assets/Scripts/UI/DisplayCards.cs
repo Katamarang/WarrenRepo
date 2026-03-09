@@ -6,7 +6,7 @@ public class DisplayCards : MonoBehaviour
     [SerializeField] CardDisplay[] cards;
     [SerializeField] Transform cardDisplay;
 
-    private void Awake()
+    private void Start()
     {
         CardManager.Instance.DisplayAllCards += OnDisplayAllCards;
     }
