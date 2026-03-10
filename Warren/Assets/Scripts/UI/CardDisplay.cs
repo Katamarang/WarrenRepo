@@ -50,6 +50,9 @@ public class CardDisplay : MonoBehaviour
 
     public void OnClick() 
     {
+        if (buttonPressed && !display.RemoveCard(Card)) { return; }
+        if (!buttonPressed && !display.AddCard(Card)) { return; }
+
         buttonPressed = !buttonPressed;
         cardSelectSprite.SetActive(buttonPressed);
 

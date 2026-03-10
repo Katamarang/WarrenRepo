@@ -3,7 +3,9 @@ using UnityEngine;
 public class Card : ScriptableObject
 {
     public string CardName;
-    public string CardDescription;
+    
+    [TextArea(3, 5)]public string CardDescription;
 
+    [Space(10)]
     public Sprite CardSprite;
 }

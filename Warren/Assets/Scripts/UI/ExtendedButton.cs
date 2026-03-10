@@ -8,7 +8,6 @@ public class ExtendedButton : Button
     [SerializeField] UnityEvent OnHoverEnter;
     [SerializeField] UnityEvent OnHoverExit;
 
-    bool isHovering;
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
