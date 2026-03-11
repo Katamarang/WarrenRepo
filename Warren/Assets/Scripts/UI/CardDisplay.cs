@@ -9,7 +9,7 @@ public class CardDisplay : MonoBehaviour
     Button button;
     Transform hoveredCardDisplay;
     GameObject cardSelectSprite;
-    DisplayCards display;
+    CardSelecter display;
 
 
     [SerializeField] bool buttonPressed;
@@ -26,7 +26,7 @@ public class CardDisplay : MonoBehaviour
         StopListening();
     }
 
-    public void SetCard(Card card, Transform hoverDisplay, DisplayCards display)
+    public void SetCard(Card card, Transform hoverDisplay, CardSelecter display)
     {
         Card = card;
         hoveredCardDisplay = hoverDisplay;

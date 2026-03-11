@@ -11,6 +11,8 @@ public class WeaponCard : PlayerCard
     public float BaseAttackCooldown;
     public WeaponType WeaponType;
 
+    public WeaponBehaviour Behaviour;
+
 }
 
 public enum DamageType

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class P_AttackState : IState
 {
@@ -7,8 +8,15 @@ public class P_AttackState : IState
 
     float attackCooldown;
     float comboCooldown;
+
+    Transform attackPoint;
+    float attackRadius;
+    LayerMask enemy;
+
     float _attackCooldownTime;
     float _comboCooldownTime;
+
+    int damage;
 
     Animator _anim;
 
@@ -21,11 +29,23 @@ public class P_AttackState : IState
         
         attackCooldown = playerStats.MeleeCooldown;
         comboCooldown = playerStats.ComboCooldown;
+
+        attackPoint = playerStats.AttackPoint;
+        attackRadius = playerStats.AttackRadius;
+        enemy = playerStats.Damageable;
+
+        damage = playerStats.MeleeDamage;
     }
 
     public void Enter()
     {
         _player.Animator.SetTrigger("IsAttacking");
+        List<IDamageable> hit = _playerStats.MeleeBehaviour.OnFire(attackPoint, attackRadius, enemy);
+
+        foreach (IDamageable hitItem in hit)
+        {
+            hitItem.OnDamage(damage);
+        }
     }
 
     public void Update()

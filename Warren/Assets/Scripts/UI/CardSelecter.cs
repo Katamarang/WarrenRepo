@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class DisplayCards : MonoBehaviour
+public class CardSelecter : MonoBehaviour
 {
     [SerializeField] CardDisplay[] cardSlots;
     [SerializeField] Transform cardDisplay;
 
     [Space(20)]
     [SerializeField] int MaxCards;
+
+    [Header("Error Handling")]
+    [SerializeField] GameObject ExitScreen;
 
     List<Card> selectedCards = new List<Card>();
     bool meleeSelected;
@@ -67,4 +71,26 @@ public class DisplayCards : MonoBehaviour
         MeleeDeselected.Invoke();
     }
     #endregion
+
+    public void CloseScreen()
+    {
+        ExitScreen.SetActive(true);
+        TMP_Text text = ExitScreen.GetComponentInChildren<TMP_Text>();
+
+        if (meleeSelected && selectedCards.Count == MaxCards) { text.text = "Confirm Cards?"; }
+        else if (!meleeSelected) { text.text = "No melee Selected. Confirm Cards?"; }
+        else if (selectedCards.Count != MaxCards) { text.text = "Less than five cards selected. Confirm Cards?"; }
+    }
+
+    public void AcceptChoices()
+    {
+        ExitScreen.SetActive(false);
+
+        // save stuff and switch scenes
+    }
+
+    public void RefuseChoice()
+    {
+        ExitScreen.SetActive(false);
+    }
 }

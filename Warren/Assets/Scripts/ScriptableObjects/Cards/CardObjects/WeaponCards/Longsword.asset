@@ -19,3 +19,4 @@ MonoBehaviour:
   BaseDamage: 5
   BaseAttackCooldown: 0.4
   WeaponType: 0
+  Behaviour: {fileID: 11400000, guid: f119af88a2eafac488fc5786a9adecdc, type: 2}
