@@ -17,15 +17,12 @@ public class CardManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        print(Instance);
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
 
-        /*if (Instance == null) { Instance = this; }
-        else { Destroy(gameObject); }*/
+        DontDestroyOnLoad(gameObject);
     }
 
-
-    [ContextMenu("Load Cards")]
     public void LoadCards()
     {
         List<Card> playerCards = new List<Card>();
@@ -37,7 +34,8 @@ public class CardManager : MonoBehaviour
             //else if (card is WorldCard) { worldCards.Add(card); }
         }
 
-        SendPlayerCards.Invoke(playerCards);
+        if (SendPlayerCards != null) SendPlayerCards.Invoke(playerCards);
+        
         //SendWorldCards.Invoke(worldCards);
     }
 
@@ -46,4 +44,34 @@ public class CardManager : MonoBehaviour
     {
         DisplayAllCards.Invoke(AllCards);
     }
+
+    public void SetActiveCards(List<Card> activeCards)
+    {
+        ActiveCards = activeCards;
+    }
+
+    #region Save Load
+    public void Save(ref StartingDeckData data)
+    {
+        data.StarterDeck = ActiveCards;
+    }
+
+    
+    public void Load(ref StartingDeckData data)
+    {
+        ActiveCards = data.StarterDeck;
+        LoadCards();
+    }
+    #endregion
+
+    [ContextMenu("Save")]
+    public void SAVEDEBUG() { SaveLoad.Save(); }
+    [ContextMenu("Load")]
+    public void LOADDEBUG() { SaveLoad.Load(); }
+}
+
+[System.Serializable]
+public struct StartingDeckData
+{
+    public List<Card> StarterDeck;
 }

@@ -692,9 +692,11 @@ MonoBehaviour:
   MeleeCooldown: 0.3
   ComboCooldown: 0.2
   DamageTypes: 
+  MeleeBehaviour: {fileID: 0}
+  ParryWindow: 0.4
+  SpellCost: 0
   AttackPoint: {fileID: 1307696666}
   AttackRadius: 1
-  ParryWindow: 0.6
   DamageResistances: 
   Damageable:
     serializedVersion: 2
@@ -729,57 +731,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258780022}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1857324654
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1857324656}
-  - component: {fileID: 1857324655}
-  m_Layer: 0
-  m_Name: Card Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1857324655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857324654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91d64181d8da66e419c867fd0fb385c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardManager
-  AllCards: []
-  ActiveCards:
-  - {fileID: 11400000, guid: f596702b4424e1f4082dcda4aa4fcb2e, type: 2}
-  - {fileID: 11400000, guid: e4d3a9e1e0fc45148b2fd17d783affc1, type: 2}
-  - {fileID: 11400000, guid: 02e2c4722b0117a459daac316b5a080d, type: 2}
-  - {fileID: 11400000, guid: a437d85dc1e2fdf4ab1838b07832bf22, type: 2}
-  - {fileID: 11400000, guid: 7eea8bee00d3a884abe202ee85075ce9, type: 2}
---- !u!4 &1857324656
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857324654}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.14706, y: -0.02898, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1912319225
 GameObject:
@@ -820,4 +771,3 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1258780022}
-  - {fileID: 1857324656}

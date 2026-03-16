@@ -10,14 +10,7 @@ public class SM_Player : StateMachine
     public Animator Animator { get; private set; }
     public PlayerStats PlayerStats { get; private set; }
     #endregion
-    
-    #region Player States
-    public IState IdleState { get; private set; }
-    public IState WalkState { get; private set; }
-    public IState AttackState { get; private set; }
-    public IState ParryStartState { get; private set; }
-    // other states, eventually
-    #endregion
+   
 
     private void Start()
     {
@@ -25,17 +18,8 @@ public class SM_Player : StateMachine
         PlayerInput = GetComponent<PlayerInput>();
         Animator = GetComponent<Animator>();
         PlayerStats = GetComponent<PlayerStats>();
-
-        InitialiseStates();
-
-        Initialize(IdleState);
+   
+        Initialize(new P_IdleState(this, PlayerStats));
     } 
 
-    private void InitialiseStates()
-    {
-        IdleState = new P_IdleState(this, PlayerStats);
-        WalkState = new P_WalkState(this, PlayerStats);
-        AttackState = new P_AttackState(this, PlayerStats);
-        ParryStartState = new P_ParryInitState(this, PlayerStats);
-    }
 }

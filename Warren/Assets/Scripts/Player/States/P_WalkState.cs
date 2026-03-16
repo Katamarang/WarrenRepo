@@ -44,8 +44,8 @@ public class P_WalkState : IState
 
     public void FixedUpdate()
     {
-        if (_currentSpeed < _playerStats.MaxSpeed) { _currentSpeed += _playerStats.Acceleration * Time.deltaTime; }
-        else { _currentSpeed = _playerStats.MaxSpeed; }
+        if (_currentSpeed < maxSpeed) { _currentSpeed += acceleration * Time.deltaTime; }
+        else { _currentSpeed = maxSpeed; }
 
         rb.linearVelocity = _inputDirection * _currentSpeed;
     }
@@ -57,20 +57,20 @@ public class P_WalkState : IState
         {
             if (_inputBuffer < 6) { _inputBuffer++; _currentSpeed = 0; return; }
 
-            _player.TransitionTo(_player.IdleState);
+            _player.TransitionTo(new P_IdleState(_player, _playerStats));
         } 
         else { _inputBuffer = 0; }
 
         //attack
         if (_player.PlayerInput.Attack())
         {
-            _player.TransitionTo(_player.AttackState);
+            _player.TransitionTo(new P_AttackState(_player, _playerStats));
         }
 
         //parry
         if (_player.PlayerInput.Parry())
         {
-            _player.TransitionTo(_player.ParryStartState);
+            _player.TransitionTo(new P_ParryState(_player, _playerStats));
         }
 
     }

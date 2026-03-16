@@ -20,17 +20,17 @@ public class P_IdleState : IState
     {
         if (_player.PlayerInput.ReadInput() != Vector2.zero)
         {
-            _player.TransitionTo(_player.WalkState);
+            _player.TransitionTo(new P_WalkState(_player, _playerStats));
         }
 
         if (_player.PlayerInput.Attack())
         {
-            _player.TransitionTo(_player.AttackState);
+            _player.TransitionTo(new P_AttackState(_player, _playerStats));
         }
 
         if (_player.PlayerInput.Parry())
         {
-            _player.TransitionTo(_player.ParryStartState);
+            _player.TransitionTo(new P_ParryState(_player, _playerStats));
         }
     }
 

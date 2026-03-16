@@ -60,7 +60,6 @@ public class CardSelecter : MonoBehaviour
     }
 
     #region Specific Card Selected
-
     public void OnMeleeSelected()
     {
         MeleeSelected.Invoke();
@@ -85,7 +84,8 @@ public class CardSelecter : MonoBehaviour
     public void AcceptChoices()
     {
         ExitScreen.SetActive(false);
-
+        CardManager.Instance.SetActiveCards(selectedCards);
+        GameManager.Instance.ChangeScene("SampleScene");
         // save stuff and switch scenes
     }
 

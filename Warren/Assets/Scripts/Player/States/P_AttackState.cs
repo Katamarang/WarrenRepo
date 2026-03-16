@@ -56,13 +56,13 @@ public class P_AttackState : IState
         {
             if (_player.PlayerInput.Attack())
             {
-                _player.TransitionTo(_player.AttackState);
+                _player.TransitionTo(new P_AttackState(_player, _playerStats));
             }
 
             _comboCooldownTime += Time.deltaTime;
         } else
         {
-            _player.TransitionTo(_player.IdleState);
+            _player.TransitionTo(new P_IdleState(_player, _playerStats));
         }                
     }
 
