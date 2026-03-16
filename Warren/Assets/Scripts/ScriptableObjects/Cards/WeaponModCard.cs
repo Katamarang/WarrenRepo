@@ -5,8 +5,6 @@ using UnityEngine;
 public class WeaponModCard : PlayerCard
 {
     [Header("Weapon Modifier")]
-    public WeaponType WeaponToAffect;
-
     public WeaponMod[] WeaponModifiers;
 }
 

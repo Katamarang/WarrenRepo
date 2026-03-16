@@ -55,8 +55,6 @@ public class CardManager : MonoBehaviour
     {
         data.StarterDeck = ActiveCards;
     }
-
-    
     public void Load(ref StartingDeckData data)
     {
         ActiveCards = data.StarterDeck;
@@ -64,10 +62,6 @@ public class CardManager : MonoBehaviour
     }
     #endregion
 
-    [ContextMenu("Save")]
-    public void SAVEDEBUG() { SaveLoad.Save(); }
-    [ContextMenu("Load")]
-    public void LOADDEBUG() { SaveLoad.Load(); }
 }
 
 [System.Serializable]

@@ -7,9 +7,9 @@ public class WeaponCard : PlayerCard
     public Sprite WeaponSprite;
 
     public int BaseDamage;
+    public float BaseAttackRadius;
 
     public float BaseAttackCooldown;
-    public WeaponType WeaponType;
 
     public WeaponBehaviour Behaviour;
 
@@ -21,11 +21,4 @@ public enum DamageType
     Fire, // Damage over time
     Poison, // Slows
     Lightning // high damage, has a few seconds charge up
-}
-
-public enum WeaponType
-{
-    Attack,
-    Parry,
-    Dash
 }

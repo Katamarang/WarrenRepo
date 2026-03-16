@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class P_ParryState : IState
 {
-    // this is a blank script that will be duplicated when we want to create a new state
 
     SM_Player _player;
     PlayerStats _playerStats;
@@ -22,6 +21,11 @@ public class P_ParryState : IState
     public void Enter()
     {
         _player.Animator.SetTrigger("IsParrying");
+    }
+
+    public void Parry()
+    {
+        _playerStats.SpellCharges++;
     }
 
     public void Update()

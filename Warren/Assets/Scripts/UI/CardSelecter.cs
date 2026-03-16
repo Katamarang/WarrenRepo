@@ -16,9 +16,13 @@ public class CardSelecter : MonoBehaviour
 
     List<Card> selectedCards = new List<Card>();
     bool meleeSelected;
+    bool spellSelected;
 
     public event Action MeleeSelected;
     public event Action MeleeDeselected;
+
+    public event Action SpellSelected;
+    public event Action SpellDeselected;
 
     private void Start()
     {
@@ -44,7 +48,8 @@ public class CardSelecter : MonoBehaviour
         if (selectedCards.Count + 1 > MaxCards) { return false; }
         selectedCards.Add(card);
 
-        if (card is WeaponCard && (card as WeaponCard).WeaponType == WeaponType.Attack) { meleeSelected = true; }
+        if (card is WeaponCard) { meleeSelected = true; }
+        else if (card is SpellCard) { spellSelected = true; }
 
         return true;
     }
@@ -54,21 +59,17 @@ public class CardSelecter : MonoBehaviour
         if (selectedCards.Count - 1 < 0) { return false; }
         selectedCards.Remove(card);
 
-        if (card is WeaponCard && (card as WeaponCard).WeaponType == WeaponType.Attack) { meleeSelected = false; }
+        if (card is WeaponCard) { meleeSelected = false; }
+        else if (card is SpellCard) { spellSelected = false; }
 
         return true;
     }
 
     #region Specific Card Selected
-    public void OnMeleeSelected()
-    {
-        MeleeSelected.Invoke();
-    }
-
-    public void OnMeleeDeselected()
-    {
-        MeleeDeselected.Invoke();
-    }
+    public void OnMeleeSelected() { MeleeSelected?.Invoke(); }
+    public void OnMeleeDeselected() { MeleeDeselected?.Invoke(); }
+    public void OnSpellSelected() {  SpellSelected?.Invoke(); }
+    public void OnSpellDeselected() { SpellDeselected?.Invoke(); }
     #endregion
 
     public void CloseScreen()

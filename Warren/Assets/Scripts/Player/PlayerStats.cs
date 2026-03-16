@@ -15,7 +15,7 @@ public class PlayerStats : MonoBehaviour, IStats
     public int MeleeDamage = 1;
     public float MeleeCooldown = 0.3f;
     public float ComboCooldown = 0.2f;
-    public List<DamageType> DamageTypes = new List<DamageType>();
+    public List<DamageType> MeleeDamageTypes = new List<DamageType>();
     public WeaponBehaviour MeleeBehaviour;
 
     [Header("Parry")]
@@ -23,7 +23,11 @@ public class PlayerStats : MonoBehaviour, IStats
 
     [Header("Spell")]
     public int SpellCost;
-    //public WeaponBehaviour SpellBehaviour; 
+    [HideInInspector] public int SpellCharges;
+    public int SpellDamage;
+    public float SpellRadius;
+    public List<DamageType> SpellDamageType;
+    public WeaponBehaviour SpellBehaviour; 
 
     [Space(25)]
     public Transform AttackPoint;

@@ -56,20 +56,20 @@ public class CardDisplay : MonoBehaviour
         buttonPressed = !buttonPressed;
         cardSelectSprite.SetActive(buttonPressed);
 
-        if (Card is WeaponCard && (Card as WeaponCard).WeaponType == WeaponType.Attack)
+        if (buttonPressed)
         {
-            if (buttonPressed)
-            {
-                display.OnMeleeSelected();
-            }
-            else
-            {
-                display.OnMeleeDeselected();
-            }
+            if (Card is WeaponCard) { display.OnMeleeSelected(); }
+            else if (Card is SpellCard) { display.OnSpellSelected(); }
         }
+        else
+        {
+            if (Card is WeaponCard) { display.OnMeleeDeselected(); }
+            else if (Card is SpellCard) { display.OnSpellDeselected(); }
+        }
+
     }
 
-    private void OnMeleeSelected()
+    private void OnCardSelected()
     {
         //print("melee selected");
 
@@ -80,7 +80,7 @@ public class CardDisplay : MonoBehaviour
         }
     }
 
-    private void OnMeleeDeselected()
+    private void OnCardDeselected()
     {
         //print("melee deselected");
 
@@ -92,19 +92,26 @@ public class CardDisplay : MonoBehaviour
 
     private void StartListening()
     {
-        if (Card is not WeaponCard) { return; } // only listens if card is a weapon
+        //if (Card is not WeaponCard or SpellCard) { return; } // only listens if card is a weapon or spell
 
-        if ((Card as WeaponCard).WeaponType == WeaponType.Attack)
+        if (Card is WeaponCard)
         {
-            display.MeleeSelected += OnMeleeSelected;
-            display.MeleeDeselected += OnMeleeDeselected;
+            display.MeleeSelected += OnCardSelected;
+            display.MeleeDeselected += OnCardDeselected;
+        } else if (Card is SpellCard)
+        {
+            display.SpellSelected += OnCardSelected;
+            display.SpellDeselected += OnCardDeselected;
         }
     }
 
     private void StopListening()
     {
-        display.MeleeSelected -= OnMeleeSelected;
-        display.MeleeDeselected -= OnMeleeDeselected;
+        display.MeleeSelected -= OnCardSelected;
+        display.MeleeDeselected -= OnCardDeselected;
+
+        display.SpellSelected -= OnCardSelected;
+        display.SpellDeselected -= OnCardDeselected;
     }
     #endregion
 }

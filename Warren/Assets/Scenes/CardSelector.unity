@@ -3301,8 +3301,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6c023ed1c59ffed4bacbe58947194105, type: 2}
   - {fileID: 11400000, guid: 7eea8bee00d3a884abe202ee85075ce9, type: 2}
   - {fileID: 11400000, guid: e4d3a9e1e0fc45148b2fd17d783affc1, type: 2}
-  - {fileID: 11400000, guid: 7eea8bee00d3a884abe202ee85075ce9, type: 2}
-  - {fileID: 11400000, guid: e4d3a9e1e0fc45148b2fd17d783affc1, type: 2}
+  - {fileID: 11400000, guid: 00311d2fe7e300b46b6786e0959be0f3, type: 2}
+  - {fileID: 11400000, guid: 00311d2fe7e300b46b6786e0959be0f3, type: 2}
   - {fileID: 11400000, guid: 02e2c4722b0117a459daac316b5a080d, type: 2}
   - {fileID: 11400000, guid: a437d85dc1e2fdf4ab1838b07832bf22, type: 2}
   ActiveCards: []
