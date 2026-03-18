@@ -12,31 +12,34 @@ public class P_ParryState : IState
     public P_ParryState(SM_Player player, PlayerStats playerStats)
     {
         _player = player;     
-        _playerStats = playerStats;
+        _playerStats = playerStats;      
+    }
 
+
+    public override void Enter()
+    {
         parryWindow = _playerStats.ParryWindow;
-    }
 
-
-    public void Enter()
-    {
         _player.Animator.SetTrigger("IsParrying");
+        Parry(); // TEMP
     }
 
-    public void Parry()
+    public void Parry() // only gets called when Parry is successful
     {
-        _playerStats.SpellCharges++;
+        _player.SpellState.AddSpellCharge();
     }
 
-    public void Update()
+    public override void Update()
     {
         if (_parryWindowTime < parryWindow) { _parryWindowTime += Time.deltaTime; return; }
 
-        _player.TransitionTo(new P_IdleState(_player, _playerStats));
+        _player.TransitionTo(_player.IdleState);
     }
 
-    public void Exit()
+    public override void Exit()
     {
         _parryWindowTime = 0;
     }
+
+    public override void FixedUpdate() { }
 }

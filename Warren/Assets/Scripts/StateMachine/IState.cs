@@ -1,24 +1,13 @@
 using UnityEngine;
 
-public interface IState 
+public abstract class IState 
 {
-    public void Enter()
-    {
-        // code that runs when we first enter the state
-    }
+    public abstract void Enter(); // code that runs when we first enter the state
 
-    public void Update()
-    {
-        // per-frame logic, include condition to transition to a new state
-    }
+    public abstract void Update(); // code that runs when we first enter the state
 
-    public void FixedUpdate()
-    {
-        // per physics update
-    }
+    public abstract void FixedUpdate(); // per physics update
 
-    public void Exit()
-    {
-        // code that runs when we exit the state
-    }
+    public abstract void Exit(); // code that runs when we exit the state
+
 }

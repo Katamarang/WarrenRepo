@@ -5,6 +5,7 @@ public class P_SpellState : IState
     SM_Player _player;
     PlayerStats _playerStats;
 
+    int SpellCharges;
 
     public P_SpellState(SM_Player player, PlayerStats playerStats)
     {
@@ -12,18 +13,25 @@ public class P_SpellState : IState
         _playerStats = playerStats;
     }
 
-    public void Enter()
+    public override void Enter()
     {
+        if (SpellCharges < _playerStats.SpellCost) { _player.TransitionTo(_player.IdleState); }
+
+        SpellCharges -= _playerStats.SpellCost;
         Debug.Log("Spell");
     }
 
-    public void Update()
+    public override void Update()
     {
-        _player.TransitionTo(new P_IdleState(_player, _playerStats));
+        
+
+        _player.TransitionTo(_player.IdleState);
     }
 
-    public void Exit()
-    {
+    public override void Exit() { }
 
-    }
+    public override void FixedUpdate() { }
+
+    public void AddSpellCharge() { SpellCharges++; }
+    public int GetSpellCharge() { return SpellCharges; }
 }

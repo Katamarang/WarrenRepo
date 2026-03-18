@@ -136,6 +136,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ca6cb4b-b222-425f-ae11-b883c6ee3626"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -285,7 +294,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cda01835-ee43-4474-bf8e-b02cc7ad4a31"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -312,6 +321,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bf78acf-9916-4586-b5a8-69243e02e4c2"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Spell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3780ffc3-afd2-4a49-b9bf-53e7c8de6f36"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Spell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -355,6 +386,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Parry = m_Player.FindAction("Parry", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Spell = m_Player.FindAction("Spell", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -440,6 +472,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Parry;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Spell;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -471,6 +504,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Spell".
+        /// </summary>
+        public InputAction @Spell => m_Wrapper.m_Player_Spell;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -512,6 +549,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Spell.started += instance.OnSpell;
+            @Spell.performed += instance.OnSpell;
+            @Spell.canceled += instance.OnSpell;
         }
 
         /// <summary>
@@ -538,6 +578,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Spell.started -= instance.OnSpell;
+            @Spell.performed -= instance.OnSpell;
+            @Spell.canceled -= instance.OnSpell;
         }
 
         /// <summary>
@@ -639,5 +682,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Spell" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpell(InputAction.CallbackContext context);
     }
 }

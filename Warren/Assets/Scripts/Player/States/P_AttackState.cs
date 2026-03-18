@@ -25,20 +25,13 @@ public class P_AttackState : IState
         _player = player;
         _playerStats = playerStats;
 
-        _anim = _player.Animator;
-        
-        attackCooldown = playerStats.MeleeCooldown;
-        comboCooldown = playerStats.ComboCooldown;
-
-        attackPoint = playerStats.AttackPoint;
-        attackRadius = playerStats.AttackRadius;
-        enemy = playerStats.Damageable;
-
-        damage = playerStats.MeleeDamage;
+        _anim = _player.Animator;       
     }
 
-    public void Enter()
+    public override void Enter()
     {
+        UpdateStats();
+
         _player.Animator.SetTrigger("IsAttacking");
         List<IDamageable> hit = _playerStats.MeleeBehaviour.OnFire(attackPoint, attackRadius, enemy);
 
@@ -48,27 +41,31 @@ public class P_AttackState : IState
         }
     }
 
-    public void Update()
+    public override void Update()
     {       
         if (_attackCooldownTime < attackCooldown) { _attackCooldownTime += Time.deltaTime; return; }
 
-        if (_comboCooldownTime < comboCooldown)
-        {
-            if (_player.PlayerInput.Attack())
-            {
-                _player.TransitionTo(new P_AttackState(_player, _playerStats));
-            }
-
-            _comboCooldownTime += Time.deltaTime;
-        } else
-        {
-            _player.TransitionTo(new P_IdleState(_player, _playerStats));
-        }                
+       // combo code goes here 
+        _player.TransitionTo(_player.IdleState);                      
     }
 
-    public void Exit()
+    public override void Exit()
     {
         _attackCooldownTime = 0;
         _comboCooldownTime = 0;
     }
+
+    private void UpdateStats()
+    {
+        attackCooldown = _playerStats.MeleeCooldown;
+        comboCooldown = _playerStats.ComboCooldown;
+
+        attackPoint = _playerStats.AttackPoint;
+        attackRadius = _playerStats.AttackRadius;
+        enemy = _playerStats.Damageable;
+
+        damage = _playerStats.MeleeDamage;
+    }
+
+    public override void FixedUpdate() { }
 }

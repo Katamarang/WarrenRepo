@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f10bc2987becc49b9a077989a30aa8, type: 3}
-  m_Name: HealthUpgrade
-  m_EditorClassIdentifier: Assembly-CSharp::StatModCard
-  CardName: Hearty Meal
-  CardDescription: Increases maximum health
+  m_Name: LightningMod
+  m_EditorClassIdentifier: Assembly-CSharp::ModifierCard
+  CardName: Lightning
+  CardDescription: Spell now does Lightning Damage
   CardSprite: {fileID: 0}
-  ModType: 2
+  ModType: 1
   StatModifier:
-  - Stat: 6
-    Modifier: 5
+  - Stat: 3
+    Modifier: 3

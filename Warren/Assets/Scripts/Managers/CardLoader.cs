@@ -13,6 +13,34 @@ public class CardLoader
         
     }
 
+
+    #region Stat Table
+
+    Dictionary<(ModType, Stat), Action<PlayerStats, float>> statTable = new() // uses the mod type and stat as a key, returns a method
+    {
+        // MELEE
+        { (ModType.Weapon, Stat.Damage),     (p,v) => p.MeleeDamage += (int)v }, // increases damage
+        { (ModType.Weapon, Stat.Range),      (p,v) => p.AttackRadius += v }, // increases radius
+        { (ModType.Weapon, Stat.Speed),      (p,v) => p.MeleeCooldown = Math.Max(0.1f, p.MeleeCooldown - v) }, // decreases cooldown
+        { (ModType.Weapon, Stat.DamageType), (p,v) => p.MeleeDamageTypes.Add((DamageType)(int)v) }, // adds damage type
+
+        // SPELL
+        { (ModType.Spell, Stat.Damage),     (p,v) => p.SpellDamage += (int)v }, // increases spell damage
+        { (ModType.Spell, Stat.Range),      (p,v) => p.SpellRadius += v }, // increases spell range
+        { (ModType.Spell, Stat.Cost),       (p,v) => p.SpellCost = Math.Max(1, p.SpellCost - (int)v) }, // decreases spell speed
+        { (ModType.Spell, Stat.DamageType), (p,v) => p.SpellDamageTypes.Add((DamageType)(int)v) }, // adds damage type
+
+        // PLAYER
+        { (ModType.Player, Stat.CurrentHealth),  (p,v) => p.CurrentHealth += (int)v },
+        { (ModType.Player, Stat.MaxHealth), (p,v) => p.MaxHealth += (int)v },
+        { (ModType.Player, Stat.Speed), (p,v) => p.MaxSpeed += v },
+        { (ModType.Player, Stat.Acceleration), (p,v) => p.Acceleration += v },
+        { (ModType.Player, Stat.DamageType), (p,v) => p.DamageResistances.Add((DamageType)(int)v) }, // adds damage type
+    };
+
+
+    #endregion
+
     public void LoadCards(List<Card> Cards)
     {
         foreach (var card in Cards)
@@ -23,9 +51,7 @@ public class CardLoader
 
                 if (card is WeaponCard) { LoadWeaponCard(card as WeaponCard, player); }
 
-                else if (card is WeaponModCard) { LoadWeaponModCard(card as WeaponModCard, player); }
-
-                else if (card is StatModCard) { LoadStatModCard(card as StatModCard, player); }
+                else if (card is ModifierCard) { LoadModCard(card as ModifierCard, player); }
 
                 else if (card is SpellCard) { LoadSpellCard(card as SpellCard, player); }
             }
@@ -47,34 +73,15 @@ public class CardLoader
         player.MeleeBehaviour = weaponCard.Behaviour;      
     }
 
-    private void LoadWeaponModCard(WeaponModCard card, PlayerStats player) // loads weapon modification cards 
-    {      
-        foreach (WeaponMod mod in card.WeaponModifiers)
-        {
-            if (mod.WeaponStat is WeaponStat.Damage) { player.MeleeDamage += (int)mod.Modifier; }
-            else if (mod.WeaponStat is WeaponStat.Speed)
-            {
-                player.MeleeCooldown -= mod.Modifier;
-                if (player.MeleeCooldown < 0.1f) player.MeleeCooldown = 0.1f;
-            }
-            else if (mod.WeaponStat is WeaponStat.DamageType && !player.MeleeDamageTypes.Contains((DamageType)(int)mod.Modifier))
-            {
-                player.MeleeDamageTypes.Add((DamageType)(int)mod.Modifier);
-            }
-        }        
-    }
-
-    private void LoadStatModCard(StatModCard card, PlayerStats player) // loads player modifications 
+    private void LoadModCard(ModifierCard card, PlayerStats player) // loads weapon modification cards 
     {
-        foreach (ModifyStats stat in card.StatsToModify)
+        foreach (var mod in card.StatModifier) // loops through each modifier and applies it
         {
-            if (stat.Stat is PlayerGameStats.CurrentHealth) { player.CurrentHealth += stat.Modifier; }
-            else if (stat.Stat is PlayerGameStats.MaxHealth) { player.MaxHealth += stat.Modifier; }
-            else if (stat.Stat is PlayerGameStats.Speed) { player.MaxSpeed += stat.Modifier; }
-            else if (stat.Stat is PlayerGameStats.Acceleration) { player.Acceleration += stat.Modifier; }
-            else if (stat.Stat is PlayerGameStats.Resistance && !player.DamageResistances.Contains((DamageType)stat.Modifier))
-            { player.DamageResistances.Add((DamageType)stat.Modifier); }
-
+            if (statTable.TryGetValue((card.ModType, mod.Stat), out var action))
+            {
+                //Debug.Break();
+                action(player, mod.Modifier); // calls the returned method
+            }
         }
     }
 
@@ -83,6 +90,8 @@ public class CardLoader
         player.SpellDamage = spellCard.BaseDamage;
         player.SpellCost = spellCard.BaseCost;
         player.SpellRadius = spellCard.BaseRadius;
+
+        player.SpellBehaviour = spellCard.Behaviour;
     }
     #endregion
 }

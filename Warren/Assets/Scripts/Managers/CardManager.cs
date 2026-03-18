@@ -23,6 +23,11 @@ public class CardManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        DisplayAllCards?.Invoke(AllCards);
+    }
+
     public void LoadCards()
     {
         List<Card> playerCards = new List<Card>();
@@ -34,15 +39,9 @@ public class CardManager : MonoBehaviour
             //else if (card is WorldCard) { worldCards.Add(card); }
         }
 
-        if (SendPlayerCards != null) SendPlayerCards.Invoke(playerCards);
+        SendPlayerCards?.Invoke(playerCards);
         
         //SendWorldCards.Invoke(worldCards);
-    }
-
-    [ContextMenu("Display Cards")]
-    public void DisplayCards()
-    {
-        DisplayAllCards.Invoke(AllCards);
     }
 
     public void SetActiveCards(List<Card> activeCards)

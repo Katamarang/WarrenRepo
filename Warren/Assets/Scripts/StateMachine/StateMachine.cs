@@ -13,23 +13,10 @@ public class StateMachine : MonoBehaviour
     public void TransitionTo(IState nextState)
     {
         CurrentState.Exit();
-        print(nextState);
         CurrentState = nextState;
         nextState.Enter();
     }
-    public void Update()
-    {
-        if (CurrentState != null)
-        {
-            CurrentState.Update();
-        }
-    }
+    public void Update() { CurrentState?.Update(); }
 
-    public void FixedUpdate()
-    {
-        if (CurrentState != null)
-        {
-            CurrentState.FixedUpdate();
-        }
-    }
+    public void FixedUpdate() { CurrentState?.FixedUpdate(); }
 }

@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour, IStats
 
     [Header("Melee Combat")]
     public int MeleeDamage = 1;
+    public float AttackRadius = 0.5f;
     public float MeleeCooldown = 0.3f;
     public float ComboCooldown = 0.2f;
     public List<DamageType> MeleeDamageTypes = new List<DamageType>();
@@ -23,15 +24,14 @@ public class PlayerStats : MonoBehaviour, IStats
 
     [Header("Spell")]
     public int SpellCost;
-    [HideInInspector] public int SpellCharges;
     public int SpellDamage;
     public float SpellRadius;
-    public List<DamageType> SpellDamageType;
+    public List<DamageType> SpellDamageTypes;
     public WeaponBehaviour SpellBehaviour; 
 
     [Space(25)]
     public Transform AttackPoint;
-    public float AttackRadius;
+    
 
     [Space(25)]
     

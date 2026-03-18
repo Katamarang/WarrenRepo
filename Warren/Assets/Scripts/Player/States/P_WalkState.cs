@@ -20,18 +20,19 @@ public class P_WalkState : IState
         _player = player;
         _playerStats = playerStats;
 
-        rb = player.RB;
-        anim = player.Animator;
-        maxSpeed = playerStats.MaxSpeed;
-        acceleration = playerStats.Acceleration;
+        rb = _player.RB;
+        anim = _player.Animator;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         anim.SetBool("IsRunning", true);
+    
+        maxSpeed = _playerStats.MaxSpeed;
+        acceleration = _playerStats.Acceleration;
     }
 
-    public void Update()
+    public override void Update()
     {
         _inputDirection = _player.PlayerInput.ReadInput();
         anim.SetFloat("PosY", Mathf.RoundToInt(_player.PlayerInput.PlayerFacing.y));
@@ -42,7 +43,7 @@ public class P_WalkState : IState
         Transition(_inputDirection);       
     }
 
-    public void FixedUpdate()
+    public override void FixedUpdate()
     {
         if (_currentSpeed < maxSpeed) { _currentSpeed += acceleration * Time.deltaTime; }
         else { _currentSpeed = maxSpeed; }
@@ -57,25 +58,16 @@ public class P_WalkState : IState
         {
             if (_inputBuffer < 6) { _inputBuffer++; _currentSpeed = 0; return; }
 
-            _player.TransitionTo(new P_IdleState(_player, _playerStats));
+            _player.TransitionTo(_player.IdleState);
         } 
         else { _inputBuffer = 0; }
 
-        //attack
-        if (_player.PlayerInput.Attack())
-        {
-            _player.TransitionTo(new P_AttackState(_player, _playerStats));
-        }
-
-        //parry
-        if (_player.PlayerInput.Parry())
-        {
-            _player.TransitionTo(new P_ParryState(_player, _playerStats));
-        }
-
+        if (_player.PlayerInput.Attack()) { _player.TransitionTo(_player.AttackState); }
+        else if (_player.PlayerInput.Parry()) { _player.TransitionTo(_player.ParryState); }
+        else if (_player.PlayerInput.Spell()) { _player.TransitionTo(_player.SpellState); }
     }
 
-    public void Exit()
+    public override void Exit()
     {
         rb.linearVelocity = Vector2.zero;
         _currentSpeed = 0;

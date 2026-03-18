@@ -15,7 +15,7 @@ MonoBehaviour:
   CardName: Fine Tuning
   CardDescription: Increase Weapon Damage
   CardSprite: {fileID: 0}
-  WeaponToAffect: 0
-  WeaponModifiers:
-  - WeaponStat: 0
-    Modifier: 4
+  ModType: 0
+  StatModifier:
+  - Stat: 0
+    Modifier: 2

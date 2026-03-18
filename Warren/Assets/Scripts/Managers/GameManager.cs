@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneUnloaded -= SceneUnloaded;
     }
 
+
+    #region change scene
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
@@ -31,15 +33,17 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneID);
     }
+    #endregion
 
     private void SceneLoad(Scene arg0, LoadSceneMode arg1)
     {
         SaveLoad.Load();
+        Debug.Log("Scene loaded " + arg0.name);
     }
 
     private void SceneUnloaded(Scene arg0)
     {
-        SaveLoad.Save();
+        SaveLoad.Save();        
     }
 
 }

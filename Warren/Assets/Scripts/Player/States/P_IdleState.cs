@@ -11,31 +11,17 @@ public class P_IdleState : IState
         _playerStats = playerStats;
     }
 
-    public void Enter()
-    {
+    public override void Enter() { }
 
+    public override void Update()
+    {
+        if (_player.PlayerInput.ReadInput() != Vector2.zero) { _player.TransitionTo(_player.WalkState); }
+        else if (_player.PlayerInput.Attack()) { _player.TransitionTo(_player.AttackState); }
+        else if (_player.PlayerInput.Parry()) { _player.TransitionTo(_player.ParryState); }
+        else if (_player.PlayerInput.Spell()) { _player.TransitionTo(_player.SpellState); }
     }
 
-    public void Update()
-    {
-        if (_player.PlayerInput.ReadInput() != Vector2.zero)
-        {
-            _player.TransitionTo(new P_WalkState(_player, _playerStats));
-        }
+    public override void Exit() { }
 
-        if (_player.PlayerInput.Attack())
-        {
-            _player.TransitionTo(new P_AttackState(_player, _playerStats));
-        }
-
-        if (_player.PlayerInput.Parry())
-        {
-            _player.TransitionTo(new P_ParryState(_player, _playerStats));
-        }
-    }
-
-    public void Exit()
-    {
-
-    }
+    public override void FixedUpdate() { }
 }

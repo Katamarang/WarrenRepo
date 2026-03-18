@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8289865718f68c4fb1422b7c1b6bd21, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f10bc2987becc49b9a077989a30aa8, type: 3}
   m_Name: SpeedIncrease
   m_EditorClassIdentifier: Assembly-CSharp::StatModCard
   CardName: Caffine
-  CardDescription: Increases your speed
+  CardDescription: Increases Speed;
   CardSprite: {fileID: 0}
-  StatsToModify:
-  - Stat: 2
-    Modifier: 0
-  - Stat: 3
-    Modifier: 0
+  ModType: 2
+  StatModifier:
+  - Stat: 1
+    Modifier: 2
+  - Stat: 7
+    Modifier: 2

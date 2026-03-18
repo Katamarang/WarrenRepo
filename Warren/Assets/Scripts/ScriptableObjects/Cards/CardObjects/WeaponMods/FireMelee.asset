@@ -15,7 +15,7 @@ MonoBehaviour:
   CardName: Hot Embers
   CardDescription: Your Melee weapon does Fire Damage
   CardSprite: {fileID: 0}
-  WeaponToAffect: 0
-  WeaponModifiers:
-  - WeaponStat: 2
+  ModType: 0
+  StatModifier:
+  - Stat: 3
     Modifier: 1
