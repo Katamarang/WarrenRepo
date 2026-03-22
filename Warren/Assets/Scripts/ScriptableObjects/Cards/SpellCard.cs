@@ -4,11 +4,11 @@ using UnityEngine;
 public class SpellCard : PlayerCard
 {
     [Header("Spell")]
-    public AnimatorOverrideController animatorOverride;
-
     public int BaseDamage;
     public float BaseRadius;
     public int BaseCost;
+    public float SpellLength;
 
     public WeaponBehaviour Behaviour;
+    public AnimationClip Animation;
 }

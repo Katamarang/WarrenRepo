@@ -6,6 +6,8 @@ public class P_SpellState : IState
     PlayerStats _playerStats;
 
     int SpellCharges;
+    float SpellLength;
+    float _spellTime;
 
     public P_SpellState(SM_Player player, PlayerStats playerStats)
     {
@@ -15,15 +17,22 @@ public class P_SpellState : IState
 
     public override void Enter()
     {
-        if (SpellCharges < _playerStats.SpellCost) { _player.TransitionTo(_player.IdleState); }
+        if (SpellCharges < _playerStats.SpellCost || _playerStats.SpellBehaviour == null) // spell fail
+        {
+            _player.TransitionTo(_player.IdleState); 
+            return; 
+        } 
+
+        SpellLength = _playerStats.SpellLength;
 
         SpellCharges -= _playerStats.SpellCost;
+        _player.Animator.SetTrigger("IsSpell");
         Debug.Log("Spell");
     }
 
     public override void Update()
     {
-        
+        if (_spellTime < SpellLength) { _spellTime += Time.deltaTime; return; }
 
         _player.TransitionTo(_player.IdleState);
     }

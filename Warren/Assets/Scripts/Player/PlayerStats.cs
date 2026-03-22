@@ -26,20 +26,21 @@ public class PlayerStats : MonoBehaviour, IStats
     public int SpellCost;
     public int SpellDamage;
     public float SpellRadius;
+    public float SpellLength;
     public List<DamageType> SpellDamageTypes;
     public WeaponBehaviour SpellBehaviour; 
 
     [Space(25)]
     public Transform AttackPoint;
-    
-
+ 
     [Space(25)]
     
     public List<DamageType> DamageResistances = new List<DamageType>();
     public LayerMask Damageable;
+    public Animator Animator;
 
     List<Card> Cards;
-    CardLoader CardLoader;
+    CardLoader CardLoader;   
 
     #region Initialization
     private void OnEnable()
@@ -63,6 +64,6 @@ public class PlayerStats : MonoBehaviour, IStats
     public void LoadCardLoader()
     {
         CardLoader = new CardLoader(this);
-        CardLoader.LoadCards(Cards);
+        CardLoader.LoadPlayerCards(Cards);
     }
 }

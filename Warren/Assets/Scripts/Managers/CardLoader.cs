@@ -41,28 +41,26 @@ public class CardLoader
 
     #endregion
 
-    public void LoadCards(List<Card> Cards)
+    public void LoadPlayerCards(List<Card> Cards)
     {
+        PlayerStats player = Stats as PlayerStats;
+
+        AnimatorOverrideController animatorOverride = new(player.Animator.runtimeAnimatorController);  
+
         foreach (var card in Cards)
-        {
-            if (card is PlayerCard)
-            {
-                PlayerStats player = Stats as PlayerStats;
+        {            
+            if (card is WeaponCard weaponCard) { LoadWeaponCard(weaponCard, player); }
 
-                if (card is WeaponCard) { LoadWeaponCard(card as WeaponCard, player); }
+            else if (card is ModifierCard modifierCard) { LoadModCard(modifierCard, player); }
 
-                else if (card is ModifierCard) { LoadModCard(card as ModifierCard, player); }
-
-                else if (card is SpellCard) { LoadSpellCard(card as SpellCard, player); }
-            }
-
+            else if (card is SpellCard spellCard) { LoadSpellCard(spellCard, player, animatorOverride); }
+            
             //other card types go here
         }
+        player.Animator.runtimeAnimatorController = animatorOverride;
     }
 
-    
-
-    #region Player Cards
+    #region Load Player Cards
     private void LoadWeaponCard(WeaponCard weaponCard, PlayerStats player) // loads weapon Cards and apply their stats 
     {      
         player.MeleeDamage = weaponCard.BaseDamage;
@@ -75,9 +73,9 @@ public class CardLoader
 
     private void LoadModCard(ModifierCard card, PlayerStats player) // loads weapon modification cards 
     {
-        foreach (var mod in card.StatModifier) // loops through each modifier and applies it
+        foreach (var mod in card.StatModifier) // loops through each modifier
         {
-            if (statTable.TryGetValue((card.ModType, mod.Stat), out var action))
+            if (statTable.TryGetValue((card.ModType, mod.Stat), out var action)) // uses the card mod target and stat to return a method
             {
                 //Debug.Break();
                 action(player, mod.Modifier); // calls the returned method
@@ -85,13 +83,20 @@ public class CardLoader
         }
     }
 
-    private void LoadSpellCard(SpellCard spellCard, PlayerStats player)
+    private void LoadSpellCard(SpellCard spellCard, PlayerStats player, AnimatorOverrideController overrideController)
     {
         player.SpellDamage = spellCard.BaseDamage;
         player.SpellCost = spellCard.BaseCost;
         player.SpellRadius = spellCard.BaseRadius;
+        player.SpellLength = spellCard.SpellLength;
 
         player.SpellBehaviour = spellCard.Behaviour;
+        overrideController["BlankSpell"] = spellCard.Animation;
     }
     #endregion
+
+    public void LoadWorldCards(List<Card> Cards)
+    {
+        // will eventually do stuff
+    }
 }
