@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Spell", menuName = "Scriptable Objects/Cards/Player Cards/Spell Card")]
+[CreateAssetMenu(fileName = "new Spell", menuName = "Scriptable Objects/Cards/Spell Card")]
 public class SpellCard : PlayerCard
 {
     [Header("Spell")]

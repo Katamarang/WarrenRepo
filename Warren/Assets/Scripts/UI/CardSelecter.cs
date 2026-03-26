@@ -7,6 +7,7 @@ public class CardSelecter : MonoBehaviour
 {
     [SerializeField] CardDisplay[] cardSlots;
     [SerializeField] Transform cardDisplay;
+    [SerializeField] WeaponCard Fists;
 
     [Space(20)]
     [SerializeField] int MaxCards;
@@ -38,8 +39,8 @@ public class CardSelecter : MonoBehaviour
     {
         for (int i = 0; i < cardSlots.Length; i++)
         {
-            CardDisplay card = cardSlots[i];
-            card.SetCard(AllCards[i], cardDisplay, this);
+            
+            cardSlots[i].SetCard(AllCards[i], cardDisplay, this);
         }
     }
 
@@ -85,6 +86,9 @@ public class CardSelecter : MonoBehaviour
     public void AcceptChoices()
     {
         ExitScreen.SetActive(false);
+
+        if (!meleeSelected) { selectedCards.Add(Fists); }
+
         CardManager.Instance.SetActiveCards(selectedCards);
         GameManager.Instance.ChangeScene("SampleScene");
         // save stuff and switch scenes

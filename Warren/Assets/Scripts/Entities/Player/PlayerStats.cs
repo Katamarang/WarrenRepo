@@ -9,14 +9,13 @@ public class PlayerStats : MonoBehaviour, IStats
 
     [Header("Health")]
     public int MaxHealth;
-    public int CurrentHealth;
 
     [Header("Melee Combat")]
     public int MeleeDamage = 1;
     public float AttackRadius = 0.5f;
     public float MeleeCooldown = 0.3f;
     public float ComboCooldown = 0.2f;
-    public List<DamageType> MeleeDamageTypes = new List<DamageType>();
+    public List<StatusEffect> MeleeDamageTypes = new List<StatusEffect>();
     public WeaponBehaviour MeleeBehaviour;
 
     [Header("Parry")]
@@ -27,7 +26,7 @@ public class PlayerStats : MonoBehaviour, IStats
     public int SpellDamage;
     public float SpellRadius;
     public float SpellLength;
-    public List<DamageType> SpellDamageTypes;
+    public List<StatusEffect> SpellDamageTypes = new List<StatusEffect>();
     public WeaponBehaviour SpellBehaviour; 
 
     [Space(25)]
@@ -35,7 +34,7 @@ public class PlayerStats : MonoBehaviour, IStats
  
     [Space(25)]
     
-    public List<DamageType> DamageResistances = new List<DamageType>();
+    public List<StatusEffect> DamageResistances = new List<StatusEffect>();
     public LayerMask Damageable;
     public Animator Animator;
 
@@ -59,11 +58,17 @@ public class PlayerStats : MonoBehaviour, IStats
         Cards = cards;
         print("Cards Recieved");
         LoadCardLoader();
+        GetComponent<EntityHealth>().Load();
     }
 
     public void LoadCardLoader()
     {
         CardLoader = new CardLoader(this);
         CardLoader.LoadPlayerCards(Cards);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRadius);
     }
 }

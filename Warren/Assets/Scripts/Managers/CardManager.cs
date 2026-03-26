@@ -8,6 +8,8 @@ public class CardManager : MonoBehaviour
 
     public List<Card> ActiveCards;
 
+    public StatusEffect[] AllStatusEffects;
+
     public event Action<List<Card>> DisplayAllCards;
 
     public event Action<List<Card>> SendPlayerCards;

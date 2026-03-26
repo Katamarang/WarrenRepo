@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Modifier", menuName = "Scriptable Objects/Cards/Player Cards/Modifier Card")]
+[CreateAssetMenu(fileName = "new Modifier", menuName = "Scriptable Objects/Cards/Modifier Card")]
 public class ModifierCard : PlayerCard
 {
     [Header("Modifier")]

@@ -37,8 +37,11 @@ public class P_AttackState : IState
 
         foreach (IDamageable hitItem in hit)
         {
-            hitItem.OnDamage(damage);
+            hitItem.TakeDamage(damage);
+            if (_playerStats.MeleeDamageTypes.Count > 0 && hitItem is IStatus status) 
+            { status.ApplyStatusEffect(_playerStats.MeleeDamageTypes); } 
         }
+        //if (hit.Count != 0) Debug.Log(hit[0]);
     }
 
     public override void Update()

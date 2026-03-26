@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireMelee
   m_EditorClassIdentifier: Assembly-CSharp::WeaponModCard
   CardName: Hot Embers
-  CardDescription: Your Melee weapon does Fire Damage
+  CardDescription: Melee Attacks now Burn enemies
   CardSprite: {fileID: 0}
   ModType: 0
   StatModifier:

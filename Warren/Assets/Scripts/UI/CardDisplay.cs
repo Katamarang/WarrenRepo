@@ -28,6 +28,8 @@ public class CardDisplay : MonoBehaviour
 
     public void SetCard(Card card, Transform hoverDisplay, CardSelecter display)
     {
+        if (card == null) { gameObject.SetActive(false); return; }
+
         Card = card;
         hoveredCardDisplay = hoverDisplay;
         this.display = display;
@@ -107,6 +109,7 @@ public class CardDisplay : MonoBehaviour
 
     private void StopListening()
     {
+        if (display == null) { return; }
         display.MeleeSelected -= OnCardSelected;
         display.MeleeDeselected -= OnCardDeselected;
 

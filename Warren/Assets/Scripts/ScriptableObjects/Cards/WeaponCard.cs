@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Scriptable Objects/Cards/Player Cards/Weapon Card")]
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Scriptable Objects/Cards/Weapon Card")]
 public class WeaponCard : PlayerCard
 {
     [Header("Weapon")]

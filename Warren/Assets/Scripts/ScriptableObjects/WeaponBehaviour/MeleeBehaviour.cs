@@ -17,7 +17,7 @@ public class MeleeBehaviour : WeaponBehaviour
             }
         }
 
-        Debug.Log("Hit Swung");
+        //Debug.Log("Hit Swung");
         return damageables;
     }
 }
