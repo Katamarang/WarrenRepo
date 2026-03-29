@@ -9,34 +9,25 @@ public class ShockedStatus : StatusEffect
 
     float damageDelayTime;
 
-    float statusLengthTime;
-
-    EntityHealth entity;
-    bool resistant;
-
-    public override void OnStatusApplied(EntityHealth entity)
+    public override void OnStatusApplied(EntityHealth entity, Transform UIElement, int index)
     {
-        this.entity = entity;
-        
-        if (entity.EntityStats is PlayerStats stats && stats.DamageResistances.Contains(this)) resistant = true;
+        base.OnStatusApplied(entity, UIElement, 2); // Gets shocked ui and enables it
+
         Debug.Log("Shocked Applied");
     }
 
     public override bool OnStatusUpdate()
     {
-        if (statusLengthTime > Length) { OnStatusEnd(); return true; }
-        statusLengthTime += Time.deltaTime;
-
+        if (base.OnStatusUpdate()) { return true;}
         return false;
     }
 
     public override void OnStatusEnd()
     {
-        statusLengthTime = 0;
         entity.TakeDamage(!resistant? Damage : Damage / 2);
 
         //entity.EntityStateMachine.TransitionTo(entity.EntityStateMachine.StunState);
-        resistant = false;
+        base.OnStatusEnd();
     }
 
     

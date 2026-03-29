@@ -11,14 +11,9 @@ public class PoisonStatus : StatusEffect
     float defaultSpeed;
     int defaultDamage;
 
-    float statusLengthTime;
-    EntityHealth entity;
-    bool resistant;
-
-    public override void OnStatusApplied(EntityHealth entity)
+    public override void OnStatusApplied(EntityHealth entity, Transform UIElement, int index)
     {
-        this.entity = entity;
-        if (entity.EntityStats is PlayerStats pstats && pstats.DamageResistances.Contains(this)) resistant = true;
+        base.OnStatusApplied(entity, UIElement, 1);
 
         if (entity.EntityStats is PlayerStats stats)
         {
@@ -36,14 +31,13 @@ public class PoisonStatus : StatusEffect
             defaultDamage = estats.Damage;
             estats.Damage -= !resistant ? DamageDecrease : DamageDecrease / 2;
         }
+
         Debug.Log("Poison Applied");
     }
 
     public override bool OnStatusUpdate()
     {
-        if (statusLengthTime > Length) { OnStatusEnd(); return true; }
-        statusLengthTime += Time.deltaTime;
-
+        if (base.OnStatusUpdate()) { return true; }
         return false;
     }
 
@@ -62,8 +56,7 @@ public class PoisonStatus : StatusEffect
             estats.Damage = defaultDamage;
         }
 
-        statusLengthTime = 0;
-        resistant = false;
+        base.OnStatusEnd();
     }
     
 }

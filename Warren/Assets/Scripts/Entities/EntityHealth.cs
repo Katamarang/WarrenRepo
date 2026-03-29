@@ -10,6 +10,7 @@ public class EntityHealth : MonoBehaviour, IDamageable, IStatus
     public int CurrentHealth = 50;
 
     List<StatusEffect> activeStatus = new List<StatusEffect>();
+    [SerializeField] Transform statusUI;
     
 
     public void Load()
@@ -34,7 +35,7 @@ public class EntityHealth : MonoBehaviour, IDamageable, IStatus
             if (!activeStatus.Contains(effect))
             {
                 activeStatus.Add(effect);
-                effect.OnStatusApplied(this);
+                effect.OnStatusApplied(this, statusUI, 0);
             }
         }
     }

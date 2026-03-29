@@ -7,22 +7,17 @@ public class BurningStatus : StatusEffect
     public float DamageTickSpeed;
 
     float damageTickTime;
-    float statusLengthTime;
 
-    EntityHealth entity;
-    bool resistant;
-
-    public override void OnStatusApplied(EntityHealth entity)
+    public override void OnStatusApplied(EntityHealth entity, Transform UIElement, int index)
     {
-        this.entity = entity;
-        if (entity.EntityStats is PlayerStats stats && stats.DamageResistances.Contains(this)) resistant = true;
+        base.OnStatusApplied(entity, UIElement, 0);
+
         Debug.Log("Burning Applied");
     }
 
     public override bool OnStatusUpdate()
     {
-        if (statusLengthTime > Length) { OnStatusEnd(); return true; }
-        statusLengthTime += Time.deltaTime;
+        if (base.OnStatusUpdate()) { return true; }
 
         if (damageTickTime > DamageTickSpeed)
         {
@@ -40,9 +35,7 @@ public class BurningStatus : StatusEffect
     public override void OnStatusEnd()
     {
         damageTickTime = 0;
-        statusLengthTime = 0;
-
-        resistant = false;
+        base.OnStatusEnd();
     }
 
     
