@@ -14,7 +14,6 @@ public class P_AttackState : IState
     LayerMask enemy;
 
     float _attackCooldownTime;
-    float _comboCooldownTime;
 
     int damage;
 
@@ -55,13 +54,11 @@ public class P_AttackState : IState
     public override void Exit()
     {
         _attackCooldownTime = 0;
-        _comboCooldownTime = 0;
     }
 
     private void UpdateStats()
     {
         attackCooldown = _playerStats.MeleeCooldown;
-        comboCooldown = _playerStats.ComboCooldown;
 
         attackPoint = _playerStats.AttackPoint;
         attackRadius = _playerStats.AttackRadius;

@@ -14,14 +14,14 @@ public enum Stat
     Damage,
     Speed,
     Cost,
-    DamageType,
+    ElementType,
     Range,
     CurrentHealth,
     MaxHealth,
     Acceleration
 }
 
-public enum ModType { Weapon, Spell, Player, World }
+public enum ModType { Weapon, Spell, Entity, World }
 
 [Serializable]
 public class Mod

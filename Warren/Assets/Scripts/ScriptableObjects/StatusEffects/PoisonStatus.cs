@@ -10,27 +10,18 @@ public class PoisonStatus : StatusEffect
 
     float defaultSpeed;
     int defaultDamage;
+    EntityStats stats;
 
     public override void OnStatusApplied(EntityHealth entity, Transform UIElement, int index)
     {
         base.OnStatusApplied(entity, UIElement, 1);
+        stats = entity.EntityStats;
 
-        if (entity.EntityStats is PlayerStats stats)
-        {
-            defaultSpeed = stats.MaxSpeed;
-            stats.MaxSpeed -= !resistant? SpeedDecrease : SpeedDecrease / 2;
+        defaultSpeed = stats.MaxSpeed;
+        defaultDamage = stats.MeleeDamage;
 
-            defaultDamage = stats.MeleeDamage;
-            stats.MeleeDamage -= !resistant ? DamageDecrease : DamageDecrease / 2;
-        } 
-        else if (entity.EntityStats is EnemyStats estats)
-        {
-            defaultSpeed = estats.MaxSpeed;
-            estats.MaxSpeed -= !resistant ? SpeedDecrease : SpeedDecrease / 2;
-
-            defaultDamage = estats.Damage;
-            estats.Damage -= !resistant ? DamageDecrease : DamageDecrease / 2;
-        }
+        stats.MaxSpeed -= !resistant ? SpeedDecrease : SpeedDecrease / 2;
+        stats.MeleeDamage -= !resistant ? DamageDecrease : DamageDecrease / 2;
 
         Debug.Log("Poison Applied");
     }
@@ -43,18 +34,11 @@ public class PoisonStatus : StatusEffect
 
     public override void OnStatusEnd()
     {
-        if (entity.EntityStats is PlayerStats stats)
-        {
-            stats.MaxSpeed = defaultSpeed;
+        stats.MaxSpeed = defaultSpeed;
+        stats.MeleeDamage = defaultDamage;
 
-            stats.MeleeDamage = defaultDamage;
-        }
-        else if (entity.EntityStats is EnemyStats estats)
-        {
-            estats.MaxSpeed = defaultSpeed;
-
-            estats.Damage = defaultDamage;
-        }
+        defaultSpeed = 0;
+        defaultDamage = 0;
 
         base.OnStatusEnd();
     }

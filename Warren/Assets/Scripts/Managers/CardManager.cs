@@ -6,7 +6,7 @@ public class CardManager : MonoBehaviour
 {
     public List<Card> AllCards;
 
-    public List<Card> ActiveCards;
+    List<Card> ActiveCards;
 
     public StatusEffect[] AllStatusEffects;
 

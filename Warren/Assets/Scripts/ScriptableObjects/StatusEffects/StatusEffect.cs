@@ -13,6 +13,7 @@ public abstract class StatusEffect : ScriptableObject
 
     internal float statusLengthTime;
     internal bool resistant;
+    internal bool vunerable;
 
     public virtual void OnStatusApplied(EntityHealth entity, Transform UIElement, int index)
     {
@@ -20,7 +21,8 @@ public abstract class StatusEffect : ScriptableObject
         this.UIElement = UIElement.GetChild(index).gameObject;
 
         // may break once enemy stats are added. 'this' might be refering to this class and not the subclass
-        if (entity.EntityStats is PlayerStats stats && stats.DamageResistances.Contains(this)) resistant = true; 
+        if (entity.EntityStats is PlayerStats pstats && pstats.ElementType.Contains(this)) resistant = true; 
+        else if (entity.EntityStats is EnemyStats estats && estats.ElementType.Contains(this)) vunerable = true;
 
         this.UIElement.SetActive(true);
     }
@@ -35,6 +37,8 @@ public abstract class StatusEffect : ScriptableObject
     {
         UIElement.SetActive(false);
         resistant = false;
+        vunerable = false;
+
         statusLengthTime = 0;
     }
 

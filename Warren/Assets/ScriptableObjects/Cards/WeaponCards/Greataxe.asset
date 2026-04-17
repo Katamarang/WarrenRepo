@@ -18,5 +18,5 @@ MonoBehaviour:
   WeaponSprite: {fileID: 5631122766013114463, guid: ce5202e47021594499ad2249d1843e45, type: 3}
   BaseDamage: 6
   BaseAttackRadius: 0.8
-  BaseAttackCooldown: 0.3
+  BaseAttackCooldown: 0.4
   Behaviour: {fileID: 11400000, guid: f119af88a2eafac488fc5786a9adecdc, type: 2}

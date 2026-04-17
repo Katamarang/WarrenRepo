@@ -1,23 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour, IStats
+public class PlayerStats : EntityStats, IStats
 {
-    [Header("Movement")]
-    public float MaxSpeed;
-    public float Acceleration;
-
-    [Header("Health")]
-    public int MaxHealth;
-
-    [Header("Melee Combat")]
-    public int MeleeDamage = 1;
-    public float AttackRadius = 0.5f;
-    public float MeleeCooldown = 0.3f;
-    public float ComboCooldown = 0.2f;
-    public List<StatusEffect> MeleeDamageTypes = new List<StatusEffect>();
-    public WeaponBehaviour MeleeBehaviour;
-
     [Header("Parry")]
     public float ParryWindow = 0.6f;
 
@@ -27,19 +12,7 @@ public class PlayerStats : MonoBehaviour, IStats
     public float SpellRadius;
     public float SpellLength;
     public List<StatusEffect> SpellDamageTypes = new List<StatusEffect>();
-    public WeaponBehaviour SpellBehaviour; 
-
-    [Space(25)]
-    public Transform AttackPoint;
- 
-    [Space(25)]
-    
-    public List<StatusEffect> DamageResistances = new List<StatusEffect>();
-    public LayerMask Damageable;
-    public Animator Animator;
-
-    List<Card> Cards;
-    CardLoader CardLoader;   
+    public WeaponBehaviour SpellBehaviour;  
 
     #region Initialization
     private void OnEnable()
@@ -55,7 +28,7 @@ public class PlayerStats : MonoBehaviour, IStats
 
     private void OnPlayerCardsRecieved(List<Card> cards)
     {
-        Cards = cards;
+        this.cards = cards;
         print("Cards Recieved");
         LoadCardLoader();
         GetComponent<EntityHealth>().Load();
@@ -63,8 +36,8 @@ public class PlayerStats : MonoBehaviour, IStats
 
     public void LoadCardLoader()
     {
-        CardLoader = new CardLoader(this);
-        CardLoader.LoadPlayerCards(Cards);
+        cardLoader = new CardLoader(this);
+        cardLoader.LoadPlayerCards(cards);
     }
 
     private void OnDrawGizmosSelected()

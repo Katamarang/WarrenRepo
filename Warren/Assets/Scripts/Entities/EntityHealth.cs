@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EntityHealth : MonoBehaviour, IDamageable, IStatus
 {
-    public IStats EntityStats {  get; private set; }
+    public EntityStats EntityStats {  get; private set; }
     public StateMachine EntityStateMachine { get; private set; }
 
     public int CurrentHealth = 50;
@@ -15,11 +15,10 @@ public class EntityHealth : MonoBehaviour, IDamageable, IStatus
 
     public void Load()
     {
-        EntityStats = GetComponent<IStats>();
+        EntityStats = GetComponent<EntityStats>();
         EntityStateMachine = GetComponent<StateMachine>();
 
-        if (EntityStats is PlayerStats player) { CurrentHealth = player.MaxHealth; }
-        else if (EntityStats is EnemyStats enemy) { CurrentHealth = enemy.MaxHealth; }
+        CurrentHealth = EntityStats.MaxHealth;
     }
 
     public void TakeDamage(int damage)
@@ -50,9 +49,9 @@ public class EntityHealth : MonoBehaviour, IDamageable, IStatus
     {
         if (activeStatus.Count == 0) { return; }
 
-        List<StatusEffect> effects = activeStatus;
+        List<StatusEffect> effects = activeStatus; // creates a cache of applied status effects
 
-        foreach (var effect in effects.ToList()) 
+        foreach (var effect in effects.ToList()) // removes the status effect once it finishes
         {
             if (effect.OnStatusUpdate()) { activeStatus.Remove(effect); }
         }

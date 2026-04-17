@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e9c3f79eb55a74591cb813aeff54f8, type: 3}
+  m_Name: Dummy
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatBock
+  BaseHealth: 25
+  BaseSpeed: 6
+  WeaponCard: {fileID: 11400000, guid: f596702b4424e1f4082dcda4aa4fcb2e, type: 2}
+  ModCardAmount: 2
+  CardPool:
+  - {fileID: 11400000, guid: e4d3a9e1e0fc45148b2fd17d783affc1, type: 2}
+  - {fileID: 11400000, guid: a437d85dc1e2fdf4ab1838b07832bf22, type: 2}
+  - {fileID: 11400000, guid: 02e2c4722b0117a459daac316b5a080d, type: 2}
+  - {fileID: 11400000, guid: 7eea8bee00d3a884abe202ee85075ce9, type: 2}
+  AnimatorOverride: {fileID: 22100000, guid: e1b86a2d910be934eb0be37011f3115a, type: 2}
