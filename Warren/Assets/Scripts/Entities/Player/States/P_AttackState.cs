@@ -7,7 +7,6 @@ public class P_AttackState : IState
     PlayerStats _playerStats;
 
     float attackCooldown;
-    float comboCooldown;
 
     Transform attackPoint;
     float attackRadius;

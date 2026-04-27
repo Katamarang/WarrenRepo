@@ -4,6 +4,7 @@ public class P_WalkState : IState
 {
     SM_Player _player;
     PlayerStats _playerStats;
+    PlayerInput _playerInput;
 
     float _currentSpeed;
     int _inputBuffer;
@@ -19,6 +20,7 @@ public class P_WalkState : IState
     {
         _player = player;
         _playerStats = playerStats;
+        _playerInput = _player.PlayerInput;
 
         rb = _player.RB;
         anim = _player.Animator;
@@ -34,7 +36,7 @@ public class P_WalkState : IState
 
     public override void Update()
     {
-        _inputDirection = _player.PlayerInput.ReadInput();
+        _inputDirection = _playerInput.ReadInput();
         anim.SetFloat("PosY", Mathf.RoundToInt(_player.PlayerInput.PlayerFacing.y));
         anim.SetFloat("PosX", Mathf.RoundToInt(_player.PlayerInput.PlayerFacing.x));
 
@@ -62,9 +64,9 @@ public class P_WalkState : IState
         } 
         else { _inputBuffer = 0; }
 
-        if (_player.PlayerInput.Attack()) { _player.TransitionTo(_player.AttackState); }
-        else if (_player.PlayerInput.Parry()) { _player.TransitionTo(_player.ParryState); }
-        else if (_player.PlayerInput.Spell()) { _player.TransitionTo(_player.SpellState); }
+        if (_playerInput.Attack()) { _player.TransitionTo(_player.AttackState); }
+        else if (_playerInput.Parry()) { _player.TransitionTo(_player.ParryState); }
+        else if (_playerInput.Spell()) { _player.TransitionTo(_player.SpellState); }
     }
 
     public override void Exit()

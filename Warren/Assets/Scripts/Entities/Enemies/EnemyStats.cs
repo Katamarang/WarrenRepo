@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyStats : EntityStats, IStats
 {
+    SM_Enemy SM_Enemy;
 
     public void LoadCardLoader()
     {
@@ -22,6 +23,10 @@ public class EnemyStats : EntityStats, IStats
         LoadCardLoader();
 
         GetComponent<EntityHealth>().Load();
+
+        SM_Enemy = GetComponent<SM_Enemy>();
+        SM_Enemy.CreateStates();
+        SM_Enemy.Initialize(SM_Enemy.IdleState);
     }
 
     private void GetRandomCards(EnemyStatBock statBlock)
@@ -38,5 +43,11 @@ public class EnemyStats : EntityStats, IStats
 
             cards.Add(statBlock.CardPool[r]);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRadius);
     }
 }

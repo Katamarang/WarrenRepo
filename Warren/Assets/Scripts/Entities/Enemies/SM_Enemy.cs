@@ -10,19 +10,16 @@ public class SM_Enemy : StateMachine
     #region States
     public E_IdleState IdleState {  get; private set; }
     public E_FollowState FollowState { get; private set; }
-    //public E_AttackState AttackState { get; private set; }
+    public E_AttackState AttackState { get; private set; }
     #endregion
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void CreateStates()
     {
         Stats = GetComponent<EnemyStats>();
         Input = GetComponent<EnemyInput>();
-    }
 
-    private void CreateStates()
-    {
         IdleState = new E_IdleState(this, Stats);
         FollowState = new E_FollowState(this, Stats);
+        AttackState = new E_AttackState(this, Stats);
     }
 }

@@ -7,6 +7,8 @@ public class EnemyInput : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] LayerMask Player;
 
+    [SerializeField] bool playerInRange;
+    [SerializeField] bool playerInAttackRange;
 
     public Vector2 FacingDirection {  get; private set; }
 
@@ -17,12 +19,14 @@ public class EnemyInput : MonoBehaviour
 
     public bool PlayerInSearchRange()
     {
-        return Physics2D.OverlapCircle(transform.position, searchRange, Player);
+        playerInRange = Physics2D.OverlapCircle(transform.position, searchRange, Player);
+        return playerInRange;
     }
 
     public bool PlayerInAttackRange()
     {
-        return Physics2D.OverlapCircle(transform.position, attackRange, Player);
+        playerInAttackRange = Physics2D.OverlapCircle(transform.position, attackRange, Player);
+        return playerInAttackRange;
     }
 
     private void OnDrawGizmosSelected()
