@@ -87,7 +87,7 @@ public class CardSelecter : MonoBehaviour
     {
         ExitScreen.SetActive(false);
 
-        if (!meleeSelected) { selectedCards.Add(Fists); }
+        if (!meleeSelected) { selectedCards.Insert(0, Fists); }
 
         CardManager.Instance.SetActiveCards(selectedCards);
         GameManager.Instance.ChangeScene("SampleScene");

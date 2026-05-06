@@ -61,9 +61,9 @@ public class CardLoader
     #region Load Player Cards
     private void LoadWeaponCard(WeaponCard weaponCard, EntityStats player, SpriteRenderer weaponSlot) // loads weapon Cards and apply their stats 
     {      
-        player.MeleeDamage += weaponCard.BaseDamage;
-        player.MeleeCooldown += weaponCard.BaseAttackCooldown;
-        player.AttackRadius += weaponCard.BaseAttackRadius;
+        player.MeleeDamage = weaponCard.BaseDamage;
+        player.MeleeCooldown = weaponCard.BaseAttackCooldown;
+        player.AttackRadius = weaponCard.BaseAttackRadius;
 
         player.MeleeBehaviour = weaponCard.Behaviour;
         weaponSlot.sprite = weaponCard.WeaponSprite;  
