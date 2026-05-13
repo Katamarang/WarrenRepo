@@ -90,7 +90,7 @@ public class CardSelecter : MonoBehaviour
         if (!meleeSelected) { selectedCards.Insert(0, Fists); }
 
         CardManager.Instance.SetActiveCards(selectedCards);
-        GameManager.Instance.ChangeScene("SampleScene");
+        GameManager.Instance.ChangeScene("PlayerScene");
         // save stuff and switch scenes
     }
 
