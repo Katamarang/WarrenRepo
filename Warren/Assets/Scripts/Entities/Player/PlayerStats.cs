@@ -12,7 +12,7 @@ public class PlayerStats : EntityStats, IStats
     public float SpellRadius;
     public float SpellLength;
     public List<StatusEffect> SpellDamageTypes = new List<StatusEffect>();
-    public WeaponBehaviour SpellBehaviour;  
+    public SpellCard SpellBehaviour;  
 
     #region Initialization
     private void OnEnable()
@@ -40,8 +40,5 @@ public class PlayerStats : EntityStats, IStats
         cardLoader.LoadPlayerCards(cards);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(AttackPoint.position, AttackRadius);
-    }
+
 }

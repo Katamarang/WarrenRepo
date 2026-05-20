@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "new Burning Status", menuName = "Scriptable Objects/Status Effect/Burning")]
 public class BurningStatus : StatusEffect
@@ -21,7 +22,7 @@ public class BurningStatus : StatusEffect
 
         if (damageTickTime > DamageTickSpeed)
         {
-            entity.TakeDamage(!resistant? Damage : Damage/2);
+            entity.TakeDamage(!resistant? Damage : Damage/2, this);
             damageTickTime = 0;
         } 
         else 

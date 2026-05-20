@@ -9,6 +9,7 @@ public class DEBUGEnemySpawner : MonoBehaviour
 
     int SelectedEnemy = 0;
     EnemyFactory EnemyFactory;
+    bool AIoff = true;
 
     private void Start()
     {
@@ -22,6 +23,11 @@ public class DEBUGEnemySpawner : MonoBehaviour
         EnemyFactory = GameObject.Find("EnemyFactory").GetComponent<EnemyFactory>();
     }
 
+    public void TurnOffAI(bool AI)
+    {
+        AIoff = AI;
+    }
+
     public void OnValueChange(int id)
     {
         SelectedEnemy = id;
@@ -31,6 +37,6 @@ public class DEBUGEnemySpawner : MonoBehaviour
     {
         if (EnemyFactory == null) { print("No Enemy Factory in scene"); return; }
 
-        EnemyFactory.SpawnEnemy(AllEnemies[SelectedEnemy], Vector3.zero);
+        EnemyFactory.SpawnEnemy(AllEnemies[SelectedEnemy], Vector3.zero, AIoff);
     }
 }

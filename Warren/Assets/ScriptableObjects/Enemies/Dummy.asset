@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatBock
   BaseHealth: 25
   BaseSpeed: 6
-  WeaponCard: {fileID: 11400000, guid: f596702b4424e1f4082dcda4aa4fcb2e, type: 2}
+  WeaponCard: {fileID: 11400000, guid: 084dcd9f53f35344587eb1cc63a767e7, type: 2}
   ModCardAmount: 2
   CardPool:
   - {fileID: 11400000, guid: e4d3a9e1e0fc45148b2fd17d783affc1, type: 2}

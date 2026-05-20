@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EntityHealth : MonoBehaviour, IDamageable, IStatus
+public class EntityHealth : MonoBehaviour
 {
     public EntityStats EntityStats {  get; private set; }
     public StateMachine EntityStateMachine { get; private set; }
@@ -24,10 +24,26 @@ public class EntityHealth : MonoBehaviour, IDamageable, IStatus
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
-        OnDeath();      
+        OnDeath();  
+        
+        if (FindFirstObjectByType<DEBUGDamageNumbers>() is DEBUGDamageNumbers debug) // debug
+        {
+            debug.DisplayDamageNumber(damage, DamageType.None);
+        }
     }
 
-    public void ApplyStatusEffect(List<StatusEffect> appliedStatus)
+    public void TakeDamage(int damage, StatusEffect effect)
+    {
+        CurrentHealth -= damage;
+        OnDeath();
+
+        if (FindFirstObjectByType<DEBUGDamageNumbers>() is DEBUGDamageNumbers debug) // debug
+        {
+            debug.DisplayDamageNumber(damage, effect.DamageType);
+        }
+    }
+
+    public void ApplyStatusEffect(int damage, List<StatusEffect> appliedStatus)
     {
         foreach (var effect in appliedStatus)
         {
@@ -37,6 +53,15 @@ public class EntityHealth : MonoBehaviour, IDamageable, IStatus
                 effect.OnStatusApplied(this, statusUI, 0);
             }
         }
+
+        /*if (GameObject.FindGameObjectWithTag("Debug"))
+        {
+            DEBUGDamageNumbers debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<DEBUGDamageNumbers>();
+            foreach (var effect in appliedStatus)
+            {
+                debug.DisplayDamageNumber(effect.Damage, effect.DamageType);
+            }           
+        }*/
     }
 
     public void OnDeath()

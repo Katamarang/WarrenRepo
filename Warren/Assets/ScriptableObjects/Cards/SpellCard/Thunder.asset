@@ -19,5 +19,5 @@ MonoBehaviour:
   BaseRadius: 6
   BaseCost: 3
   SpellLength: 0
-  Behaviour: {fileID: 11400000, guid: f119af88a2eafac488fc5786a9adecdc, type: 2}
+  Behaviour: {fileID: 0}
   Animation: {fileID: 7400000, guid: 111762786ad590c46a398acd99d439bd, type: 2}

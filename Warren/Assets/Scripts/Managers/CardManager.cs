@@ -13,7 +13,7 @@ public class CardManager : MonoBehaviour
     public event Action<List<Card>> DisplayAllCards;
 
     public event Action<List<Card>> SendPlayerCards;
-    public event Action<List<Card>> SendWorldCards;
+    //public event Action<List<Card>> SendWorldCards;
 
     public static CardManager Instance;
 

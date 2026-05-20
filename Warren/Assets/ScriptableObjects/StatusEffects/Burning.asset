@@ -15,4 +15,5 @@ MonoBehaviour:
   StatusParticle: {fileID: 0}
   Damage: 1
   Length: 1
+  DamageType: 1
   DamageTickSpeed: 0.2

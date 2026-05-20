@@ -18,10 +18,10 @@ public class PoisonStatus : StatusEffect
         stats = entity.EntityStats;
 
         defaultSpeed = stats.MaxSpeed;
-        defaultDamage = stats.MeleeDamage;
+        defaultDamage = stats.WeaponBehaviour.damage;
 
         stats.MaxSpeed -= !resistant ? SpeedDecrease : SpeedDecrease / 2;
-        stats.MeleeDamage -= !resistant ? DamageDecrease : DamageDecrease / 2;
+        stats.WeaponBehaviour.damage -= !resistant ? DamageDecrease : DamageDecrease / 2;
 
         Debug.Log("Poison Applied");
     }
@@ -35,7 +35,7 @@ public class PoisonStatus : StatusEffect
     public override void OnStatusEnd()
     {
         stats.MaxSpeed = defaultSpeed;
-        stats.MeleeDamage = defaultDamage;
+        stats.WeaponBehaviour.damage = defaultDamage;
 
         defaultSpeed = 0;
         defaultDamage = 0;

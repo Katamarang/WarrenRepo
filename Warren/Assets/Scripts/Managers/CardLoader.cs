@@ -17,10 +17,10 @@ public class CardLoader
     Dictionary<(ModType, Stat), Action<EntityStats, float>> statTable = new() // uses the mod type and stat as a key, returns a method
     {
         // MELEE
-        { (ModType.Weapon, Stat.Damage),     (p,v) => p.MeleeDamage += (int)v }, // increases damage
-        { (ModType.Weapon, Stat.Range),      (p,v) => p.AttackRadius += v }, // increases radius
+        { (ModType.Weapon, Stat.Damage),     (p,v) => p.WeaponBehaviour.damage += (int)v }, // increases damage
+        { (ModType.Weapon, Stat.Range),      (p,v) => p.WeaponBehaviour.radius += v }, // increases radius
         { (ModType.Weapon, Stat.Speed),      (p,v) => p.MeleeCooldown = Math.Max(0.1f, p.MeleeCooldown - v) }, // decreases cooldown
-        { (ModType.Weapon, Stat.ElementType), (p,v) => p.MeleeDamageTypes.Add(GetStatusEffect((int)v)) }, // adds damage type to melee
+        { (ModType.Weapon, Stat.ElementType), (p,v) => p.WeaponBehaviour.damageTypes.Add(GetStatusEffect((int)v)) }, // adds damage type to melee
 
         // SPELL
         { (ModType.Spell, Stat.Damage),     (p,v) => (p as PlayerStats).SpellDamage += (int)v }, // increases spell damage
@@ -60,16 +60,41 @@ public class CardLoader
 
     #region Load Player Cards
     private void LoadWeaponCard(WeaponCard weaponCard, EntityStats player, SpriteRenderer weaponSlot) // loads weapon Cards and apply their stats 
-    {      
-        player.MeleeDamage = weaponCard.BaseDamage;
-        player.MeleeCooldown = weaponCard.BaseAttackCooldown;
-        player.AttackRadius = weaponCard.BaseAttackRadius;
+    {
+        switch (weaponCard.Behaviour)
+        {
+            case WeaponBehaviours.Melee:
+                MeleeBehaviour melee = new MeleeBehaviour();
+                MeleeCard meleeCard = weaponCard as MeleeCard;
 
-        player.MeleeBehaviour = weaponCard.Behaviour;
+                melee.damage = meleeCard.BaseDamage;
+                melee.radius = meleeCard.BaseAttackRadius;
+
+                melee.pos = player.AttackPoint;
+                player.MeleeCooldown = meleeCard.BaseAttackCooldown;
+                melee.mask = player.Damageable;
+
+                player.WeaponBehaviour = melee;
+                break;
+
+            case WeaponBehaviours.Spawn:
+                SpawnBehaviour spawn = new SpawnBehaviour();
+                SpawnCard spawnCard = weaponCard as SpawnCard;
+
+                spawn.damage = spawnCard.BaseDamage;
+                spawn.radius = spawnCard.BaseAttackRadius;
+                spawn.pos = player.AttackPoint;
+
+                spawn.ToSpawn = spawnCard.ToSpawn;
+                break;
+
+        }
+
+        
         weaponSlot.sprite = weaponCard.WeaponSprite;  
     }
 
-    private void LoadModCard(ModifierCard card, EntityStats player) // loads weapon modification cards 
+    private void LoadModCard(ModifierCard card, EntityStats player) // loads modification cards 
     {
         foreach (var mod in card.StatModifier) // loops through each modifier
         {
@@ -88,22 +113,28 @@ public class CardLoader
         player.SpellRadius = spellCard.BaseRadius;
         player.SpellLength = spellCard.SpellLength;
 
-        player.SpellBehaviour = spellCard.Behaviour;
+        //player.SpellBehaviour = spellCard.Behaviour;
         overrideController["BlankSpell"] = spellCard.Animation;
         Stats.Animator.runtimeAnimatorController = overrideController;
     }
 
     private static StatusEffect GetStatusEffect(int effect)
     {
-        if (effect == 1) { return CardManager.Instance.AllStatusEffects[0]; } // burning
-        else if (effect == 2) { return CardManager.Instance.AllStatusEffects[1]; } // poison
-        else if (effect == 3) { return CardManager.Instance.AllStatusEffects[2]; } // lighting
-        else {  return null; }
+        switch(effect)
+        {
+            case 1:
+                return CardManager.Instance.AllStatusEffects[0]; // burning
+            case 2:
+                 return CardManager.Instance.AllStatusEffects[1]; // poison
+            case 3:
+                 return CardManager.Instance.AllStatusEffects[2]; // lightning
+        }
+        return null;
     }
+
+    
+
     #endregion
 
-    public void LoadWorldCards(List<Card> Cards)
-    {
-        // will eventually do stuff
-    }
+    //public void LoadWorldCards(List<Card> Cards) { } //will eventually do stuff
 }

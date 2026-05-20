@@ -16,8 +16,8 @@ public class DEBUGTraitChoice : MonoBehaviour
     float MaxSpeed;
     float Acceleration;
 
-    int MeleeDamage = 1;
-    float AttackRadius = 0.5f;
+    //int MeleeDamage = 1;
+    //float AttackRadius = 0.5f;
     float MeleeCooldown = 0.3f;
 
     int SpellCost;
@@ -40,6 +40,7 @@ public class DEBUGTraitChoice : MonoBehaviour
 
     public void AddCard(Card c)
     {
+        if (c is WeaponCard) { selectedCards.Insert(0, c); return; }
         selectedCards.Add(c);
     }
 
@@ -73,8 +74,8 @@ public class DEBUGTraitChoice : MonoBehaviour
         MaxHealth = player.MaxHealth;
         MaxSpeed = player.MaxSpeed;
         Acceleration = player.Acceleration;
-        MeleeDamage = player.MeleeDamage;
-        AttackRadius = player.AttackRadius;
+        //MeleeDamage = player.WeaponBehaviour.damage;
+        //AttackRadius = player.WeaponBehaviour.radius;
         MeleeCooldown = player.MeleeCooldown;
 
         SpellCost = (player as PlayerStats).SpellCost;
@@ -88,10 +89,11 @@ public class DEBUGTraitChoice : MonoBehaviour
         player.MaxHealth = MaxHealth;
         player.MaxSpeed = MaxSpeed;
         player.Acceleration = Acceleration;
-        player.MeleeDamage = MeleeDamage;
-        player.AttackRadius = AttackRadius;
+        player.WeaponBehaviour = null;
+        //player.WeaponBehaviour.damage = MeleeDamage;
+        //player.WeaponBehaviour.radius = AttackRadius;
         player.MeleeCooldown = MeleeCooldown;
-        player.MeleeDamageTypes = new();
+        //player.WeaponBehaviour.damageTypes = new();
         player.WeaponSlot.sprite = null;
 
         (player as PlayerStats).SpellCost = SpellCost;

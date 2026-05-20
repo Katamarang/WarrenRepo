@@ -12,12 +12,6 @@ public class E_AttackState : IState
     float attackCooldown;
     float _attackCooldownTime;
 
-    Transform attackPoint;
-    float attackRadius;
-    LayerMask player;
-
-    int damage;
-
     public E_AttackState(SM_Enemy enemy, EnemyStats stats)
     {
         _enemy = enemy;
@@ -25,28 +19,14 @@ public class E_AttackState : IState
 
         _input = _enemy.Input;
         _animator = _stats.Animator;
-
-        attackPoint = _stats.AttackPoint;
-        attackRadius = _stats.AttackRadius;
-        player = _stats.Damageable;
-
-        damage = _stats.MeleeDamage;
     }
 
     public override void Enter()
     {
         attackCooldown = _stats.MeleeCooldown;
 
-        List<IDamageable> hit = _stats.MeleeBehaviour.OnFire(attackPoint, attackRadius, player);
-
-        foreach (IDamageable hitItem in hit)
-        {
-            hitItem.TakeDamage(damage);
-            if (_stats.MeleeDamageTypes.Count > 0 && hitItem is IStatus status)
-            { status.ApplyStatusEffect(_stats.MeleeDamageTypes); }         
-        }
-
         _animator.SetTrigger("IsAttack");
+        _stats.WeaponBehaviour.OnFire();
     }
 
     public override void Exit()

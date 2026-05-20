@@ -8,7 +8,7 @@ public class SpellCard : PlayerCard
     public float BaseRadius;
     public int BaseCost;
     public float SpellLength;
+    public WeaponBehaviours behaviour;
 
-    public WeaponBehaviour Behaviour;
     public AnimationClip Animation;
 }

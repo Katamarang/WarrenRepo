@@ -14,11 +14,12 @@ public class EntityStats : MonoBehaviour
     public float Acceleration;
 
     [Header("Melee Combat")]
-    public int MeleeDamage = 1;
+    /*public int MeleeDamage = 1;
     public float AttackRadius = 0.5f;
+    
+    public List<StatusEffect> MeleeDamageTypes = new List<StatusEffect>();*/
     public float MeleeCooldown = 0.3f;
-    public List<StatusEffect> MeleeDamageTypes = new List<StatusEffect>();
-    public WeaponBehaviour MeleeBehaviour;
+    public WeaponBehaviour WeaponBehaviour;
 
     [Header("Misc")]
     public List<StatusEffect> ElementType = new List<StatusEffect>(); // controls what the player is resistant to and what the enemies are vunereable to

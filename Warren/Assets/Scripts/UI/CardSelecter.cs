@@ -80,6 +80,7 @@ public class CardSelecter : MonoBehaviour
 
         if (meleeSelected && selectedCards.Count == MaxCards) { text.text = "Confirm Cards?"; }
         else if (!meleeSelected) { text.text = "No melee Selected. Confirm Cards?"; }
+        else if (!spellSelected) { text.text = "No spell Selected. Confirm Cards?"; }
         else if (selectedCards.Count != MaxCards) { text.text = "Less than five cards selected. Confirm Cards?"; }
     }
 

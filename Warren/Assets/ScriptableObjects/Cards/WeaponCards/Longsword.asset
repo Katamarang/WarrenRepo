@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d649a7a3641c44685fb71e666270bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 02e55bf6d8df6a04c912011d95a337ca, type: 3}
   m_Name: Longsword
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponCard
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeCard
   CardName: Longsword
-  CardDescription: its a longswonrd
+  CardDescription: its a longsword
   CardSprite: {fileID: 0}
   WeaponSprite: {fileID: 6374525964455321646, guid: ce5202e47021594499ad2249d1843e45, type: 3}
+  BaseAttackCooldown: 0.4
   BaseDamage: 5
   BaseAttackRadius: 0.8
-  BaseAttackCooldown: 0.4
-  Behaviour: {fileID: 11400000, guid: f119af88a2eafac488fc5786a9adecdc, type: 2}
+  Behaviour: 0

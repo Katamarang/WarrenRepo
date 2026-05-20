@@ -7,6 +7,7 @@ public abstract class StatusEffect : ScriptableObject
 
     public int Damage;
     public float Length;
+    public DamageType DamageType;
 
     internal EntityHealth entity;
     internal GameObject UIElement;

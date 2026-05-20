@@ -19,7 +19,7 @@ public class EnemyStats : EntityStats, IStats
         
         GetRandomCards(statBlock);
 
-        cards.Add(statBlock.WeaponCard);
+        cards.Insert(0, statBlock.WeaponCard);
         LoadCardLoader();
 
         GetComponent<EntityHealth>().Load();
@@ -48,6 +48,6 @@ public class EnemyStats : EntityStats, IStats
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(AttackPoint.position, AttackRadius);
+        Gizmos.DrawWireSphere(AttackPoint.position, WeaponBehaviour.radius);
     }
 }
