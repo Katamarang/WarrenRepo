@@ -15,11 +15,38 @@ MonoBehaviour:
   Path: FMOD Project/WarrenFMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639142759225723877
+  lastModified: 639149758098555624
   FileSizes:
   - Name: Desktop
-    Value: 712
+    Value: 766
   Exists: 1
+--- !u!114 &-4879392529228942348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Debug/DebugSound
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Debug/DebugSound
+  Guid:
+    Data1: -1564533138
+    Data2: 1112892173
+    Data3: -110573146
+    Data4: -202469304
+  Banks:
+  - {fileID: -1590484790700617539}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 100
 --- !u!114 &-1590484790700617539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,10 +62,10 @@ MonoBehaviour:
   Path: FMOD Project/WarrenFMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639142759225688827
+  lastModified: 639149758098526726
   FileSizes:
   - Name: Desktop
-    Value: 1036
+    Value: 3648
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -55,11 +82,12 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -5914970574737692384}
   - {fileID: -1590484790700617539}
-  EditorEvents: []
+  EditorEvents:
+  - {fileID: -4879392529228942348}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1590484790700617539}
   StringsBanks:
   - {fileID: -5914970574737692384}
-  cacheTime: 639142759225723877
+  cacheTime: 639149758098555624
   cacheVersion: 131636
