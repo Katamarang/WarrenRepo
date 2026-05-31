@@ -34,11 +34,11 @@ public class LevelGenerator : MonoBehaviour
     [ContextMenu("Generate Level")]
     public void GenerateLevel()
     {
-        Tilemap.ClearAllTiles();
-        WORLDGRID = new int[WorldSize.size.x, WorldSize.size.y];
+        //Tilemap.ClearAllTiles();
+        CreateWorldGrid();
 
         SEED = RandomSeed? UnityEngine.Random.Range(1,999) : SEED; //generates a seed if randomseed is true
-        WORLDGRID = Biome.StartGeneration(WorldSize, SEED);
+        WORLDGRID = Biome.StartGeneration(WORLDGRID, WorldSize, SEED);
 
 
         PaintLevel();
@@ -46,11 +46,10 @@ public class LevelGenerator : MonoBehaviour
 
     private void PaintLevel() // will move to a seperate script later
     {
-        //Tilemap.SetTile(Vector3Int.zero, tile);
         foreach (Vector2Int pos in WorldSize.allPositionsWithin)
         {
-            if (WORLDGRID[pos.x, pos.y] == (int)TileType.wall) Tilemap.SetTile((Vector3Int)pos, tile);
-            
+            if (Tilemap.GetTile((Vector3Int)pos) != null) continue;
+
             switch (WORLDGRID[pos.x, pos.y])
             {
                 case (int)TileType.wall:
@@ -59,12 +58,31 @@ public class LevelGenerator : MonoBehaviour
                     break;
 
                 case (int)TileType.corridor:
-                    tile.color = Color.grey;
+                    tile.color = Color.darkGray;
                     Tilemap.SetTile((Vector3Int)pos, tile);
+                    break;
+
+                case (int)TileType.air:
+                    Tilemap.SetTile((Vector3Int)pos, null);
                     break;
             }
         }
-    } 
+    }
+
+    void CreateWorldGrid()
+    {
+        WORLDGRID = new int[WorldSize.size.x, WorldSize.size.y];
+
+        for (int x= 0;  x < WORLDGRID.GetLength(0); x++)
+        {
+            for (int y= 0; y < WORLDGRID.GetLength(1); y++)
+            {
+                if (Tilemap.GetTile(new(x, y, 0)) != null) WORLDGRID[x, y] = (int)TileType.air;
+                else WORLDGRID[x, y] = (int)TileType.wall;
+            }
+        }
+    }
+
 }
 
 public enum TileType

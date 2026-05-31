@@ -113,7 +113,7 @@ public class CardLoader
         player.SpellRadius = spellCard.BaseRadius;
         player.SpellLength = spellCard.SpellLength;
 
-        //player.SpellBehaviour = spellCard.Behaviour;
+        player.SpellBehaviour = new MeleeBehaviour(); // Should combine with weapon behaviour
         overrideController["BlankSpell"] = spellCard.Animation;
         Stats.Animator.runtimeAnimatorController = overrideController;
     }

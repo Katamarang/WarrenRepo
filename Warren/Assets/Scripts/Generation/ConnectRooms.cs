@@ -1,61 +1,95 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ConnectRooms 
 {
-    List<List<Vector3Int>> Rooms;
     int[,] Map;
 
-    Queue<Vector3Int> unconnected = new Queue<Vector3Int>(); // unconnected room centers
-    List<Vector3Int> connected = new List<Vector3Int>(); // connected room centers
+    Queue<(Vector3Int, int)> unconnected = new Queue<(Vector3Int, int)>(); // unconnected room centers and size
+    Dictionary<Vector3Int, List<Vector3Int>> connections = new Dictionary<Vector3Int, List<Vector3Int>>();
 
-    public ConnectRooms(List<List<Vector3Int>> rooms, int[,] map)
+    public ConnectRooms(List<List<Vector3Int>> rooms, int[,] map, int threshold)
     {
-        Rooms = rooms;
         Map = map;
 
         foreach (var room in rooms)
         {
-            unconnected.Enqueue(GetRoomCenter(room));
+            Vector3Int center = GetRoomCenter(room);
+            unconnected.Enqueue((center, room.Count));
+
+            connections.Add(center, new List<Vector3Int>());
+            //Map[center.x, center.y] = (int)TileType.corridor;
         }    
 
         while (unconnected.Count > 0)
         {
-            var room = unconnected.Dequeue();
-            connected.Add(room);
+            var r = unconnected.Dequeue();
 
-            Vector3Int closestRoom = room;
-            float closestDistance = float.MaxValue;
+            int connectionAmount = ConnectionAmount(r.Item2, threshold);
 
-            foreach (var center in unconnected)
+            for (int i = 0; i < connectionAmount; i++)
             {
-                float distance = Vector3.Distance(room, center);
-                if (closestDistance > distance) { closestRoom = center; closestDistance = distance; }
-            }
+                Vector3Int closestRoom = r.Item1;
+                float closestDistance = float.MaxValue;
 
-            CarveCorridor(room, closestRoom);
+                foreach (var room in unconnected)
+                {                    
+                    if (connections[r.Item1].Contains(room.Item1)) { continue; }
+
+                    Vector3Int center = room.Item1;
+
+                    float distance = (center - r.Item1).magnitude;
+
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestRoom = center;
+                    }
+                }
+
+                connections[r.Item1].Add(closestRoom);
+                CarveCorridor(r.Item1, closestRoom, connectionAmount);
+            }
         }
     }
 
-    void CarveCorridor(Vector3Int a, Vector3Int b)
+    void CarveCorridor(Vector3Int a, Vector3Int b, int CorridorSize)
     {
         Vector3Int current = a;
         int i = 0;
-
 
         while (current != b && i != 999)
         {
             i++;
 
-            Map[current.x, current.y] = (int)TileType.corridor;
+            CarveCross(current, CorridorSize);
 
-            int dx = Mathf.Clamp(b.x - current.x, -1, 1);
-            int dy = Mathf.Clamp(b.y - current.y, -1, 1);
+            int dx = b.x - current.x;
+            int dy = b.y - current.y;
 
-            current = new Vector3Int(current.x + dx, current.y + dy, 0);
+            if (UnityEngine.Random.value < 0.3f)
+            {
+                if (UnityEngine. Random.value < 0.5f) dx = 0;
+                else dy = 0;
+            }
+
+            if (dx != 0) current.x += Mathf.Clamp(dx, -1, 1);
+            else if (dy != 0) current.y += Mathf.Clamp(dy, -1, 1);
         }
+    }
 
-        Map[current.x, current.y] = (int)TileType.corridor;
+    void CarveCross(Vector3Int pos, int size)
+    {
+        Map[pos.x, pos.y] = (int)TileType.air;
+
+        if (size == 1) return;
+
+        foreach (Vector3Int n in neighbours)
+        {
+            Vector3Int npos = n + pos;
+            Map[npos.x, npos.y] = (int)TileType.air;
+        }
     }
 
     Vector3Int GetRoomCenter(List<Vector3Int> room)
@@ -68,4 +102,20 @@ public class ConnectRooms
         }
         return new Vector3Int(x / room.Count, y / room.Count, 0);
     }
+
+    int ConnectionAmount(int roomSize, int threshold)
+    {
+        if (roomSize < threshold) { return 1; }
+        else if (roomSize >= threshold) { return 2; }
+        else if (roomSize >= threshold * 2) { return 3; }
+        else { return 4; }
+    }
+
+    Vector2Int[] neighbours = new Vector2Int[]
+    {
+        new(1,0),
+        new(0,1)
+        //new(-1,0),
+        //new(0,-1)
+    };
 }

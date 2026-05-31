@@ -12,7 +12,7 @@ public class PlayerStats : EntityStats, IStats
     public float SpellRadius;
     public float SpellLength;
     public List<StatusEffect> SpellDamageTypes = new List<StatusEffect>();
-    public SpellCard SpellBehaviour;  
+    public WeaponBehaviour SpellBehaviour;  
 
     #region Initialization
     private void OnEnable()

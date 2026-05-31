@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shortbow
   m_EditorClassIdentifier: Assembly-CSharp::SpawnCard
   CardName: Shortbow
-  CardDescription: 
+  CardDescription: pew pew
   CardSprite: {fileID: 0}
   WeaponSprite: {fileID: -1023608187, guid: ce5202e47021594499ad2249d1843e45, type: 3}
   BaseAttackCooldown: 0

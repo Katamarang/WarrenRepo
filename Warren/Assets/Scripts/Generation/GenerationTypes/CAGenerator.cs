@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class CAGenerator : GenAlgorithm
@@ -11,18 +12,21 @@ public class CAGenerator : GenAlgorithm
     [Header("Small Rooms")]
     [SerializeField] int minRoomSize;
 
+    [Header("Corrdiors")]
+    [SerializeField] int corridorThreshold;
+
     int[,] gridCache;
     int[,] newCache;
 
     int seed;
 
-    public override int[,] StartGeneration(BoundsInt bounds, int seed)
+    public override int[,] StartGeneration(int[,] WORLDGRID, BoundsInt bounds, int seed)
     {
         this.bounds = bounds;
         this.seed = seed;
 
-        gridCache = new int[bounds.size.x, bounds.size.y];
-        newCache = new int[bounds.size.x, bounds.size.y];
+        gridCache = WORLDGRID.Clone() as int[,];
+        newCache = WORLDGRID.Clone() as int[,]; ;
 
         GenerateRandomTiles();
         SmoothGeneration();
@@ -31,7 +35,10 @@ public class CAGenerator : GenAlgorithm
         RSR.FloodFill((int)TileType.air);
         RSR.RemoveRooms(minRoomSize, (int)TileType.wall);
 
-        ConnectRooms CR = new ConnectRooms(RSR.GetRooms(), gridCache);
+        ConnectRooms CR = new ConnectRooms(RSR.GetRooms(), gridCache, corridorThreshold);
+
+        RSR.FloodFill((int)TileType.wall);
+        RSR.RemoveRooms(2, (int)TileType.air);
 
         return gridCache;
     }   
@@ -40,6 +47,8 @@ public class CAGenerator : GenAlgorithm
     {
         foreach (var pos in bounds.allPositionsWithin)
         {
+            if (gridCache[pos.x, pos.y] == (int)TileType.air) { continue; } 
+
             Vector3Int localPos = pos - bounds.min;
 
             if (localPos.x <= bounds.min.x || localPos.x >= bounds.max.x - 1 || 

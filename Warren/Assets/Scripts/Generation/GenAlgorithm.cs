@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class GenAlgorithm : MonoBehaviour
 {
-    public abstract int[,] StartGeneration(BoundsInt WorldSize, int seed);
+    public abstract int[,] StartGeneration(int[,] WORLDGRID, BoundsInt WorldSize, int seed);
 
     internal Vector2Int[] neighbours = new Vector2Int[]
     {
