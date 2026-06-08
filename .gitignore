@@ -91,3 +91,4 @@ fmod_editor.log
 # Keep FMOD editor images/gizmos used by Unity
 !Assets/Gizmos/FMOD/**
 !Assets/Editor Default Resources/FMOD/**
+Warren/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
