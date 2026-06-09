@@ -4,27 +4,28 @@ using UnityEngine.UI;
 
 public class DEBUGTraitChoice : MonoBehaviour
 {
+    // A debug script for adding and removing cards without needing to change scenes.
+    
     [SerializeField] GameObject button;
 
     [SerializeField] List<Card> selectedCards;
 
     EntityStats player;
 
+    // Stores the player's stats so that they can be reset when applying or resetting cards
     #region Stored Stats
     int MaxHealth;
 
     float MaxSpeed;
     float Acceleration;
 
-    //int MeleeDamage = 1;
-    //float AttackRadius = 0.5f;
     float MeleeCooldown = 0.3f;
 
     int SpellCost;
     int SpellDamage;
     float SpellRadius;
     float SpellLength;
-    #endregion
+    #endregion .
 
     private void Start()
     {
@@ -74,8 +75,6 @@ public class DEBUGTraitChoice : MonoBehaviour
         MaxHealth = player.MaxHealth;
         MaxSpeed = player.MaxSpeed;
         Acceleration = player.Acceleration;
-        //MeleeDamage = player.WeaponBehaviour.damage;
-        //AttackRadius = player.WeaponBehaviour.radius;
         MeleeCooldown = player.MeleeCooldown;
 
         SpellCost = (player as PlayerStats).SpellCost;
@@ -90,10 +89,7 @@ public class DEBUGTraitChoice : MonoBehaviour
         player.MaxSpeed = MaxSpeed;
         player.Acceleration = Acceleration;
         player.WeaponBehaviour = null;
-        //player.WeaponBehaviour.damage = MeleeDamage;
-        //player.WeaponBehaviour.radius = AttackRadius;
         player.MeleeCooldown = MeleeCooldown;
-        //player.WeaponBehaviour.damageTypes = new();
         player.WeaponSlot.sprite = null;
 
         (player as PlayerStats).SpellCost = SpellCost;

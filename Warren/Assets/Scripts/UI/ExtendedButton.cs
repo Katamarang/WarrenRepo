@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ExtendedButton : Button
 {
+    // extends the button class for when the mouse hovers over the button.
+    
     [SerializeField] UnityEvent OnHoverEnter;
     [SerializeField] UnityEvent OnHoverExit;
 

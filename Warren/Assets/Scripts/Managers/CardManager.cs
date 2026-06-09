@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class CardManager : MonoBehaviour
 {
+    // handles the loading and saving of cards, as well as sending card data to other scripts.
     public List<Card> AllCards;
 
     List<Card> ActiveCards;
@@ -35,13 +36,14 @@ public class CardManager : MonoBehaviour
         List<Card> playerCards = new List<Card>();
         //List<Card> worldCards = new List<Card>();
 
-        foreach (Card card in ActiveCards)
+        foreach (Card card in ActiveCards) // sorts the active cards into player and world cards.
         {
             if (card is PlayerCard) { playerCards.Add(card); }
             //else if (card is WorldCard) { worldCards.Add(card); }
         }
 
-        SendPlayerCards?.Invoke(playerCards);
+        // sends them to the appropriate scripts.
+        SendPlayerCards?.Invoke(playerCards); 
         
         //SendWorldCards.Invoke(worldCards);
     }
@@ -51,7 +53,8 @@ public class CardManager : MonoBehaviour
         ActiveCards = activeCards;
     }
 
-    #region Save Load
+    // saves and loads the starting deck
+    #region Save Load 
     public void Save(ref StartingDeckData data)
     {
         data.StarterDeck = ActiveCards;

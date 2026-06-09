@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerStats : EntityStats, IStats
 {
+    // subclass of EntityStats, holds all stats unique to the Player. Also handles card loading.
+
     [Header("Parry")]
     public float ParryWindow = 0.6f;
 

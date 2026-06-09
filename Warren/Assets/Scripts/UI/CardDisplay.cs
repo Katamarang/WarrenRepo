@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class CardDisplay : MonoBehaviour
 {
+    // responsible for displaying a card in the card select menu, and handling the selection of that card.
     public Card Card { get; private set; }
     Image image;
     Button button;
@@ -58,7 +59,7 @@ public class CardDisplay : MonoBehaviour
         buttonPressed = !buttonPressed;
         cardSelectSprite.SetActive(buttonPressed);
 
-        if (buttonPressed)
+        if (buttonPressed) // used if specific cards have been selected.
         {
             if (Card is WeaponCard) { display.OnMeleeSelected(); }
             else if (Card is SpellCard) { display.OnSpellSelected(); }
@@ -73,8 +74,6 @@ public class CardDisplay : MonoBehaviour
 
     private void OnCardSelected()
     {
-        //print("melee selected");
-
         if (!buttonPressed)
         {
             button.interactable = false;
@@ -84,8 +83,6 @@ public class CardDisplay : MonoBehaviour
 
     private void OnCardDeselected()
     {
-        //print("melee deselected");
-
         button.interactable = true;
         image.color = new Color(1, 1, 1, 1);
     }

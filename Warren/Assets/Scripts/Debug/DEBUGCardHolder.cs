@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class DEBUGCardHolder : MonoBehaviour
 {
+    // debug script for displaying the cards in DEBUGTraitChoice's dropdown.
+    
     Card Card;
     DEBUGTraitChoice Parent;
 

@@ -3,6 +3,7 @@ using System.IO;
 
 public class SaveLoad 
 {
+    // handles saving and loading of data.
     private static SavaData _savaData = new();
 
 

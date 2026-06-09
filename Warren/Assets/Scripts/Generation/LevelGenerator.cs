@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class LevelGenerator : MonoBehaviour
 {
-    // per level script
+    // per level script. Handles level generation. Painting the level will be moved to a seperate script later on.
 
     public int[,] WORLDGRID { get; private set; }
 
@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X)) // debug key to generate level
         {
             GenerateLevel();
         }
@@ -69,7 +69,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    void CreateWorldGrid()
+    void CreateWorldGrid() // creates the world grid based on the current tilemap. Allows for tiles to be placed in editor.
     {
         WORLDGRID = new int[WorldSize.size.x, WorldSize.size.y];
 

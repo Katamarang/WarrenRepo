@@ -4,6 +4,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 [CreateAssetMenu(fileName = "new Poison Status", menuName = "Scriptable Objects/Status Effect/Poison")]
 public class PoisonStatus : StatusEffect
 {
+    // Poison status effect. Decreases the target's speed and damage for a duration.
     [Header("Poison")]
     public float SpeedDecrease;
     public int DamageDecrease;

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RemoveSmallRooms 
 {
+    // removes rooms smaller than a certain size, and fills them with a specified tile
+
     List<List<Vector3Int>> rooms = new();
     int[,] map;
 
@@ -11,7 +13,7 @@ public class RemoveSmallRooms
         this.map = map;
     }
 
-    public void FloodFill(int tileToSearch)
+    public void FloodFill(int tileToSearch) // uses a flood fill algorithm to find rooms in the map, and adds them to the rooms list
     {
         rooms.Clear();
         bool[,] visited = new bool[map.GetLength(0), map.GetLength(1)];
@@ -20,7 +22,7 @@ public class RemoveSmallRooms
         {
             for (int y = 0; y < map.GetLength(1); y++)
             {
-                if (map[x, y] == tileToSearch && !visited[x, y]) // if is tile and has not been visited
+                if (map[x, y] == tileToSearch && !visited[x, y]) // if it is desired tile and has not been visited
                 {
                     // new room
 
@@ -46,7 +48,7 @@ public class RemoveSmallRooms
                                 newY >= map.GetLength(1))
                                 continue;
 
-                            // if neighbour is floor, add to queue
+                            // if neighbour is desired, add to queue
                             if (!visited[newX, newY] && map[newX, newY] == tileToSearch)
                             {
                                 visited[newX, newY] = true;
@@ -61,7 +63,7 @@ public class RemoveSmallRooms
         }
     }
 
-    public void RemoveRooms(int minSize, int fill)
+    public void RemoveRooms(int minSize, int fill) // removes rooms smaller than minSize, and fills them with fill
     {
         if (rooms.Count == 0) return;
 

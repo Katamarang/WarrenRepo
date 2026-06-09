@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    // interface for reading Player input, using the new Input System.
+
     InputActions.PlayerActions _player;
 
     public Vector2 PlayerFacing {  get; private set; }

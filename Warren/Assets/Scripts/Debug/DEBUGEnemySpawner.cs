@@ -4,6 +4,8 @@ using TMPro;
 
 public class DEBUGEnemySpawner : MonoBehaviour
 {
+    // A debug script for spawning enemies using the Enemy Factory. requires an Enemy Factory in the scene to work.
+
     [SerializeField] List<EnemyStatBock> AllEnemies;
     [SerializeField] TMP_Dropdown Dropdown;
 
@@ -23,17 +25,17 @@ public class DEBUGEnemySpawner : MonoBehaviour
         EnemyFactory = GameObject.Find("EnemyFactory").GetComponent<EnemyFactory>();
     }
 
-    public void TurnOffAI(bool AI)
+    public void TurnOffAI(bool AI) // Called by the toggle when the value is changed, sets whether the spawned enemy will have AI or not.
     {
         AIoff = AI;
     }
 
-    public void OnValueChange(int id)
+    public void OnValueChange(int id) // Called by the dropdown when the value is changed, sets the selected enemy to spawn.
     {
         SelectedEnemy = id;
     }
 
-    public void SpawnEnemy()
+    public void SpawnEnemy() // tells the Enemy Factory to spawn the selected enemy at 0,0 with or without AI.
     {
         if (EnemyFactory == null) { print("No Enemy Factory in scene"); return; }
 

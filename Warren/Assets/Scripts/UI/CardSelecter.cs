@@ -5,6 +5,7 @@ using TMPro;
 
 public class CardSelecter : MonoBehaviour
 {
+    // responsible for displaying and selecting cards.
     [SerializeField] CardDisplay[] cardSlots;
     [SerializeField] Transform cardDisplay;
     [SerializeField] WeaponCard Fists;
@@ -44,22 +45,26 @@ public class CardSelecter : MonoBehaviour
         }
     }
 
+    // returns false if the card cannot be added, true if it can. 
     public bool AddCard(Card card)
     {
         if (selectedCards.Count + 1 > MaxCards) { return false; }
         selectedCards.Add(card);
 
+        // handles specific card types being added.
         if (card is WeaponCard) { meleeSelected = true; }
         else if (card is SpellCard) { spellSelected = true; }
 
         return true;
     }
 
+    // returns false if the card cannot be removed, true if it can.
     public bool RemoveCard(Card card)
     {
         if (selectedCards.Count - 1 < 0) { return false; }
         selectedCards.Remove(card);
 
+        // handles specific card types being removed.
         if (card is WeaponCard) { meleeSelected = false; }
         else if (card is SpellCard) { spellSelected = false; }
 
@@ -78,6 +83,7 @@ public class CardSelecter : MonoBehaviour
         ExitScreen.SetActive(true);
         TMP_Text text = ExitScreen.GetComponentInChildren<TMP_Text>();
 
+        // handles error messages for not selecting a melee, spell, or enough cards.
         if (meleeSelected && selectedCards.Count == MaxCards) { text.text = "Confirm Cards?"; }
         else if (!meleeSelected) { text.text = "No melee Selected. Confirm Cards?"; }
         else if (!spellSelected) { text.text = "No spell Selected. Confirm Cards?"; }

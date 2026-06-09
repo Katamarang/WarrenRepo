@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class P_AttackState : IState
 {
+    // Player's attack state
     SM_Player _player;
     PlayerStats _playerStats;
 
@@ -19,7 +20,7 @@ public class P_AttackState : IState
 
     public override void Enter()
     {
-        UpdateStats();
+        attackCooldown = _playerStats.MeleeCooldown;
 
         _player.Animator.SetTrigger("IsAttacking");
 
@@ -27,21 +28,16 @@ public class P_AttackState : IState
     }
 
     public override void Update()
-    {       
-        if (_attackCooldownTime < attackCooldown) { _attackCooldownTime += Time.deltaTime; return; }
+    {
+        // will transition back to idle once the attack cooldown ends.
+        if (_attackCooldownTime < attackCooldown) { _attackCooldownTime += Time.deltaTime; return; } 
 
-       // combo code goes here 
         _player.TransitionTo(_player.IdleState);                      
     }
 
     public override void Exit()
     {
         _attackCooldownTime = 0;
-    }
-
-    private void UpdateStats()
-    {
-        attackCooldown = _playerStats.MeleeCooldown;
     }
 
     public override void FixedUpdate() { }

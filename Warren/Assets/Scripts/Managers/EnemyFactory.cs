@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour
 {
+    // handles the instantiation of enemies.
     public GameObject BaseEnemy;
 
     [Header("DEBUG")]
     public EnemyStatBock Enemy;
 
+    // spawns an enemy with the given stat block at the given position. if AIOff is true, the enemy will not move or attack.
     public void SpawnEnemy(EnemyStatBock statBlock, Vector3 transform, bool AIOff)
     {
         GameObject enemy = Instantiate(BaseEnemy, transform, Quaternion.identity);

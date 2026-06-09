@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class StatusEffect : ScriptableObject
 {
+    // superclass for all status effects. Contains the base functions and variables.
     public GameObject StatusParticle;
 
     public int Damage;
@@ -16,7 +17,8 @@ public abstract class StatusEffect : ScriptableObject
     internal bool resistant;
     internal bool vunerable;
 
-    public virtual void OnStatusApplied(EntityHealth entity, Transform UIElement, int index)
+    // called when the status is applied to an entity.
+    public virtual void OnStatusApplied(EntityHealth entity, Transform UIElement, int index) 
     {
         this.entity = entity;
         this.UIElement = UIElement.GetChild(index).gameObject;
@@ -25,16 +27,17 @@ public abstract class StatusEffect : ScriptableObject
         if (entity.EntityStats is PlayerStats pstats && pstats.ElementType.Contains(this)) resistant = true; 
         else if (entity.EntityStats is EnemyStats estats && estats.ElementType.Contains(this)) vunerable = true;
 
+        // applies the UI element to the target
         this.UIElement.SetActive(true);
     }
-    public virtual bool OnStatusUpdate()
+    public virtual bool OnStatusUpdate() // update method for status. Returns true once the status effect is finished.
     {
         if (statusLengthTime > Length) { OnStatusEnd(); return true; }
         statusLengthTime += Time.deltaTime;
 
         return false;
     }
-    public virtual void OnStatusEnd()
+    public virtual void OnStatusEnd() // called when the status effect is finished.
     {
         UIElement.SetActive(false);
         resistant = false;

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public abstract class GenAlgorithm : MonoBehaviour
 {
+    // super class for the different generation algorithms.
+    // probably isn't necessary anymore.
+
     public abstract int[,] StartGeneration(int[,] WORLDGRID, BoundsInt WorldSize, int seed);
 
     internal Vector2Int[] neighbours = new Vector2Int[]

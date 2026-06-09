@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class E_FollowState : IState
 {
+    // Follow state for the enemy. Will eveuntuall use pathfinding to follow the player.
     SM_Enemy _enemy;
     EnemyStats _stats;
 

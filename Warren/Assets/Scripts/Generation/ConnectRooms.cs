@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ConnectRooms 
 {
+    // gets a list of rooms from RemoveSmallRooms and connects them with corridors, modifying the map in place
     int[,] Map;
 
     Queue<(Vector3Int, int)> unconnected = new Queue<(Vector3Int, int)>(); // unconnected room centers and size
@@ -13,26 +14,28 @@ public class ConnectRooms
     {
         Map = map;
 
-        foreach (var room in rooms)
+        foreach (var room in rooms) // for each room, add its center to the unconnected queue.
         {
             Vector3Int center = GetRoomCenter(room);
             unconnected.Enqueue((center, room.Count));
 
+            // add its center to the connections dictionary with an empty list of connections
             connections.Add(center, new List<Vector3Int>());
-            //Map[center.x, center.y] = (int)TileType.corridor;
         }    
 
         while (unconnected.Count > 0)
         {
             var r = unconnected.Dequeue();
 
-            int connectionAmount = ConnectionAmount(r.Item2, threshold);
+            // determine how many connections this room has based on size.
+            int connectionAmount = ConnectionAmount(r.Item2, threshold); 
 
             for (int i = 0; i < connectionAmount; i++)
             {
                 Vector3Int closestRoom = r.Item1;
                 float closestDistance = float.MaxValue;
 
+                // find the closest unconnected room that is not already connected to this room
                 foreach (var room in unconnected)
                 {                    
                     if (connections[r.Item1].Contains(room.Item1)) { continue; }
@@ -48,6 +51,7 @@ public class ConnectRooms
                     }
                 }
 
+                // connect them and add the connection to its key in the dictionary
                 connections[r.Item1].Add(closestRoom);
                 CarveCorridor(r.Item1, closestRoom, connectionAmount);
             }
@@ -59,6 +63,7 @@ public class ConnectRooms
         Vector3Int current = a;
         int i = 0;
 
+        // carve a corridor from a to b by moving one step at a time towards b, carving a cross at each step.
         while (current != b && i != 999)
         {
             i++;
@@ -68,12 +73,14 @@ public class ConnectRooms
             int dx = b.x - current.x;
             int dy = b.y - current.y;
 
+            // randomly choosing to move horizontally or vertically first to create more interesting corridors
             if (UnityEngine.Random.value < 0.3f)
             {
                 if (UnityEngine. Random.value < 0.5f) dx = 0;
                 else dy = 0;
             }
 
+            // stop the corridor from moving diagonally by only allowing it to move in one direction at a time.
             if (dx != 0) current.x += Mathf.Clamp(dx, -1, 1);
             else if (dy != 0) current.y += Mathf.Clamp(dy, -1, 1);
         }
@@ -92,6 +99,7 @@ public class ConnectRooms
         }
     }
 
+    // Get the center of a room by averaging the positions of all the tiles in the room.
     Vector3Int GetRoomCenter(List<Vector3Int> room)
     {
         int x = 0, y = 0;
@@ -115,7 +123,5 @@ public class ConnectRooms
     {
         new(1,0),
         new(0,1)
-        //new(-1,0),
-        //new(0,-1)
     };
 }

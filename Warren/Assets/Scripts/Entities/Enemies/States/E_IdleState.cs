@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class E_IdleState : IState
 {
+    // Idle state for the enemy.
     SM_Enemy _enemy;
     EnemyStats _stats;
 

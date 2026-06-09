@@ -12,8 +12,8 @@ public class CardLoader
         Stats = stats;      
     }
 
+    // a stat dictionary that uses the mod type and stat as a key, and returns a method that modifies the appropriate stat.
     #region Stat Table
-
     Dictionary<(ModType, Stat), Action<EntityStats, float>> statTable = new() // uses the mod type and stat as a key, returns a method
     {
         // MELEE
@@ -41,10 +41,9 @@ public class CardLoader
 
     public void LoadPlayerCards(List<Card> Cards)
     {
-
         AnimatorOverrideController animatorOverride = new(Stats.Animator.runtimeAnimatorController);  
 
-        foreach (var card in Cards)
+        foreach (var card in Cards) // loops through each card and calls the appropriate load method based on card type
         {    
 
             if (card is WeaponCard weaponCard) { LoadWeaponCard(weaponCard, Stats, Stats.WeaponSlot); }
@@ -59,7 +58,9 @@ public class CardLoader
     }
 
     #region Load Player Cards
-    private void LoadWeaponCard(WeaponCard weaponCard, EntityStats player, SpriteRenderer weaponSlot) // loads weapon Cards and apply their stats 
+
+    // loads weapon Cards and apply their stats to the weapon behaviour.
+    private void LoadWeaponCard(WeaponCard weaponCard, EntityStats player, SpriteRenderer weaponSlot) 
     {
         switch (weaponCard.Behaviour)
         {
@@ -90,17 +91,16 @@ public class CardLoader
 
         }
 
-        
         weaponSlot.sprite = weaponCard.WeaponSprite;  
     }
 
-    private void LoadModCard(ModifierCard card, EntityStats player) // loads modification cards 
+    // loads modification cards 
+    private void LoadModCard(ModifierCard card, EntityStats player) 
     {
         foreach (var mod in card.StatModifier) // loops through each modifier
         {
-            if (statTable.TryGetValue((card.ModType, mod.Stat), out var action)) // uses the card mod target and stat to return a method
+            if (statTable.TryGetValue((card.ModType, mod.Stat), out var action)) // uses stat table to return a method
             {
-                //Debug.Break();
                 action(player, mod.Modifier); // calls the returned method
             }
         }
@@ -118,7 +118,7 @@ public class CardLoader
         Stats.Animator.runtimeAnimatorController = overrideController;
     }
 
-    private static StatusEffect GetStatusEffect(int effect)
+    private static StatusEffect GetStatusEffect(int effect) // returns a status effect based on an integer.
     {
         switch(effect)
         {
@@ -131,8 +131,6 @@ public class CardLoader
         }
         return null;
     }
-
-    
 
     #endregion
 

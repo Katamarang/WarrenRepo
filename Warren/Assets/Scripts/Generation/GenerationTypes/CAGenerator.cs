@@ -2,7 +2,8 @@ using System.ComponentModel;
 using UnityEngine;
 
 public class CAGenerator : GenAlgorithm
-{ 
+{
+    // Algorithm that uses cellular automata to generate cave like structures.
     [Header("Cellular Automata")]
     [SerializeField, Range(0, 1)] float RandomTileChance;
     [SerializeField] float Scale = 20f;
@@ -28,16 +29,16 @@ public class CAGenerator : GenAlgorithm
         gridCache = WORLDGRID.Clone() as int[,];
         newCache = WORLDGRID.Clone() as int[,]; ;
 
-        GenerateRandomTiles();
-        SmoothGeneration();
+        GenerateRandomTiles(); // uses perlin noise to generate random tiles
+        SmoothGeneration(); // uses cellular automata to smooth the generated tiles
 
         RemoveSmallRooms RSR = new(gridCache); // removes small pockets of air
         RSR.FloodFill((int)TileType.air);
         RSR.RemoveRooms(minRoomSize, (int)TileType.wall);
 
-        ConnectRooms CR = new ConnectRooms(RSR.GetRooms(), gridCache, corridorThreshold);
+        ConnectRooms CR = new ConnectRooms(RSR.GetRooms(), gridCache, corridorThreshold); // connects the remaining rooms with corridors
 
-        RSR.FloodFill((int)TileType.wall);
+        RSR.FloodFill((int)TileType.wall); // removes small pockets of wall
         RSR.RemoveRooms(2, (int)TileType.air);
 
         return gridCache;
@@ -61,7 +62,7 @@ public class CAGenerator : GenAlgorithm
             float yCoord = (float)localPos.y / bounds.size.y * Scale + seed;
 
             gridCache[localPos.x, localPos.y] = Mathf.PerlinNoise(xCoord, yCoord) 
-                < RandomTileChance ? (int)TileType.wall : (int)TileType.air; // uses perlin noise to detirmin tile type
+                < RandomTileChance ? (int)TileType.wall : (int)TileType.air; // uses perlin noise to determine the tile type.
         }
     }
 
@@ -79,7 +80,7 @@ public class CAGenerator : GenAlgorithm
         }
     }
 
-    private void AdjustCell(Vector3Int tile)
+    private void AdjustCell(Vector3Int tile) // adjusts cell based on its neighbours.
     {
         int wallCount = 0;
         foreach (Vector3Int neighbour in neighbours)
@@ -100,6 +101,7 @@ public class CAGenerator : GenAlgorithm
 
         tile -= bounds.min;
 
+        // if wallCount is greater than the requirement, make it air, if its less, make it wall, otherwise keep it the same.
         if (wallCount > NeighbourRequirement) { newCache[tile.x, tile.y] = (int)TileType.air; }
         else if (wallCount < NeighbourRequirement) { newCache[tile.x, tile.y] = (int)TileType.wall; }
         else { newCache[tile.x, tile.y] = gridCache[tile.x, tile.y]; }

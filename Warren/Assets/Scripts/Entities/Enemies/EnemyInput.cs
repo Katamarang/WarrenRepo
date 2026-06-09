@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class EnemyInput : MonoBehaviour
 {
+    // this class will be used to check for player proximity.
+    // It will be used by the enemy's state machine to determine which state to transition to.
+
     EnemyStats stats;
     [SerializeField] float searchRange;
     [SerializeField] float attackRange;

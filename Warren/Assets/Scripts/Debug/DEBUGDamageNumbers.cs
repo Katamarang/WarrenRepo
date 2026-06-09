@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class DEBUGDamageNumbers : MonoBehaviour
 {
+    // Debug script that displays damage numbers when activated
+    
     [SerializeField] GameObject Text;
     [SerializeField] float DisplayLength;
     [SerializeField] Transform DisplayPoint;
@@ -17,12 +19,13 @@ public class DEBUGDamageNumbers : MonoBehaviour
 
     bool DamageNumbers = true;
 
-    public void DamageNoActive(bool no)
+    public void DamageNoActive(bool no) // Called by the toggle when the value is changed, sets whether damage numbers will be displayed or not.
     {
         DamageNumbers = no;
     }
 
-    public void DisplayDamageNumber(int damage, DamageType type)
+    // Called by the damageable when damage is taken, displays the damage number and colour based on the type of damage taken.
+    public void DisplayDamageNumber(int damage, DamageType type) 
     {
         if (!DamageNumbers) { return; }
 
@@ -33,11 +36,12 @@ public class DEBUGDamageNumbers : MonoBehaviour
         StartCoroutine(HoldText(text));
     }
 
+    // Overload of the above method for when multiple types of damage are applied at once.
     public void DisplayDamageNumber(int damage, List<DamageType> type)
     {
         if (!DamageNumbers) { return; }
 
-        foreach (DamageType t in type)
+        foreach (DamageType t in type) // loops type and displays a damage number for each.
         {
             TMP_Text text = Instantiate(Text, DisplayPoint).GetComponent<TMP_Text>();
             text.color = GetColor(t);
@@ -47,10 +51,7 @@ public class DEBUGDamageNumbers : MonoBehaviour
         }
     }
 
-
-
-
-    private IEnumerator HoldText (TMP_Text text)
+    private IEnumerator HoldText (TMP_Text text) // displays the text for a set amount of time.
     {
         yield return new WaitForSeconds(DisplayLength);
         Destroy(text.gameObject);

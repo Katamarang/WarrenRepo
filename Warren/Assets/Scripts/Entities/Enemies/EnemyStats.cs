@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyStats : EntityStats, IStats
 {
+    // subclass of EntityStats. It will be used to store the enemy's stats and cards and handles card loading.
+
     SM_Enemy SM_Enemy;
 
     public void LoadCardLoader()
@@ -10,7 +12,7 @@ public class EnemyStats : EntityStats, IStats
         cardLoader.LoadPlayerCards(cards);
     }
 
-    public void OnInstantate(EnemyStatBock statBlock)
+    public void OnInstantate(EnemyStatBock statBlock) // called by the Enemy Factory. It will load the enemy's stats and cards based on the stat block.
     {
         MaxHealth = statBlock.BaseHealth;
         MaxSpeed = statBlock.BaseSpeed;
@@ -29,7 +31,7 @@ public class EnemyStats : EntityStats, IStats
         SM_Enemy.Initialize(SM_Enemy.IdleState);
     }
 
-    private void GetRandomCards(EnemyStatBock statBlock)
+    private void GetRandomCards(EnemyStatBock statBlock) // selects random cards from the card pool.
     {
         for (int i = 0; i < statBlock.ModCardAmount; i++)
         {

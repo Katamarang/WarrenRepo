@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class P_ParryState : IState
 {
+    // Player's parry state
 
     SM_Player _player;
     PlayerStats _playerStats;
@@ -21,7 +22,7 @@ public class P_ParryState : IState
         parryWindow = _playerStats.ParryWindow;
 
         _player.Animator.SetTrigger("IsParrying");
-        Parry(); // TEMP
+        Parry(); // TEMP. Will be called if the player takes damage during the parry window.
     }
 
     public void Parry() // only gets called when Parry is successful
@@ -33,7 +34,7 @@ public class P_ParryState : IState
     {
         if (_parryWindowTime < parryWindow) { _parryWindowTime += Time.deltaTime; return; }
 
-        _player.TransitionTo(_player.IdleState);
+        _player.TransitionTo(_player.IdleState); // will transition back to idle if the parry window ends.
     }
 
     public override void Exit()

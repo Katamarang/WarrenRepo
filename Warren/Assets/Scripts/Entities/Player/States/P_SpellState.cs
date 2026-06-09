@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class P_SpellState : IState
 {
+    // Player's spell state
     SM_Player _player;
     PlayerStats _playerStats;
 
@@ -17,7 +18,8 @@ public class P_SpellState : IState
 
     public override void Enter()
     {
-        if (SpellCharges < _playerStats.SpellCost || _playerStats.SpellBehaviour == null) // spell fail
+        // spell fail if there is not enough charges or if there is no spell behaviour assigned
+        if (SpellCharges < _playerStats.SpellCost || _playerStats.SpellBehaviour == null) 
         {
             _player.TransitionTo(_player.IdleState); 
             return; 
@@ -34,7 +36,7 @@ public class P_SpellState : IState
     {
         if (_spellTime < SpellLength) { _spellTime += Time.deltaTime; return; }
 
-        _player.TransitionTo(_player.IdleState);
+        _player.TransitionTo(_player.IdleState); // will transition back to idle once the spell duration ends.
     }
 
     public override void Exit() { }

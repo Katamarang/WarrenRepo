@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
+    // base class for all state machines. Handles transitions and state updates.
+    // states themselves are responsible for their own logic.
     public IState CurrentState { get; private set; }
 
     public void Initialize(IState startingState)

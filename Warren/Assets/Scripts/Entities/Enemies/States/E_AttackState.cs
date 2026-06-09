@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class E_AttackState : IState
 {
+    // Attack state for the enemy.
     SM_Enemy _enemy;
     EnemyStats _stats;
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EntityHealth : MonoBehaviour
 {
+    // class for controlling the health of an entity, and applying status effects to it.
+
     public EntityStats EntityStats {  get; private set; }
     public StateMachine EntityStateMachine { get; private set; }
 
@@ -53,15 +55,18 @@ public class EntityHealth : MonoBehaviour
                 effect.OnStatusApplied(this, statusUI, 0);
             }
         }
+    }
 
-        /*if (GameObject.FindGameObjectWithTag("Debug"))
+    private void UpdateStatusEffects() // calls OnStatusUpdate for each active status effect, and removes it if it returns true
+    {
+        if (activeStatus.Count == 0) { return; }
+
+        List<StatusEffect> effects = activeStatus; // creates a cache of applied status effects
+
+        foreach (var effect in effects.ToList()) // removes the status effect once it finishes
         {
-            DEBUGDamageNumbers debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<DEBUGDamageNumbers>();
-            foreach (var effect in appliedStatus)
-            {
-                debug.DisplayDamageNumber(effect.Damage, effect.DamageType);
-            }           
-        }*/
+            if (effect.OnStatusUpdate()) { activeStatus.Remove(effect); }
+        }
     }
 
     public void OnDeath()
@@ -72,15 +77,9 @@ public class EntityHealth : MonoBehaviour
 
     private void Update()
     {
-        if (activeStatus.Count == 0) { return; }
-
-        List<StatusEffect> effects = activeStatus; // creates a cache of applied status effects
-
-        foreach (var effect in effects.ToList()) // removes the status effect once it finishes
-        {
-            if (effect.OnStatusUpdate()) { activeStatus.Remove(effect); }
-        }
-
+        UpdateStatusEffects();
     }
+
+    
 
 }

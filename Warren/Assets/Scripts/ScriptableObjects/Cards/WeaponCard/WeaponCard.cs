@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class WeaponCard : PlayerCard
 {
+    // Weapon card specific properties
     public Sprite WeaponSprite;
 
     public float BaseAttackCooldown;
@@ -12,7 +13,7 @@ public class WeaponCard : PlayerCard
     public WeaponBehaviours Behaviour;
 }
 
-public abstract class WeaponBehaviour
+public abstract class WeaponBehaviour // This is the base class for all weapon behaviours.
 {
     public Transform pos;
     public float radius;

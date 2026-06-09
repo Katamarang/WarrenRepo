@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // handles scene loading and saving/loading data on scene load/unload.
+
     public static GameManager Instance;
     bool toDestroy;
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class EntityStats : MonoBehaviour
 {
+    // class for controlling the stats of an entity.
+
     internal CardLoader cardLoader;
     internal List<Card> cards = new List<Card>();
 
@@ -14,10 +16,6 @@ public class EntityStats : MonoBehaviour
     public float Acceleration;
 
     [Header("Melee Combat")]
-    /*public int MeleeDamage = 1;
-    public float AttackRadius = 0.5f;
-    
-    public List<StatusEffect> MeleeDamageTypes = new List<StatusEffect>();*/
     public float MeleeCooldown = 0.3f;
     public WeaponBehaviour WeaponBehaviour;
 

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SM_Enemy : StateMachine
 {
+    // subclass of StateMachine that will be attached to the enemy.
+
     #region References
     public EnemyStats Stats {  get; private set; }
     public EnemyInput Input { get; private set; }

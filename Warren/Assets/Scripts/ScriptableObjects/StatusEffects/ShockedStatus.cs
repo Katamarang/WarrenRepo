@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new Shocked Status", menuName = "Scriptable Objects/Status Effect/Shocked")]
 public class ShockedStatus : StatusEffect
 {
+    // shocked status effect. Applies damage after a short delay. 
     [Header("Shocked")]
     public float DamageDelay;
     public float StunTime;

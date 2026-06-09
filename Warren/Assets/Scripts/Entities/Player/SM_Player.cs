@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class SM_Player : StateMachine
 {
+    // Subclass of StateMachine, controls the Player's states and references.
+
     #region References
     public PlayerInput PlayerInput { get; private set; }
     public Rigidbody2D RB {  get; private set; }

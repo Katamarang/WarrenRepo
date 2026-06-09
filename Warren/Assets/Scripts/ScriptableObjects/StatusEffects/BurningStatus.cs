@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "new Burning Status", menuName = "Scriptable Objects/Status Effect/Burning")]
 public class BurningStatus : StatusEffect
 {
+    // Burning status effect. Applies damage over time for a duration.
     [Header("Burning")]
     public float DamageTickSpeed;
 
