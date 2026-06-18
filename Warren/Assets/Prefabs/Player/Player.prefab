@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 2761619684146011717}
   - component: {fileID: 7389480273375865245}
   - component: {fileID: 7983893888935480155}
+  - component: {fileID: 2368583339056597195}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -347,28 +348,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a637fb7f71d97d458d8af475028be90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  MaxHealth: 50
   MaxSpeed: 4
   Acceleration: 15
-  MeleeDamage: 1
-  AttackRadius: 0.8
-  MeleeCooldown: 0.8
-  MeleeDamageTypes: []
-  MeleeBehaviour: {fileID: 11400000, guid: f119af88a2eafac488fc5786a9adecdc, type: 2}
-  ElementType: []
-  AttackPoint: {fileID: 5949803368620525679}
-  WeaponSlot: {fileID: 4252170675624701430}
-  Damageable:
-    serializedVersion: 2
-    m_Bits: 64
   Animator: {fileID: 3313275175702515807}
-  ParryWindow: 0.4
-  SpellCost: 0
-  SpellDamage: 0
-  SpellRadius: 0
-  SpellLength: 0
-  SpellDamageTypes: []
-  SpellBehaviour: {fileID: 0}
 --- !u!114 &7983893888935480155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,8 +363,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37c15bd7f86c3649bac9abc451cf67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  MaxHealth: 0
   CurrentHealth: 50
+  StatusResistant: []
+  StatusVunerable: []
   statusUI: {fileID: 5887830004347681919}
+--- !u!114 &2368583339056597195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4065598508278806282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf812b0b93b5902419cae28a680b30c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  PrimaryCard: {fileID: 0}
+  PrimaryDamageModifer: 0
+  PrimaryCooldownModifier: 0
+  PrimaryRadiusModifier: 0
+  PrimaryStatusEffects: []
+  AttackPosition: {fileID: 5949803368620525679}
+  WeaponSlot: {fileID: 8476886132793638201}
+  Damageable:
+    serializedVersion: 2
+    m_Bits: 64
+  SpellCard: {fileID: 0}
+  SpellCostModifier: 0
+  SpellDamageModifer: 0
+  SpellCooldownModifier: 0
+  SpellRadiusModifier: 0
+  SpellStatusEffects: []
+  ManaCharges: 0
+  ParryWindow: 0.8
 --- !u!1 &4470913791488525501
 GameObject:
   m_ObjectHideFlags: 0

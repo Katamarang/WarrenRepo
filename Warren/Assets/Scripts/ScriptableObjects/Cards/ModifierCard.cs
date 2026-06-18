@@ -14,12 +14,16 @@ public enum Stat // enum for the stats that can be modified by the modifier card
 {
     Damage,
     Speed,
-    Cost,
-    ElementType,
+    Acceleration,
     Range,
-    CurrentHealth,
+
+    SpellCost,
+    ElementType,
+    StatusResistant,
+    StatusVunerable,
+
     MaxHealth,
-    Acceleration
+    CurrentHealth    
 }
 
 public enum ModType { Weapon, Spell, Entity, World } // enum what what the modifier card modifies.

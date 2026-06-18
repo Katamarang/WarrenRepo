@@ -25,7 +25,7 @@ public class ShockedStatus : StatusEffect
 
     public override void OnStatusEnd()
     {
-        entity.TakeDamage(!resistant? Damage : Damage / 2, this);
+        entity.TakeDamage(!resistant? Damage : Damage / 2, DamageType);
 
         //entity.EntityStateMachine.TransitionTo(entity.EntityStateMachine.StunState);
         base.OnStatusEnd();

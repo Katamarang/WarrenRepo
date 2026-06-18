@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponCard : PlayerCard
+public abstract class WeaponCard : PlayerCard
 {
     // Weapon card specific properties
     public Sprite WeaponSprite;
@@ -10,19 +10,10 @@ public class WeaponCard : PlayerCard
     public int BaseDamage;
     public float BaseAttackRadius;
 
-    public WeaponBehaviours Behaviour;
-}
+    public WeaponType type;
+    public int SpellCost;
 
-public abstract class WeaponBehaviour // This is the base class for all weapon behaviours.
-{
-    public Transform pos;
-    public float radius;
-    public LayerMask mask;
-
-    public int damage;
-    public List<StatusEffect> damageTypes = new List<StatusEffect>();
-
-    public abstract void OnFire();
+    public abstract void OnFire(int damageMod, List<StatusEffect> statusEffects, Transform pos, LayerMask target);
 }
 
 public enum WeaponBehaviours
@@ -30,6 +21,8 @@ public enum WeaponBehaviours
     Melee,
     Spawn
 }
+
+public enum WeaponType { Weapon, Spell }
 
 public enum DamageType
 {

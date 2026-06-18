@@ -5,18 +5,18 @@ public class EnemyStats : EntityStats, IStats
     // subclass of EntityStats. It will be used to store the enemy's stats and cards and handles card loading.
 
     SM_Enemy SM_Enemy;
+    EntityHealth EntityHealth;
 
     public void LoadCardLoader()
     {
         cardLoader = new CardLoader(this);
-        cardLoader.LoadPlayerCards(cards);
+        cardLoader.LoadEntityCards(cards);
+
+        EntityHealth = GetComponent<EntityHealth>();
     }
 
     public void OnInstantate(EnemyStatBock statBlock) // called by the Enemy Factory. It will load the enemy's stats and cards based on the stat block.
     {
-        MaxHealth = statBlock.BaseHealth;
-        MaxSpeed = statBlock.BaseSpeed;
-
         Animator.runtimeAnimatorController = statBlock.AnimatorOverride;
         
         GetRandomCards(statBlock);
@@ -24,7 +24,9 @@ public class EnemyStats : EntityStats, IStats
         cards.Insert(0, statBlock.WeaponCard);
         LoadCardLoader();
 
-        GetComponent<EntityHealth>().Load();
+        EntityHealth.MaxHealth = statBlock.BaseHealth;
+        MaxSpeed = statBlock.BaseSpeed;
+        EntityHealth.Load();
 
         SM_Enemy = GetComponent<SM_Enemy>();
         SM_Enemy.CreateStates();
@@ -45,11 +47,5 @@ public class EnemyStats : EntityStats, IStats
 
             cards.Add(statBlock.CardPool[r]);
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(AttackPoint.position, WeaponBehaviour.radius);
     }
 }

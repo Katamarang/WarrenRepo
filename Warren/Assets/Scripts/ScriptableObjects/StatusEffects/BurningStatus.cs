@@ -23,7 +23,7 @@ public class BurningStatus : StatusEffect
 
         if (damageTickTime > DamageTickSpeed)
         {
-            entity.TakeDamage(!resistant? Damage : Damage/2, this);
+            entity.TakeDamage(!resistant? Damage : Damage/2, DamageType);
             damageTickTime = 0;
         } 
         else 

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DEBUGTestRoom
+  m_EditorClassIdentifier: Assembly-CSharp::Room
+  RoomName: TestRoom
+  RoomToSpawn: {fileID: 2586948894693191361, guid: 2fb242066fcd05643af4c8f8c51c7d86, type: 3}
+  SpawnAreas:
+  - {x: 0, y: 0, z: 0}
+  - {x: 25, y: 0, z: 0}
+  - {x: 0, y: 25, z: 0}

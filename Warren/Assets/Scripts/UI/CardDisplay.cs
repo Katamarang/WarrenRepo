@@ -62,12 +62,10 @@ public class CardDisplay : MonoBehaviour
         if (buttonPressed) // used if specific cards have been selected.
         {
             if (Card is WeaponCard) { display.OnMeleeSelected(); }
-            else if (Card is SpellCard) { display.OnSpellSelected(); }
         }
         else
         {
             if (Card is WeaponCard) { display.OnMeleeDeselected(); }
-            else if (Card is SpellCard) { display.OnSpellDeselected(); }
         }
 
     }
@@ -97,10 +95,6 @@ public class CardDisplay : MonoBehaviour
         {
             display.MeleeSelected += OnCardSelected;
             display.MeleeDeselected += OnCardDeselected;
-        } else if (Card is SpellCard)
-        {
-            display.SpellSelected += OnCardSelected;
-            display.SpellDeselected += OnCardDeselected;
         }
     }
 
@@ -109,9 +103,6 @@ public class CardDisplay : MonoBehaviour
         if (display == null) { return; }
         display.MeleeSelected -= OnCardSelected;
         display.MeleeDeselected -= OnCardDeselected;
-
-        display.SpellSelected -= OnCardSelected;
-        display.SpellDeselected -= OnCardDeselected;
     }
     #endregion
 }

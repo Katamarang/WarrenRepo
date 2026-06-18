@@ -5,26 +5,35 @@ public class P_AttackState : IState
 {
     // Player's attack state
     SM_Player _player;
-    PlayerStats _playerStats;
+    PlayerCombat _playerCombat;
 
     float attackCooldown;
-
     float _attackCooldownTime;
 
-    public P_AttackState(SM_Player player, PlayerStats playerStats)
+    WeaponCard card;
+
+    public P_AttackState(SM_Player player, PlayerCombat playerCombat)
     {
         _player = player;
-        _playerStats = playerStats;
+        _playerCombat = playerCombat;
 
     }
 
     public override void Enter()
     {
-        attackCooldown = _playerStats.MeleeCooldown;
+        card = _playerCombat.PrimaryCard;
+        if (card == null) { return; }
+        attackCooldown = card.BaseAttackCooldown + _playerCombat.PrimaryCooldownModifier;
 
         _player.Animator.SetTrigger("IsAttacking");
 
-        _playerStats.WeaponBehaviour?.OnFire(); // fires the weapon
+        _playerCombat.PrimaryCard?.OnFire
+            (
+                _playerCombat.PrimaryDamageModifer,
+                _playerCombat.PrimaryStatusEffects,
+                _playerCombat.AttackPosition,
+                _playerCombat.Damageable
+            ); // fires the weapon
     }
 
     public override void Update()

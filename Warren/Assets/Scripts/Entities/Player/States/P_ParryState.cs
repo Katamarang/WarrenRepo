@@ -5,21 +5,21 @@ public class P_ParryState : IState
     // Player's parry state
 
     SM_Player _player;
-    PlayerStats _playerStats;
+    PlayerCombat _playerCombat;
 
     float parryWindow;
     float _parryWindowTime;
 
-    public P_ParryState(SM_Player player, PlayerStats playerStats)
+    public P_ParryState(SM_Player player, PlayerCombat combat)
     {
         _player = player;     
-        _playerStats = playerStats;      
+        _playerCombat = combat;      
     }
 
 
     public override void Enter()
     {
-        parryWindow = _playerStats.ParryWindow;
+        parryWindow = _playerCombat.ParryWindow;
 
         _player.Animator.SetTrigger("IsParrying");
         Parry(); // TEMP. Will be called if the player takes damage during the parry window.
@@ -27,7 +27,7 @@ public class P_ParryState : IState
 
     public void Parry() // only gets called when Parry is successful
     {
-        _player.SpellState.AddSpellCharge();
+        _playerCombat.ManaCharges++;
     }
 
     public override void Update()

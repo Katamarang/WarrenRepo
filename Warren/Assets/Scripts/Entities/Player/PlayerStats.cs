@@ -5,16 +5,6 @@ public class PlayerStats : EntityStats, IStats
 {
     // subclass of EntityStats, holds all stats unique to the Player. Also handles card loading.
 
-    [Header("Parry")]
-    public float ParryWindow = 0.6f;
-
-    [Header("Spell")]
-    public int SpellCost;
-    public int SpellDamage;
-    public float SpellRadius;
-    public float SpellLength;
-    public List<StatusEffect> SpellDamageTypes = new List<StatusEffect>();
-    public WeaponBehaviour SpellBehaviour;  
 
     #region Initialization
     private void OnEnable()
@@ -39,7 +29,7 @@ public class PlayerStats : EntityStats, IStats
     public void LoadCardLoader()
     {
         cardLoader = new CardLoader(this);
-        cardLoader.LoadPlayerCards(cards);
+        cardLoader.LoadEntityCards(cards);
     }
 
 

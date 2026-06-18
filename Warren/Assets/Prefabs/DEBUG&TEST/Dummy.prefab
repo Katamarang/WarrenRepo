@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1783045308217028235}
   - component: {fileID: 3575823717245399956}
   - component: {fileID: 4621179964762644880}
+  - component: {fileID: 1015213156206965639}
   m_Layer: 6
   m_Name: Dummy
   m_TagString: Untagged
@@ -143,7 +144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37c15bd7f86c3649bac9abc451cf67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  MaxHealth: 20
   CurrentHealth: 0
+  StatusResistant: []
+  StatusVunerable: []
   statusUI: {fileID: 9033548676954202987}
 --- !u!114 &4621179964762644880
 MonoBehaviour:
@@ -157,21 +161,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1c984e931a2264f83d2d84d54e87e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  MaxHealth: 0
   MaxSpeed: 0
+  SpeedModifier: 0
   Acceleration: 0
-  MeleeDamage: 0
-  AttackRadius: 0
-  MeleeCooldown: 0
-  MeleeDamageTypes: []
-  MeleeBehaviour: {fileID: 0}
-  ElementType: []
-  AttackPoint: {fileID: 6585499181502584226}
+  Animator: {fileID: 2061012301468973165}
+--- !u!114 &1015213156206965639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349726659693169689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b3770ec629e1142a8c4822af25f49e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityCombat
+  PrimaryCard: {fileID: 0}
+  PrimaryDamageModifer: 0
+  PrimaryCooldownModifier: 0
+  PrimaryRadiusModifier: 0
+  PrimaryStatusEffects: []
+  AttackPosition: {fileID: 6585499181502584226}
   WeaponSlot: {fileID: 7280491752681644127}
   Damageable:
     serializedVersion: 2
     m_Bits: 8
-  Animator: {fileID: 2061012301468973165}
 --- !u!1 &772645916202292762
 GameObject:
   m_ObjectHideFlags: 0

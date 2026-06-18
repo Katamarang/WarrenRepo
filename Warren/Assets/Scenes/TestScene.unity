@@ -866,6 +866,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380738400}
   m_CullTransparentMesh: 1
+--- !u!212 &418672959 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4252170675624701430, guid: 3d907aba48d75564588fd1af5e6de0b5, type: 3}
+  m_PrefabInstance: {fileID: 1719524129}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &476700733
 GameObject:
   m_ObjectHideFlags: 0
@@ -3328,6 +3333,14 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2611912216609652024, guid: 007cb8a18803de04d83b4afb92318275, type: 3}
+      propertyPath: 'AllCards.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 6acfa084629f2204e8397b5e2e5927d7, type: 2}
+    - target: {fileID: 2611912216609652024, guid: 007cb8a18803de04d83b4afb92318275, type: 3}
+      propertyPath: 'AllCards.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: fff3cf07b8eadf849a520a80b1630ca1, type: 2}
+    - target: {fileID: 2611912216609652024, guid: 007cb8a18803de04d83b4afb92318275, type: 3}
       propertyPath: 'AllCards.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: d16c57c5883bb9d4a9ac65b1eda0211e, type: 2}
@@ -3854,15 +3867,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2368583339056597195, guid: 3d907aba48d75564588fd1af5e6de0b5, type: 3}
+      propertyPath: WeaponSlot
+      value: 
+      objectReference: {fileID: 418672959}
     - target: {fileID: 4065598508278806282, guid: 3d907aba48d75564588fd1af5e6de0b5, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983893888935480155, guid: 3d907aba48d75564588fd1af5e6de0b5, type: 3}
+      propertyPath: MaxHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983893888935480155, guid: 3d907aba48d75564588fd1af5e6de0b5, type: 3}
+      propertyPath: CurrentHealth
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d907aba48d75564588fd1af5e6de0b5, type: 3}
+--- !u!114 &1719524130 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7389480273375865245, guid: 3d907aba48d75564588fd1af5e6de0b5, type: 3}
+  m_PrefabInstance: {fileID: 1719524129}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a637fb7f71d97d458d8af475028be90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
 --- !u!1 &1758991534
 GameObject:
   m_ObjectHideFlags: 0
@@ -4422,6 +4458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DEBUGTraitChoice
   button: {fileID: 1394316713650249534, guid: 2baf9f70768414d4aa38a78f7747336c, type: 3}
   selectedCards: []
+  Player: {fileID: 1719524130}
 --- !u!114 &1924896065
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,16 +10,23 @@ public class DEBUGTraitChoice : MonoBehaviour
 
     [SerializeField] List<Card> selectedCards;
 
-    EntityStats player;
+    [SerializeField] Entity Player;
+    PlayerStats playerStats;
+    PlayerCombat playerCombat;
+    EntityHealth entityHealth;
+    
 
     // Stores the player's stats so that they can be reset when applying or resetting cards
     #region Stored Stats
     int MaxHealth;
+    int CurrentHealth;
 
-    float MaxSpeed;
+    float SpeedModifier;
     float Acceleration;
 
     float MeleeCooldown = 0.3f;
+    int PrimaryDamage;
+    float PrimaryRadius;
 
     int SpellCost;
     int SpellDamage;
@@ -35,7 +42,10 @@ public class DEBUGTraitChoice : MonoBehaviour
             o.GetComponent<DEBUGCardHolder>().DisplayCard(c, this);
         }
 
-        player = GameObject.Find("Player").GetComponent<EntityStats>();
+        playerStats = Player.GetComponent<PlayerStats>();
+        playerCombat = Player.GetComponent<PlayerCombat>();
+        entityHealth = Player.GetComponent<EntityHealth>();
+
         RecordPlayerStats();
     }
 
@@ -57,7 +67,7 @@ public class DEBUGTraitChoice : MonoBehaviour
     {
         ResetPlayer();
 
-        new CardLoader(player).LoadPlayerCards(selectedCards);
+        new CardLoader(Player).LoadEntityCards(selectedCards);
     }
 
     public void ResetCards()
@@ -72,30 +82,37 @@ public class DEBUGTraitChoice : MonoBehaviour
 
     private void RecordPlayerStats()
     {
-        MaxHealth = player.MaxHealth;
-        MaxSpeed = player.MaxSpeed;
-        Acceleration = player.Acceleration;
-        MeleeCooldown = player.MeleeCooldown;
+        MaxHealth = entityHealth.MaxHealth;
+        CurrentHealth = entityHealth.CurrentHealth;
+        SpeedModifier = playerStats.SpeedModifier;
+        Acceleration = playerStats.Acceleration;
 
-        SpellCost = (player as PlayerStats).SpellCost;
-        SpellDamage = (player as PlayerStats).SpellDamage;
-        SpellRadius = (player as PlayerStats).SpellRadius;
-        SpellLength = (player as PlayerStats).SpellLength;
+        MeleeCooldown = playerCombat.PrimaryCooldownModifier;
+        PrimaryDamage = playerCombat.PrimaryDamageModifer;
+        PrimaryRadius = playerCombat.PrimaryRadiusModifier;
+
+        SpellCost = playerCombat.SpellCostModifier;
+        SpellDamage = playerCombat.SpellDamageModifer;
+        SpellRadius = playerCombat.SpellRadiusModifier;
+        SpellLength = playerCombat.SpellCooldownModifier;
     }
 
     private void ResetPlayer()
     {
-        player.MaxHealth = MaxHealth;
-        player.MaxSpeed = MaxSpeed;
-        player.Acceleration = Acceleration;
-        player.WeaponBehaviour = null;
-        player.MeleeCooldown = MeleeCooldown;
-        player.WeaponSlot.sprite = null;
+        entityHealth.MaxHealth = MaxHealth;
+        entityHealth.CurrentHealth = CurrentHealth;
+        playerStats.SpeedModifier = SpeedModifier;
+        playerStats.Acceleration = Acceleration;
 
-        (player as PlayerStats).SpellCost = SpellCost;
-        (player as PlayerStats).SpellDamage = SpellDamage;
-        (player as PlayerStats).SpellRadius = SpellRadius;
-        (player as PlayerStats).SpellLength = SpellLength;
-        (player as PlayerStats).SpellDamageTypes = new();
+        playerCombat.PrimaryCooldownModifier = MeleeCooldown;
+        playerCombat.PrimaryDamageModifer = PrimaryDamage;
+        playerCombat.PrimaryRadiusModifier = PrimaryRadius;
+        playerCombat.PrimaryStatusEffects = new();
+
+        playerCombat.SpellCostModifier = SpellCost;
+        playerCombat.SpellDamageModifer = SpellDamage;
+        playerCombat.SpellRadiusModifier = SpellRadius;
+        playerCombat.SpellCooldownModifier = SpellLength;
+        playerCombat.SpellStatusEffects = new();
     }
 }

@@ -1,18 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SpawnCard", menuName = "Scriptable Objects/Cards/Weapons/Spawner")]
-public class SpawnCard : WeaponCard // class used for organisation. Holds the prefab to be spawned.
+public class SpawnCard : WeaponCard
 {
     [Header("Spawn Card")]
     public GameObject ToSpawn;
-}
 
-public class SpawnBehaviour : WeaponBehaviour
-{
-    public GameObject ToSpawn;
-
-
-    public override void OnFire() // will spawn the prefab at the position of the entity.
+    public override void OnFire(int damageMod, List<StatusEffect> statusEffects, Transform pos, LayerMask target)
     {
         MonoBehaviour.Instantiate(ToSpawn, pos.position, pos.localRotation);
     }

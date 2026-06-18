@@ -18,13 +18,10 @@ public class CardSelecter : MonoBehaviour
 
     List<Card> selectedCards = new List<Card>();
     bool meleeSelected;
-    bool spellSelected;
 
     public event Action MeleeSelected;
     public event Action MeleeDeselected;
 
-    public event Action SpellSelected;
-    public event Action SpellDeselected;
 
     private void Start()
     {
@@ -53,7 +50,6 @@ public class CardSelecter : MonoBehaviour
 
         // handles specific card types being added.
         if (card is WeaponCard) { meleeSelected = true; }
-        else if (card is SpellCard) { spellSelected = true; }
 
         return true;
     }
@@ -66,7 +62,6 @@ public class CardSelecter : MonoBehaviour
 
         // handles specific card types being removed.
         if (card is WeaponCard) { meleeSelected = false; }
-        else if (card is SpellCard) { spellSelected = false; }
 
         return true;
     }
@@ -74,8 +69,6 @@ public class CardSelecter : MonoBehaviour
     #region Specific Card Selected
     public void OnMeleeSelected() { MeleeSelected?.Invoke(); }
     public void OnMeleeDeselected() { MeleeDeselected?.Invoke(); }
-    public void OnSpellSelected() {  SpellSelected?.Invoke(); }
-    public void OnSpellDeselected() { SpellDeselected?.Invoke(); }
     #endregion
 
     public void CloseScreen()
@@ -86,7 +79,6 @@ public class CardSelecter : MonoBehaviour
         // handles error messages for not selecting a melee, spell, or enough cards.
         if (meleeSelected && selectedCards.Count == MaxCards) { text.text = "Confirm Cards?"; }
         else if (!meleeSelected) { text.text = "No melee Selected. Confirm Cards?"; }
-        else if (!spellSelected) { text.text = "No spell Selected. Confirm Cards?"; }
         else if (selectedCards.Count != MaxCards) { text.text = "Less than five cards selected. Confirm Cards?"; }
     }
 

@@ -10,19 +10,22 @@ public class PoisonStatus : StatusEffect
     public int DamageDecrease;
 
     float defaultSpeed;
-    int defaultDamage;
+    int defaultdamage;
+
     EntityStats stats;
+    EntityCombat combat;
 
     public override void OnStatusApplied(EntityHealth entity, Transform UIElement, int index)
     {
         base.OnStatusApplied(entity, UIElement, 1);
-        stats = entity.EntityStats;
+        stats = entity.GetComponent<EntityStats>();
+        combat = entity.GetComponent<EntityCombat>();
 
-        defaultSpeed = stats.MaxSpeed;
-        defaultDamage = stats.WeaponBehaviour.damage;
+        defaultSpeed = stats.SpeedModifier;
+        defaultdamage = combat.PrimaryDamageModifer;
 
-        stats.MaxSpeed -= !resistant ? SpeedDecrease : SpeedDecrease / 2;
-        stats.WeaponBehaviour.damage -= !resistant ? DamageDecrease : DamageDecrease / 2;
+        stats.MaxSpeed -= SpeedDecrease;
+        combat.PrimaryDamageModifer -= DamageDecrease;
 
         Debug.Log("Poison Applied");
     }
@@ -35,11 +38,11 @@ public class PoisonStatus : StatusEffect
 
     public override void OnStatusEnd()
     {
-        stats.MaxSpeed = defaultSpeed;
-        stats.WeaponBehaviour.damage = defaultDamage;
+        stats.SpeedModifier = defaultSpeed;
+        combat.PrimaryDamageModifer = defaultdamage;
 
         defaultSpeed = 0;
-        defaultDamage = 0;
+        defaultdamage = 0;
 
         base.OnStatusEnd();
     }

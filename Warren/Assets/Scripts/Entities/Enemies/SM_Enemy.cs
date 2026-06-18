@@ -6,6 +6,7 @@ public class SM_Enemy : StateMachine
 
     #region References
     public EnemyStats Stats {  get; private set; }
+    public EntityCombat Combat { get; private set; }
     public EnemyInput Input { get; private set; }
     #endregion
 
@@ -19,9 +20,10 @@ public class SM_Enemy : StateMachine
     {
         Stats = GetComponent<EnemyStats>();
         Input = GetComponent<EnemyInput>();
+        Combat = GetComponent<EntityCombat>();
 
         IdleState = new E_IdleState(this, Stats);
         FollowState = new E_FollowState(this, Stats);
-        AttackState = new E_AttackState(this, Stats);
+        AttackState = new E_AttackState(this, Combat);
     }
 }

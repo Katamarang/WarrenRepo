@@ -12,6 +12,7 @@ public class SM_Player : StateMachine
     public Rigidbody2D RB {  get; private set; }
     public Animator Animator { get; private set; }
     public PlayerStats PlayerStats { get; private set; }
+    public PlayerCombat PlayerCombat { get; private set; }
     #endregion
 
     #region States
@@ -28,6 +29,7 @@ public class SM_Player : StateMachine
         PlayerInput = GetComponent<PlayerInput>();
         Animator = GetComponent<Animator>();
         PlayerStats = GetComponent<PlayerStats>();
+        PlayerCombat = GetComponent<PlayerCombat>();
 
         CreateStates();
 
@@ -38,8 +40,8 @@ public class SM_Player : StateMachine
     {
         IdleState = new(this, PlayerStats);
         WalkState = new(this, PlayerStats);
-        AttackState = new(this, PlayerStats);
-        ParryState = new(this, PlayerStats); 
-        SpellState = new(this, PlayerStats);
+        AttackState = new(this, PlayerCombat);
+        ParryState = new(this, PlayerCombat); 
+        SpellState = new(this, PlayerCombat);
     }
 }

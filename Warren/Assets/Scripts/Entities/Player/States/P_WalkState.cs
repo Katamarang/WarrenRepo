@@ -32,7 +32,7 @@ public class P_WalkState : IState
     {
         anim.SetBool("IsRunning", true);
     
-        maxSpeed = _playerStats.MaxSpeed; // updates the walk speed in case it was changed
+        maxSpeed = _playerStats.MaxSpeed + _playerStats.SpeedModifier; // updates the walk speed in case it was changed
         acceleration = _playerStats.Acceleration;
     }
 

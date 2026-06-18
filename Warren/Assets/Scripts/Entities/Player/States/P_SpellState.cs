@@ -4,30 +4,35 @@ public class P_SpellState : IState
 {
     // Player's spell state
     SM_Player _player;
-    PlayerStats _playerStats;
-
-    int SpellCharges;
+    PlayerCombat _combat;
     float SpellLength;
     float _spellTime;
 
-    public P_SpellState(SM_Player player, PlayerStats playerStats)
+    WeaponCard card;
+
+    public P_SpellState(SM_Player player, PlayerCombat combat)
     {
         _player = player;
-        _playerStats = playerStats;
+        _combat = combat;
     }
 
     public override void Enter()
     {
+        card = _combat.SpellCard;
+        int SpellCost = _combat.SpellCostModifier + card.SpellCost;
+
         // spell fail if there is not enough charges or if there is no spell behaviour assigned
-        if (SpellCharges < _playerStats.SpellCost || _playerStats.SpellBehaviour == null) 
+        if (_combat.ManaCharges < SpellCost || _combat.SpellCard == null) 
         {
             _player.TransitionTo(_player.IdleState); 
             return; 
         } 
 
-        SpellLength = _playerStats.SpellLength;
+        SpellLength = card.BaseAttackCooldown;
 
-        SpellCharges -= _playerStats.SpellCost;
+        _combat.ManaCharges -= SpellCost;
+        card.OnFire(_combat.SpellDamageModifer, _combat.SpellStatusEffects, _combat.AttackPosition, _combat.Damageable);
+
         _player.Animator.SetTrigger("IsSpell");
         Debug.Log("Spell");
     }
@@ -43,6 +48,4 @@ public class P_SpellState : IState
 
     public override void FixedUpdate() { }
 
-    public void AddSpellCharge() { SpellCharges++; }
-    public int GetSpellCharge() { return SpellCharges; }
 }

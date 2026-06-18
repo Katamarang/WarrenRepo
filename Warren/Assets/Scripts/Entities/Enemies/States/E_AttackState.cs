@@ -6,6 +6,7 @@ public class E_AttackState : IState
     // Attack state for the enemy.
     SM_Enemy _enemy;
     EnemyStats _stats;
+    EntityCombat _combat;
 
     EnemyInput _input;
     Animator _animator;
@@ -13,21 +14,29 @@ public class E_AttackState : IState
     float attackCooldown;
     float _attackCooldownTime;
 
-    public E_AttackState(SM_Enemy enemy, EnemyStats stats)
+    WeaponCard Card;
+
+    public E_AttackState(SM_Enemy enemy, EntityCombat stats)
     {
         _enemy = enemy;
-        _stats = stats;
+        _combat = stats;
 
         _input = _enemy.Input;
-        _animator = _stats.Animator;
+        _animator = _stats.GetComponent<EntityStats>().Animator;
     }
 
     public override void Enter()
     {
-        attackCooldown = _stats.MeleeCooldown;
+        Card = _combat.PrimaryCard;
+        attackCooldown = Card.BaseAttackCooldown + _combat.PrimaryCooldownModifier;
 
         _animator.SetTrigger("IsAttack");
-        _stats.WeaponBehaviour.OnFire();
+        Card.OnFire(
+            _combat.PrimaryDamageModifer, 
+            _combat.PrimaryStatusEffects, 
+            _combat.AttackPosition, 
+            _combat.Damageable
+            );
     }
 
     public override void Exit()

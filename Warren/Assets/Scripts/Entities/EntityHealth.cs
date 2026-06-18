@@ -2,50 +2,44 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EntityHealth : MonoBehaviour
+public class EntityHealth : Entity
 {
     // class for controlling the health of an entity, and applying status effects to it.
 
-    public EntityStats EntityStats {  get; private set; }
-    public StateMachine EntityStateMachine { get; private set; }
-
+    [Header("Health")]
+    public int MaxHealth;
     public int CurrentHealth = 50;
+
+    [Header("Elements")]
+    public List<StatusEffect> StatusResistant = new List<StatusEffect>();
+    public List<StatusEffect> StatusVunerable = new List<StatusEffect>();
 
     List<StatusEffect> activeStatus = new List<StatusEffect>();
     [SerializeField] Transform statusUI;
-    
+
+    private void Start()
+    {
+        CurrentHealth = MaxHealth;
+    }
 
     public void Load()
     {
-        EntityStats = GetComponent<EntityStats>();
-        EntityStateMachine = GetComponent<StateMachine>();
 
-        CurrentHealth = EntityStats.MaxHealth;
+        CurrentHealth = MaxHealth;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, DamageType effect)
     {
         CurrentHealth -= damage;
-        OnDeath();  
-        
-        if (FindFirstObjectByType<DEBUGDamageNumbers>() is DEBUGDamageNumbers debug) // debug
-        {
-            debug.DisplayDamageNumber(damage, DamageType.None);
-        }
-    }
-
-    public void TakeDamage(int damage, StatusEffect effect)
-    {
-        CurrentHealth -= damage;
-        OnDeath();
+        if (CurrentHealth <= 0) { print(gameObject.name + " Death"); OnDeath(); }
 
         if (FindFirstObjectByType<DEBUGDamageNumbers>() is DEBUGDamageNumbers debug) // debug
         {
-            debug.DisplayDamageNumber(damage, effect.DamageType);
+            debug.DisplayDamageNumber(damage, effect);
         }
     }
 
-    public void ApplyStatusEffect(int damage, List<StatusEffect> appliedStatus)
+    public void ApplyStatusEffect(List<StatusEffect> appliedStatus)
     {
         foreach (var effect in appliedStatus)
         {
@@ -71,7 +65,7 @@ public class EntityHealth : MonoBehaviour
 
     public void OnDeath()
     {
-        if (CurrentHealth <= 0) { print(gameObject.name + " Death"); }
+        
     }
 
 

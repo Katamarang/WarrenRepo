@@ -23,10 +23,6 @@ public abstract class StatusEffect : ScriptableObject
         this.entity = entity;
         this.UIElement = UIElement.GetChild(index).gameObject;
 
-        // may break once enemy stats are added. 'this' might be refering to this class and not the subclass
-        if (entity.EntityStats is PlayerStats pstats && pstats.ElementType.Contains(this)) resistant = true; 
-        else if (entity.EntityStats is EnemyStats estats && estats.ElementType.Contains(this)) vunerable = true;
-
         // applies the UI element to the target
         this.UIElement.SetActive(true);
     }
