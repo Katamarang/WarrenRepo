@@ -28,7 +28,7 @@ public class EntityHealth : Entity
         CurrentHealth = MaxHealth;
     }
 
-    public void TakeDamage(int damage, DamageType effect)
+    public void TakeDamage(int damage, DamageType effect = DamageType.None)
     {
         CurrentHealth -= damage;
         if (CurrentHealth <= 0) { print(gameObject.name + " Death"); OnDeath(); }

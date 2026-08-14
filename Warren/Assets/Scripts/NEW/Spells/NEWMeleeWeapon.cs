@@ -5,11 +5,24 @@ public class NEWMeleeWeapon : NEWWeaponSpell
 {
     public override void OnAttackStarted(InputAction.CallbackContext context)
     {
-        print("boo");
+        if (inCooldown) return;
+
+        base.OnAttackStarted(context);
+        BeginCooldown();
+
+        foreach (Collider2D hit in Physics2D.OverlapCircleAll(transform.position, finalRadius))
+        {
+            if (!hit.TryGetComponent<EntityHealth>(out EntityHealth health)) continue;
+
+            health.TakeDamage(finalDamage);
+
+            // TO DO: Handle Status effects
+        }
     }
 
-    public override void OnAttackCanceled(InputAction.CallbackContext context)
+    private void OnDrawGizmos()
     {
-        print("brr");
+        Gizmos.DrawWireSphere(transform.position, finalRadius);
     }
+
 }
