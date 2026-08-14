@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PlayerScene.unity
+    path: Assets/Scenes/OLDTest/PlayerScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/CardSelector.unity
+    path: Assets/Scenes/OLDTest/CardSelector.unity
     guid: 8ae80031985ad004685a4aeebabf6bcf
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
