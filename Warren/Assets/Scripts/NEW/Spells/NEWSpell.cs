@@ -14,6 +14,8 @@ public abstract class NEWSpell : MonoBehaviour
     public virtual void OnInitialize() { }
 }
 
-public interface IAttackCooldown { public float AdjustCooldown() { return 0; } }
-public interface IAttackRadius { public float AdjustRadius() {  return 0; }  }
-public interface IAttackDamage { public int AdjustDamage() {  return 0; }  }
+public interface IAdjustCooldown { public float AdjustCooldown(); }
+public interface IAdjustRadius { public float AdjustRadius();  }
+public interface IAdjustDamage { public int AdjustDamage();  }
+public interface IApplyStatus { public StatusEffect ApplyStatusEffect(); }
+

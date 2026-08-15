@@ -12,11 +12,9 @@ public class NEWMeleeWeapon : NEWWeaponSpell
 
         foreach (Collider2D hit in Physics2D.OverlapCircleAll(transform.position, finalRadius))
         {
-            if (!hit.TryGetComponent<EntityHealth>(out EntityHealth health)) continue;
+            if (!hit.TryGetComponent<EntityHealth>(out EntityHealth entity)) continue;
 
-            health.TakeDamage(finalDamage);
-
-            // TO DO: Handle Status effects
+            OnHit(entity);
         }
     }
 

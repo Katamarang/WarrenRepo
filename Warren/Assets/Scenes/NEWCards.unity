@@ -1236,6 +1236,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NEWDEBUGSpellMenu
   AllSpells:
   - {fileID: 2213335250826594028, guid: ec2dadc40bae84c46ba45b4ab0686356, type: 3}
+  - {fileID: 5624407459545100941, guid: f92439f4ca6f2e8458f282794e878d40, type: 3}
+  - {fileID: 7703489163648239843, guid: 301ebc6890bfc884087d73cc95c987b9, type: 3}
+  - {fileID: 2070360680976093483, guid: d89b617b56f07914687a45c2a616cb46, type: 3}
+  - {fileID: 6244337276218352432, guid: 8d3de300c46a19542afd4799fb1cfe0c, type: 3}
+  - {fileID: 160614798832591283, guid: e83fb27b62fb9324a8e4edd58b6b62cd, type: 3}
   Player: {fileID: 7786594763515093953}
   Button: {fileID: 4703327677806360386, guid: 9b1e4fd834f2480469f9c56277a30abb, type: 3}
   Container: {fileID: 8781408701911974622}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic; 
 
 public abstract class NEWWeaponSpell : NEWSpell
 {
@@ -28,17 +29,33 @@ public abstract class NEWWeaponSpell : NEWSpell
 
     public virtual void OnAttackStarted(InputAction.CallbackContext context) 
     {
-        finalRadius = NEWPlayerSpell.AdjustValue<IAttackRadius>(baseRadius, x => x.AdjustRadius());
-        finalDamage = Mathf.RoundToInt(NEWPlayerSpell.AdjustValue<IAttackDamage>(baseDamage, x => x.AdjustDamage()));
+        finalRadius = NEWPlayerSpell.AdjustValue<IAdjustRadius>(baseRadius, x => x.AdjustRadius(), ModType.Weapon);
+        finalDamage = Mathf.RoundToInt(NEWPlayerSpell.AdjustValue<IAdjustDamage>(baseDamage, x => x.AdjustDamage(), ModType.Weapon));
     }
 
     public virtual void OnAttackCanceled(InputAction.CallbackContext context) { }
+
+    protected void OnHit(EntityHealth entity)
+    {
+        entity.TakeDamage(finalDamage);
+
+        List<StatusEffect> effects = new List<StatusEffect>();
+        foreach (IApplyStatus status in NEWPlayerSpell.GetSpellsOfType<IApplyStatus>(ModType.Weapon))
+        {
+            StatusEffect effect = status.ApplyStatusEffect();
+            if (effect == null) continue;
+
+            effects.Add(effect);
+        }
+
+        entity.ApplyStatusEffect(effects);
+    }
 
     protected void BeginCooldown()
     {
         inCooldown = true;
 
-        finalCooldown = NEWPlayerSpell.AdjustValue<IAttackCooldown>(baseCooldown, x => x.AdjustCooldown());
+        finalCooldown = NEWPlayerSpell.AdjustValue<IAdjustCooldown>(baseCooldown, x => x.AdjustCooldown(), ModType.Weapon);
     }
 
     private void Update()

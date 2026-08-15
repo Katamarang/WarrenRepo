@@ -12,12 +12,12 @@ public class NEWPlayerSpell : MonoBehaviour
         foreach (var spell in PlayerSpells) { spell.OnInitialize(); }
     }
 
-    private static List<T> GetSpellsOfType<T>() where T : class
+    public static List<T> GetSpellsOfType<T>(ModType type) where T : class
     {
         List<T> list = new List<T>();
         foreach (var spell in PlayerSpells)
         {
-            if (spell is T)
+            if (spell is T && spell is NEWModifierSpell mod && mod.modType == type)
             {
                 list.Add(spell as T);
             }
@@ -26,13 +26,17 @@ public class NEWPlayerSpell : MonoBehaviour
         return list;
     }
 
-    public static float AdjustValue<i>(float initialValue, Func<i, float> function) where i : class 
+    public static float AdjustValue<i>(float initialValue, Func<i, float> function, ModType type) where i : class 
     {
         float temp = initialValue;
-        foreach (i spell in GetSpellsOfType<i>())
+        foreach (i spell in GetSpellsOfType<i>(type))
         {
+          
             temp += function(spell);
+            
         }
+
+        temp = Mathf.Clamp(temp, 0.1f, float.MaxValue);
         return temp;
     } 
 
@@ -48,6 +52,8 @@ public class NEWPlayerSpell : MonoBehaviour
 
     public void ResetSpells()
     {
+        PlayerSpells.Clear();
+
         for (int i = 0; i < spellContainer.childCount; i++)
         {
             Destroy(spellContainer.GetChild(i).gameObject);
