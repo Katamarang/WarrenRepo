@@ -1,38 +1,41 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
+    InputActions inputActions;
 
-    InputActions.PlayerActions _player;
+    public static UnityAction<InputAction.CallbackContext> OnMovePressed;
+    public static UnityAction<InputAction.CallbackContext> OnMoveCanceled;
 
-    public Vector2 PlayerFacing {  get; private set; }
+    public static UnityAction<InputAction.CallbackContext> OnAttackStarted;
+    public static UnityAction<InputAction.CallbackContext> OnAttackCanceled;
 
     private void Awake()
     {
-        _player = new InputActions().Player;
+        inputActions = new InputActions();
     }
 
-    #region Initialise
-    private void OnEnable() { EnablePlayer(); }
-    private void OnDisable() { DisablePlayer(); }
-
-    public void EnablePlayer() { _player.Enable(); }
-    public void DisablePlayer() { _player.Disable(); }
-    #endregion
-
-    public Vector2 ReadInput()
+    private void OnEnable()
     {
-        Vector2 dir = _player.Move.ReadValue<Vector2>();
-        if (dir != Vector2.zero) { PlayerFacing = dir.normalized; }
+        inputActions.Enable();
 
-        return dir;
+        inputActions.Player.Move.performed += (c) => OnMovePressed?.Invoke(c);
+        inputActions.Player.Move.canceled += (c) => OnMoveCanceled?.Invoke(c);
+
+        inputActions.Player.Attack.started += (c) => OnAttackStarted?.Invoke(c);
+        inputActions.Player.Attack.canceled += (c) => OnAttackCanceled?.Invoke(c);
     }
 
-    public bool Attack() { return _player.Attack.WasPressedThisFrame(); }
+    private void OnDisable()
+    {
+        inputActions.Player.Move.performed -= (c) => OnMovePressed?.Invoke(c);
+        inputActions.Player.Move.canceled -= (c) => OnMoveCanceled?.Invoke(c);
 
-    public bool Parry() { return _player.Parry.WasPressedThisFrame(); }
+        inputActions.Player.Attack.started -= (c) => OnAttackStarted?.Invoke(c);
+        inputActions.Player.Attack.canceled -= (c) => OnAttackCanceled?.Invoke(c);
 
-    public bool Interact() { return _player.Interact.WasPressedThisFrame(); }
-
-    public bool Spell() { return _player.Spell.WasPressedThisFrame(); }
+        inputActions.Disable();
+    }
 }

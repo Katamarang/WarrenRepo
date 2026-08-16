@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,16 +11,21 @@ public class EntityHealth : Entity
     public int MaxHealth;
     public int CurrentHealth = 50;
 
-    [Header("Elements")]
-    public List<StatusEffect> StatusResistant = new List<StatusEffect>();
-    public List<StatusEffect> StatusVunerable = new List<StatusEffect>();
-
-    List<StatusEffect> activeStatus = new List<StatusEffect>();
+    Dictionary<DamageType, StatusEffect> Status;
+    
     [SerializeField] Transform statusUI;
+    [SerializeField] Transform statusContainer;
 
-    private void Start()
+    private void Awake()
     {
         CurrentHealth = MaxHealth;
+
+        Status = new Dictionary<DamageType, StatusEffect>()
+        {
+            {DamageType.Fire, statusContainer.GetComponentInChildren<BurningStatus>(true) },
+            {DamageType.Lightning, statusContainer.GetComponentInChildren<ShockedStatus>(true) },
+            {DamageType.Poison, statusContainer.GetComponentInChildren<PoisonStatus>(true) },
+        };
     }
 
     public void Load()
@@ -39,41 +45,23 @@ public class EntityHealth : Entity
         }
     }
 
-    public void ApplyStatusEffect(List<StatusEffect> appliedStatus)
+    public void ApplyStatusEffect(DamageType type)
     {
-        foreach (var effect in appliedStatus)
+        StatusEffect status = Status[type];
+
+        if (!status.gameObject.activeInHierarchy)
         {
-            if (!activeStatus.Contains(effect))
-            {
-                activeStatus.Add(effect);
-                effect.OnStatusApplied(this, statusUI, 0);
-            }
-        }
-    }
-
-    private void UpdateStatusEffects() // calls OnStatusUpdate for each active status effect, and removes it if it returns true
-    {
-        if (activeStatus.Count == 0) { return; }
-
-        List<StatusEffect> effects = activeStatus; // creates a cache of applied status effects
-
-        foreach (var effect in effects.ToList()) // removes the status effect once it finishes
+            status.gameObject.SetActive(true);
+            status.OnStatusApplied(this);
+        } else
         {
-            if (effect.OnStatusUpdate()) { activeStatus.Remove(effect); }
+            status.OnStatusReapplied();
         }
     }
 
     public void OnDeath()
     {
         
-    }
-
-
-    private void Update()
-    {
-        UpdateStatusEffects();
-    }
-
-    
+    }  
 
 }

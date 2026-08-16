@@ -8,7 +8,7 @@ public class CardSelecter : MonoBehaviour
     // responsible for displaying and selecting cards.
     [SerializeField] CardDisplay[] cardSlots;
     [SerializeField] Transform cardDisplay;
-    [SerializeField] WeaponCard Fists;
+    [SerializeField] WeaponSpell Fists;
 
     [Space(20)]
     [SerializeField] int MaxCards;
@@ -16,7 +16,7 @@ public class CardSelecter : MonoBehaviour
     [Header("Error Handling")]
     [SerializeField] GameObject ExitScreen;
 
-    List<Card> selectedCards = new List<Card>();
+    List<Spell> selectedCards = new List<Spell>();
     bool meleeSelected;
 
     public event Action MeleeSelected;
@@ -25,15 +25,15 @@ public class CardSelecter : MonoBehaviour
 
     private void Start()
     {
-        CardManager.Instance.DisplayAllCards += OnDisplayAllCards;
+        //CardManager.Instance.DisplayAllCards += OnDisplayAllCards;
     }
 
     private void OnDestroy()
     {
-        CardManager.Instance.DisplayAllCards -= OnDisplayAllCards;
+        //CardManager.Instance.DisplayAllCards -= OnDisplayAllCards;
     }
 
-    public void OnDisplayAllCards(List<Card> AllCards)
+    public void OnDisplayAllCards(List<Spell> AllCards)
     {
         for (int i = 0; i < cardSlots.Length; i++)
         {
@@ -43,25 +43,25 @@ public class CardSelecter : MonoBehaviour
     }
 
     // returns false if the card cannot be added, true if it can. 
-    public bool AddCard(Card card)
+    public bool AddCard(Spell card)
     {
         if (selectedCards.Count + 1 > MaxCards) { return false; }
         selectedCards.Add(card);
 
         // handles specific card types being added.
-        if (card is WeaponCard) { meleeSelected = true; }
+        if (card is WeaponSpell) { meleeSelected = true; }
 
         return true;
     }
 
     // returns false if the card cannot be removed, true if it can.
-    public bool RemoveCard(Card card)
+    public bool RemoveCard(Spell card)
     {
         if (selectedCards.Count - 1 < 0) { return false; }
         selectedCards.Remove(card);
 
         // handles specific card types being removed.
-        if (card is WeaponCard) { meleeSelected = false; }
+        if (card is WeaponSpell) { meleeSelected = false; }
 
         return true;
     }
@@ -88,7 +88,7 @@ public class CardSelecter : MonoBehaviour
 
         if (!meleeSelected) { selectedCards.Insert(0, Fists); }
 
-        CardManager.Instance.SetActiveCards(selectedCards);
+        //CardManager.Instance.SetActiveCards(selectedCards);
         GameManager.Instance.ChangeScene("PlayerScene");
         // save stuff and switch scenes
     }

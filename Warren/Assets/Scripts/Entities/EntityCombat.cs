@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class EntityCombat : Entity
 {
     [Header("Primary Attack")]
-    public WeaponCard PrimaryCard;
+    public WeaponSpell PrimaryCard;
     public int PrimaryDamageModifer;
     public float PrimaryCooldownModifier;
     public float PrimaryRadiusModifier;

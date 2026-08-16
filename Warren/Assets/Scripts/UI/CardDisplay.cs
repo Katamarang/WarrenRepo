@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CardDisplay : MonoBehaviour
 {
     // responsible for displaying a card in the card select menu, and handling the selection of that card.
-    public Card Card { get; private set; }
+    public Spell Card { get; private set; }
     Image image;
     Button button;
     Transform hoveredCardDisplay;
@@ -24,10 +24,10 @@ public class CardDisplay : MonoBehaviour
 
     private void OnDisable()
     {
-        StopListening();
+        //StopListening();
     }
 
-    public void SetCard(Card card, Transform hoverDisplay, CardSelecter display)
+    public void SetCard(Spell card, Transform hoverDisplay, CardSelecter display)
     {
         if (card == null) { gameObject.SetActive(false); return; }
 
@@ -35,38 +35,38 @@ public class CardDisplay : MonoBehaviour
         hoveredCardDisplay = hoverDisplay;
         this.display = display;
 
-        StartListening();
+        //StartListening();
 
         cardSelectSprite = transform.GetChild(0).gameObject;
         cardSelectSprite.SetActive(false);
 
-        image.sprite = Card.CardSprite;
+        image.sprite = Card.IconSprite;
     }
 
     public void OnHover()
     {
-        hoveredCardDisplay.GetComponent<Image>().sprite = Card.CardSprite;
+        hoveredCardDisplay.GetComponent<Image>().sprite = Card.IconSprite;
 
-        hoveredCardDisplay.GetChild(0).GetComponent<TMP_Text>().text = Card.CardName;
-        hoveredCardDisplay.GetChild(1).GetComponent<TMP_Text>().text = Card.CardDescription;
+        hoveredCardDisplay.GetChild(0).GetComponent<TMP_Text>().text = Card.Name;
+        hoveredCardDisplay.GetChild(1).GetComponent<TMP_Text>().text = Card.Desc;
     }
 
     public void OnClick() 
     {
-        if (buttonPressed && !display.RemoveCard(Card)) { return; }
-        if (!buttonPressed && !display.AddCard(Card)) { return; }
+        //if (buttonPressed && !display.RemoveCard(Card)) { return; }
+        //if (!buttonPressed && !display.AddCard(Card)) { return; }
 
         buttonPressed = !buttonPressed;
         cardSelectSprite.SetActive(buttonPressed);
 
-        if (buttonPressed) // used if specific cards have been selected.
+        /*if (buttonPressed) // used if specific cards have been selected.
         {
             if (Card is WeaponCard) { display.OnMeleeSelected(); }
         }
         else
         {
             if (Card is WeaponCard) { display.OnMeleeDeselected(); }
-        }
+        }*/
 
     }
 
@@ -87,7 +87,7 @@ public class CardDisplay : MonoBehaviour
 
     #region listeners
 
-    private void StartListening()
+    /*private void StartListening()
     {
         //if (Card is not WeaponCard or SpellCard) { return; } // only listens if card is a weapon or spell
 
@@ -103,6 +103,6 @@ public class CardDisplay : MonoBehaviour
         if (display == null) { return; }
         display.MeleeSelected -= OnCardSelected;
         display.MeleeDeselected -= OnCardDeselected;
-    }
+    }*/
     #endregion
 }

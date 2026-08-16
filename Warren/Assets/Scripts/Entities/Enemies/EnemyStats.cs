@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyStats : EntityStats, IStats
+public class EnemyStats : MonoBehaviour, IStats
 {
     // subclass of EntityStats. It will be used to store the enemy's stats and cards and handles card loading.
 
@@ -9,23 +9,23 @@ public class EnemyStats : EntityStats, IStats
 
     public void LoadCardLoader()
     {
-        cardLoader = new CardLoader(this);
-        cardLoader.LoadEntityCards(cards);
+        //cardLoader = new CardLoader(this);
+        //cardLoader.LoadEntityCards(cards);
 
         EntityHealth = GetComponent<EntityHealth>();
     }
 
     public void OnInstantate(EnemyStatBock statBlock) // called by the Enemy Factory. It will load the enemy's stats and cards based on the stat block.
     {
-        Animator.runtimeAnimatorController = statBlock.AnimatorOverride;
+        //Animator.runtimeAnimatorController = statBlock.AnimatorOverride;
         
         GetRandomCards(statBlock);
 
-        cards.Insert(0, statBlock.WeaponCard);
+        //cards.Insert(0, statBlock.WeaponCard);
         LoadCardLoader();
 
         EntityHealth.MaxHealth = statBlock.BaseHealth;
-        MaxSpeed = statBlock.BaseSpeed;
+        //MaxSpeed = statBlock.BaseSpeed;
         EntityHealth.Load();
 
         SM_Enemy = GetComponent<SM_Enemy>();
@@ -40,12 +40,12 @@ public class EnemyStats : EntityStats, IStats
             int r = Random.Range(0, statBlock.CardPool.Count);
 
             // will make sure duplicate cards aren't chosen
-            while (cards.Contains(statBlock.CardPool[r]))
+            /*while (cards.Contains(statBlock.CardPool[r]))
             {
                 r = Random.Range(0, statBlock.CardPool.Count);
             }
 
-            cards.Add(statBlock.CardPool[r]);
+            cards.Add(statBlock.CardPool[r]);*/
         }
     }
 }

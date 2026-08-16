@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     {
         if (toDestroy) return;
 
-        SaveLoad.Load();
+        //SaveLoad.Load();
         Debug.Log("Scene loaded " + arg0.name);
     }
 
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         if (toDestroy) return;
 
-        SaveLoad.Save();        
+        //SaveLoad.Save();        
     }
 
 }

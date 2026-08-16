@@ -14,7 +14,7 @@ public class E_AttackState : IState
     float attackCooldown;
     float _attackCooldownTime;
 
-    WeaponCard Card;
+    WeaponSpell Card;
 
     public E_AttackState(SM_Enemy enemy, EntityCombat stats)
     {
@@ -22,21 +22,21 @@ public class E_AttackState : IState
         _combat = stats;
 
         _input = _enemy.Input;
-        _animator = _stats.GetComponent<EntityStats>().Animator;
+        //_animator = _stats.GetComponent<EntityStats>().Animator;
     }
 
     public override void Enter()
     {
         Card = _combat.PrimaryCard;
-        attackCooldown = Card.BaseAttackCooldown + _combat.PrimaryCooldownModifier;
+        //attackCooldown = Card.BaseAttackCooldown + _combat.PrimaryCooldownModifier;
 
         _animator.SetTrigger("IsAttack");
-        Card.OnFire(
+        /*Card.OnFire(
             _combat.PrimaryDamageModifer, 
             _combat.PrimaryStatusEffects, 
             _combat.AttackPosition, 
             _combat.Damageable
-            );
+            );*/
     }
 
     public override void Exit()

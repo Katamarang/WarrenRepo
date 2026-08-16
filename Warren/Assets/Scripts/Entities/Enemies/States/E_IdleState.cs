@@ -16,7 +16,7 @@ public class E_IdleState : IState
         _stats = stats;
 
         _input = _enemy.Input;
-        _animator = _stats.Animator;
+        //_animator = _stats.Animator;
     }
 
     public override void Enter()
