@@ -13,7 +13,6 @@ public class EntityHealth : Entity
 
     Dictionary<DamageType, StatusEffect> Status;
     
-    [SerializeField] Transform statusUI;
     [SerializeField] Transform statusContainer;
 
     private void Awake()

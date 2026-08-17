@@ -3,11 +3,9 @@ using UnityEngine.InputSystem;
 
 public class MeleeWeapon : WeaponSpell
 {
-    public override async void OnAttackStarted(InputAction.CallbackContext context)
+    public override async void OnAbilityStarted(InputAction.CallbackContext context)
     {
-        if (inCooldown) return;
-
-        base.OnAttackStarted(context);
+        base.OnAbilityStarted(context);
         
         foreach (Collider2D hit in Physics2D.OverlapCircleAll(transform.position, finalRadius))
         {

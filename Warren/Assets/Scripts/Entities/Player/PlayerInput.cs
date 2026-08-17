@@ -11,6 +11,8 @@ public class PlayerInput : MonoBehaviour
 
     public static UnityAction<InputAction.CallbackContext> OnAttackStarted;
     public static UnityAction<InputAction.CallbackContext> OnAttackCanceled;
+    
+    public static UnityAction<InputAction.CallbackContext> OnParryPressed;
 
     private void Awake()
     {
@@ -21,20 +23,28 @@ public class PlayerInput : MonoBehaviour
     {
         inputActions.Enable();
 
-        inputActions.Player.Move.performed += (c) => OnMovePressed?.Invoke(c);
-        inputActions.Player.Move.canceled += (c) => OnMoveCanceled?.Invoke(c);
+        InputActions.PlayerActions Player = inputActions.Player;
 
-        inputActions.Player.Attack.started += (c) => OnAttackStarted?.Invoke(c);
-        inputActions.Player.Attack.canceled += (c) => OnAttackCanceled?.Invoke(c);
+        Player.Move.performed += (c) => OnMovePressed?.Invoke(c);
+        Player.Move.canceled += (c) => OnMoveCanceled?.Invoke(c);
+
+        Player.Attack.started += (c) => OnAttackStarted?.Invoke(c);
+        Player.Attack.canceled += (c) => OnAttackCanceled?.Invoke(c);
+
+        Player.Parry.started += (c) => OnParryPressed?.Invoke(c);
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Move.performed -= (c) => OnMovePressed?.Invoke(c);
-        inputActions.Player.Move.canceled -= (c) => OnMoveCanceled?.Invoke(c);
+        InputActions.PlayerActions Player = inputActions.Player;
 
-        inputActions.Player.Attack.started -= (c) => OnAttackStarted?.Invoke(c);
-        inputActions.Player.Attack.canceled -= (c) => OnAttackCanceled?.Invoke(c);
+        Player.Move.performed -= (c) => OnMovePressed?.Invoke(c);
+        Player.Move.canceled -= (c) => OnMoveCanceled?.Invoke(c);
+
+        Player.Attack.started -= (c) => OnAttackStarted?.Invoke(c);
+        Player.Attack.canceled -= (c) => OnAttackCanceled?.Invoke(c);
+
+        Player.Parry.started -= (c) => OnParryPressed?.Invoke(c);
 
         inputActions.Disable();
     }

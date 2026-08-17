@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IVariableValues
 {
-    [SerializeField] float speed;
+    [SerializeField] float baseSpeed;
+    float finalSpeed;
     Vector2 _direction;
     Vector2 _facing;
     bool canMove = true;
@@ -15,25 +17,30 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<PlayerAnimator>();
+
     }
 
     private void OnEnable()
     {
         PlayerInput.OnMovePressed += (t) => { _direction = t.ReadValue<Vector2>().normalized; _facing = _direction; };
         PlayerInput.OnMoveCanceled += (t) => _direction = Vector2.zero;
+
+        PlayerSpell.UpdateValues += UpdateValues;
     } 
 
     private void OnDisable()
     {
         PlayerInput.OnMovePressed -= (t) => { _direction = t.ReadValue<Vector2>().normalized; _facing = _direction; };
         PlayerInput.OnMoveCanceled -= (t) => _direction = Vector2.zero;
+
+        PlayerSpell.UpdateValues -= UpdateValues;
     }
 
     private void FixedUpdate()
     {
         if (!canMove) { rb.linearVelocity = Vector2.zero; return; }
 
-        rb.linearVelocity = _direction * speed;
+        rb.linearVelocity = _direction * finalSpeed;
     }
 
     private void Update()
@@ -48,4 +55,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopMovement() { canMove = false; }
     public void StartMovement() { canMove = true; }
+
+    public void UpdateValues()
+    {
+        finalSpeed = PlayerSpell.AdjustValue<IAdjustSpeed>(baseSpeed, x => x.AdjustSpeed(), ModType.Player);
+    }
 }

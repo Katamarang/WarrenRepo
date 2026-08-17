@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Spell : MonoBehaviour
+public abstract class Spell : MonoBehaviour, IVariableValues
 {
     [Header("Spell")]
     public string Name;
@@ -13,12 +13,15 @@ public abstract class Spell : MonoBehaviour
 
     protected PlayerSpell PlayerSpell;
 
-    public virtual void OnInitialize(PlayerSpell spell) { PlayerSpell = spell; }
+    public virtual void Initialised(PlayerSpell spell) { PlayerSpell = spell; }
+
+    public virtual void UpdateValues() { }
 }
 
 public interface IAdjustCooldown { public float AdjustCooldown(); }
 public interface IAdjustRadius { public float AdjustRadius();  }
 public interface IAdjustDamage { public int AdjustDamage();  }
+public interface IAdjustSpeed { public int AdjustSpeed();  }
 public interface IApplyStatus { public DamageType ApplyStatusEffect(); }
 
 public enum DamageType
@@ -33,7 +36,9 @@ public enum ModType
 {
     None,
     Weapon,
+    Parry,
     Spell,
+    Player,
     World
 }
 

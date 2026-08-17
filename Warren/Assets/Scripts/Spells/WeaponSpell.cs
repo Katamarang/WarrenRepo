@@ -2,80 +2,51 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic; 
 
-public abstract class WeaponSpell : Spell
+public abstract class WeaponSpell : AbilitySpell
 {
     [Header("Weapon")]
-    [SerializeField] float attackLength;
-    [SerializeField] float baseCooldown;  
-    protected bool inCooldown;
-
     [SerializeField] float baseRadius;
     protected float finalRadius;
 
     [SerializeField] int baseDamage;
     protected int finalDamage;
 
-    [Header("Animation")]
-    [SerializeField] AnimationClip FrontAnim;
-    [SerializeField] AnimationClip SideAnim;
-    [SerializeField] AnimationClip BackAnim;
+    List<IApplyStatus> equipedStatuses;
 
-    PlayerMovement PlayerMovement;
-    PlayerAnimator Animator;
-
-    public void OnEnable()
+    private void OnEnable()
     {
-        PlayerInput.OnAttackStarted += OnAttackStarted;
-        PlayerInput.OnAttackCanceled += OnAttackCanceled;
+        PlayerInput.OnAttackStarted += OnAbilityStarted;
+        PlayerInput.OnAttackCanceled += OnAbilityEnded;
+
+        PlayerSpell.UpdateValues += UpdateValues;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnAttackStarted -= OnAttackStarted;
-        PlayerInput.OnAttackCanceled -= OnAttackCanceled;
+        PlayerInput.OnAttackStarted -= OnAbilityStarted;
+        PlayerInput.OnAttackCanceled -= OnAbilityEnded;
+
+        PlayerSpell.UpdateValues -= UpdateValues;
     }
 
-    public override void OnInitialize(PlayerSpell spell)
+    public override void UpdateValues()
     {
-        base.OnInitialize(spell);
-        PlayerMovement = PlayerSpell.GetComponent<PlayerMovement>();
-        Animator = PlayerSpell.GetComponent<PlayerAnimator>();
+        base.UpdateValues();
 
-        Animator.SetAnimation("Attack", FrontAnim, SideAnim, BackAnim);
+        finalRadius = PlayerSpell.AdjustValue<IAdjustRadius>(baseRadius, x => x.AdjustRadius(), AbilityType);
+        finalDamage = Mathf.RoundToInt(PlayerSpell.AdjustValue<IAdjustDamage>(baseDamage, x => x.AdjustDamage(), AbilityType));
+
+        equipedStatuses = PlayerSpell.GetSpellsOfType<IApplyStatus>(ModType.Weapon);
     }
-
-    public virtual void OnAttackStarted(InputAction.CallbackContext context) 
-    {
-        finalRadius = PlayerSpell.AdjustValue<IAdjustRadius>(baseRadius, x => x.AdjustRadius(), ModType.Weapon);
-        finalDamage = Mathf.RoundToInt(PlayerSpell.AdjustValue<IAdjustDamage>(baseDamage, x => x.AdjustDamage(), ModType.Weapon));
-
-        PlayerMovement.StopMovement();
-        Animator.SetAnimTrigger("IsAttacking");
-    }
-
-    public virtual void OnAttackCanceled(InputAction.CallbackContext context) { }
 
     protected void OnHit(EntityHealth entity)
     {
         entity.TakeDamage(finalDamage);
 
-        foreach (IApplyStatus status in PlayerSpell.GetSpellsOfType<IApplyStatus>(ModType.Weapon))
+        foreach (IApplyStatus status in equipedStatuses)
         {
             entity.ApplyStatusEffect(status.ApplyStatusEffect());
         }      
     }
 
-    protected async Awaitable BeginCooldown()
-    {
-        inCooldown = true;
-        float finalCooldown = PlayerSpell.AdjustValue<IAdjustCooldown>(baseCooldown, x => x.AdjustCooldown(), ModType.Weapon);
-
-        await Awaitable.WaitForSecondsAsync(attackLength);
-
-        PlayerMovement.StartMovement();
-
-        await Awaitable.WaitForSecondsAsync(finalCooldown);
-
-        inCooldown = false;
-    }
 }

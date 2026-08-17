@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4155655195496912683}
   - component: {fileID: 2213335250826594028}
   m_Layer: 0
-  m_Name: NEWMeleeWeapon
+  m_Name: MeleeWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,10 +47,14 @@ MonoBehaviour:
   Name: Axe
   Desc: 
   IconSprite: {fileID: 0}
-  attackLength: 0.3
-  baseCooldown: 0.3
-  baseRadius: 3
+  AbilityType: 1
+  baseAbilityDuration: 0.3
+  baseAbilityCooldown: 0.2
+  animationClips:
+    Front: {fileID: 7400000, guid: 0faddc7faa0e87c468f8daa3fd0396fe, type: 2}
+    Side: {fileID: 7400000, guid: 66838a3f902adb641818234260825e34, type: 2}
+    Back: {fileID: 7400000, guid: 8a2897fd87c693d418722f4f980f7b72, type: 2}
+  animationSetName: Attack
+  triggerName: IsAttacking
+  baseRadius: 1
   baseDamage: 5
-  FrontAnim: {fileID: 7400000, guid: 0faddc7faa0e87c468f8daa3fd0396fe, type: 2}
-  SideAnim: {fileID: 7400000, guid: 66838a3f902adb641818234260825e34, type: 2}
-  BackAnim: {fileID: 7400000, guid: 8a2897fd87c693d418722f4f980f7b72, type: 2}

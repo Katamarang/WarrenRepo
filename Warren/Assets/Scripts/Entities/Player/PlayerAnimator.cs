@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -12,11 +13,11 @@ public class PlayerAnimator : MonoBehaviour
         animator.runtimeAnimatorController = overrideController;
     }
 
-    public void SetAnimation(string animName, AnimationClip front, AnimationClip side, AnimationClip back)
+    public void SetAnimation(string animName, DirectionalAnim clips)
     {
-        overrideController[$"{animName}Front"] = front;
-        overrideController[$"{animName}Side"] = side;
-        overrideController[$"{animName}Back"] = back;
+        overrideController[$"{animName}Front"] = clips.Front;
+        if (clips.Side) overrideController[$"{animName}Side"] = clips.Side;
+        if (clips.Back) overrideController[$"{animName}Back"] = clips.Back;
     }
 
     public void SetAnimBool(string animName, bool b)
@@ -33,5 +34,20 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator.SetFloat("PosX", x);
         animator.SetFloat("PosY", y);
+    }
+}
+
+[Serializable]
+public struct DirectionalAnim
+{
+    public AnimationClip Front;
+    public AnimationClip Side;
+    public AnimationClip Back;
+
+    public DirectionalAnim(AnimationClip frontClip, AnimationClip sideClip = null, AnimationClip backClip = null)
+    {
+        Front = frontClip;
+        Side = sideClip;
+        Back = backClip;
     }
 }

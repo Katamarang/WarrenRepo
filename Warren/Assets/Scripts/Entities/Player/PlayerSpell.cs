@@ -1,15 +1,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerSpell : MonoBehaviour
 {
     static List<Spell> PlayerSpells = new();
     [SerializeField] Transform spellContainer;
 
-    public virtual void OnInitialized()
+    public static UnityAction UpdateValues;
+
+    private void Start()
     {
-        foreach (var spell in PlayerSpells) { spell.OnInitialize(this); }
+        UpdateValues?.Invoke();
+    }
+
+    public virtual void Initialise()
+    {
+        foreach (var spell in PlayerSpells) { spell.Initialised(this); }
+        UpdateValues?.Invoke();
     }
 
     public static List<T> GetSpellsOfType<T>(ModType type) where T : class
@@ -49,7 +58,7 @@ public class PlayerSpell : MonoBehaviour
             PlayerSpells.Add(Instantiate(spell, spellContainer));
         }
 
-        OnInitialized();
+        Initialise();
     }
 
     public void ResetSpells()
@@ -62,3 +71,5 @@ public class PlayerSpell : MonoBehaviour
         }
     }
 }
+
+public interface IVariableValues { public void UpdateValues(); }
