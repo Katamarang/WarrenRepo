@@ -6,7 +6,7 @@ public class DEBUGSpellMenu : MonoBehaviour
 {
     [SerializeField] List<Spell> AllSpells = new List<Spell>();
     List<Spell> playerSpells = new List<Spell>();
-    [SerializeField] PlayerSpell Player;
+    [SerializeField] EntitySpell Player;
 
     [Header("Menu")]
     [SerializeField] DEBUGSpellButton Button;

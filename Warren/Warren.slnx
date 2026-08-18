@@ -36,6 +36,7 @@
   <Project Path="Unity.RenderPipelines.Universal.Runtime.csproj" />
   <Project Path="NavMeshPlus.csproj" />
   <Project Path="Unity.UnifiedRayTracing.Runtime.csproj" />
+  <Project Path="Kybernetik.UltEvents.Editor.csproj" />
   <Project Path="Unity.AI.Navigation.Editor.ConversionSystem.csproj" />
   <Project Path="Unity.VisualScripting.State.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
@@ -59,6 +60,7 @@
   <Project Path="Unity.VisualScripting.State.csproj" />
   <Project Path="Unity.InternalAPIEditorBridge.001.csproj" />
   <Project Path="Unity.AI.Navigation.Updater.csproj" />
+  <Project Path="Kybernetik.UltEvents.csproj" />
   <Project Path="UnityEditor.UI.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.2D.Editor.Overrides.csproj" />
   <Project Path="Unity.Postprocessing.Runtime.csproj" />

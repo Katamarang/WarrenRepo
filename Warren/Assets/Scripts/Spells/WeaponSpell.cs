@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public abstract class WeaponSpell : AbilitySpell
 {
     [Header("Weapon")]
+    [SerializeField] protected LayerMask IsAttacking;
     [SerializeField] float baseRadius;
     protected float finalRadius;
 
@@ -13,40 +14,33 @@ public abstract class WeaponSpell : AbilitySpell
 
     List<IApplyStatus> equipedStatuses;
 
-    private void OnEnable()
+    public override void OnEnabled()
     {
-        PlayerInput.OnAttackStarted += OnAbilityStarted;
-        PlayerInput.OnAttackCanceled += OnAbilityEnded;
-
-        PlayerSpell.UpdateValues += UpdateValues;
+        base.OnEnabled();
+        EntityInput.OnAttackStarted += OnAbilityStarted;
+        EntityInput.OnAttackCanceled += OnAbilityEnded;      
     }
 
-    private void OnDisable()
+    public override void OnDisabled()
     {
-        PlayerInput.OnAttackStarted -= OnAbilityStarted;
-        PlayerInput.OnAttackCanceled -= OnAbilityEnded;
-
-        PlayerSpell.UpdateValues -= UpdateValues;
+        base.OnDisabled();      
+        EntityInput.OnAttackStarted -= OnAbilityStarted;
+        EntityInput.OnAttackCanceled -= OnAbilityEnded;
     }
 
     public override void UpdateValues()
     {
         base.UpdateValues();
 
-        finalRadius = PlayerSpell.AdjustValue<IAdjustRadius>(baseRadius, x => x.AdjustRadius(), AbilityType);
-        finalDamage = Mathf.RoundToInt(PlayerSpell.AdjustValue<IAdjustDamage>(baseDamage, x => x.AdjustDamage(), AbilityType));
+        finalRadius = EntitySpell.AdjustValue(baseRadius, AbilityType, StatType.Radius);
+        finalDamage = Mathf.RoundToInt(EntitySpell.AdjustValue(baseDamage, AbilityType, StatType.Damage));
 
-        equipedStatuses = PlayerSpell.GetSpellsOfType<IApplyStatus>(ModType.Weapon);
+        equipedStatuses = EntitySpell.GetModifierSpellsOfType<IApplyStatus>(ModType.Weapon, StatType.Status);
     }
 
-    protected void OnHit(EntityHealth entity)
+    protected void OnHit(Hurtbox hurtbox)
     {
-        entity.TakeDamage(finalDamage);
-
-        foreach (IApplyStatus status in equipedStatuses)
-        {
-            entity.ApplyStatusEffect(status.ApplyStatusEffect());
-        }      
+        hurtbox.OnHit(finalDamage, equipedStatuses);
     }
 
 }

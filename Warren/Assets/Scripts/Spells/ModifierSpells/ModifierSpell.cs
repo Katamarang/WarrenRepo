@@ -4,4 +4,5 @@ public class ModifierSpell : Spell
 {
     [Header("Modifier")]
     public ModType modType;
+    public StatType statType;
 }

@@ -2,20 +2,42 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[CreateAssetMenu(fileName = "New Parry", menuName = "Spells/Abilities/Parries/Base Parry")]
 public class ParrySpell : AbilitySpell
 {
+    EntityResource resources;
+
     [Header("Parry")]
     public bool IsParrying;
 
-    private void OnEnable() { PlayerInput.OnParryPressed += OnAbilityStarted; }
+    public override void Initialised(EntitySpell spell)
+    {
+        resources = spell.GetComponent<EntityResource>();
 
-    private void OnDisable() { PlayerInput.OnParryPressed -= OnAbilityStarted; }
+        base.Initialised(spell);
+    }
 
-    public override async void OnAbilityStarted(InputAction.CallbackContext context)
+    public override void OnEnabled() 
     { 
-        base.OnAbilityStarted(context);
+        base.OnEnabled();
+        EntityInput.OnParryPressed += OnAbilityStarted; 
+    }
+
+    public override void OnDisabled() 
+    { 
+        base.OnDisabled();
+        EntityInput.OnParryPressed -= OnAbilityStarted; 
+    }
+
+    public override async void OnAbilityStarted()
+    {
+        if (AbilityActive()) return;
+
+        base.OnAbilityStarted();
 
         IsParrying = true;
+        Parry(); //TEMPORARY
+
         await BeginCooldown();
     }
 
@@ -24,6 +46,11 @@ public class ParrySpell : AbilitySpell
         base.OnAbilityEnd();
 
         IsParrying = false;
+    }
+
+    public virtual void Parry()
+    {
+        resources.AddSpellCharges(1);
     }
 
 }

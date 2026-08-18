@@ -1,25 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[CreateAssetMenu(fileName = "New Melee Weapon", menuName = "Spells/Abilities/Weapons/Melee Weapon")]
 public class MeleeWeapon : WeaponSpell
 {
-    public override async void OnAbilityStarted(InputAction.CallbackContext context)
+    public override async void OnAbilityStarted()
     {
-        base.OnAbilityStarted(context);
+        if (AbilityActive()) return;
         
-        foreach (Collider2D hit in Physics2D.OverlapCircleAll(transform.position, finalRadius))
+        base.OnAbilityStarted();
+        
+        foreach (Collider2D hit in Physics2D.OverlapCircleAll(EntitySpell.transform.position, finalRadius, IsAttacking))
         {
-            if (!hit.TryGetComponent<EntityHealth>(out EntityHealth entity)) continue;
+            if (!hit.TryGetComponent<Hurtbox>(out Hurtbox hurtbox)) continue;
 
-            OnHit(entity);
+            OnHit(hurtbox);
         }
 
         await BeginCooldown();
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, finalRadius);
-    }
-
 }

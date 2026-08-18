@@ -1,11 +1,7 @@
-using System.Runtime.CompilerServices;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public abstract class StatusEffect : MonoBehaviour
 {
-    [SerializeField] GameObject UIElement;
     public DamageType DamageType;
     [SerializeField] protected float effectLength;
     
@@ -15,7 +11,6 @@ public abstract class StatusEffect : MonoBehaviour
     public virtual void OnStatusApplied(EntityHealth entity)
     {
         EntityHealth = entity;
-        UIElement.SetActive(true);
     }
 
     public virtual void OnStatusReapplied() { }
@@ -35,6 +30,5 @@ public abstract class StatusEffect : MonoBehaviour
     {
         time = 0;
         gameObject.SetActive(false);
-        UIElement.SetActive(false);
     }
 }

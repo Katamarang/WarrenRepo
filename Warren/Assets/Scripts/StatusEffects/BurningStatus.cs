@@ -18,13 +18,12 @@ public class BurningStatus : StatusEffect
 
         if (damageTickTime > damageTickSpeed)
         {
-            EntityHealth.TakeDamage(damage, DamageType);
+            EntityHealth.TakeDamage(damage);
             damageTickTime = 0;
         }
-        else
-        {
-            damageTickTime += Time.deltaTime;
-        }
+
+        damageTickTime += Time.deltaTime;
+        
     }
 
     public override void OnStatusEnd()

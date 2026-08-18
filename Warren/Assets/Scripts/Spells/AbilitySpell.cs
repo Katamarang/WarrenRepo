@@ -19,37 +19,45 @@ public class AbilitySpell : Spell
     [SerializeField] string animationSetName;
     [SerializeField] string triggerName;
 
-    PlayerMovement PlayerMovement;
+    protected EntityInput EntityInput;
+    PlayerMovement EntityMovement;
+    
     PlayerAnimator Animator;
 
     public override void UpdateValues()
     {
-        finalAbilityDuration = PlayerSpell.AdjustValue<IAdjustCooldown>(baseAbilityDuration, x => x.AdjustCooldown(), AbilityType);
-        finalAbilityCooldown = PlayerSpell.AdjustValue<IAdjustCooldown>(baseAbilityCooldown, x => x.AdjustCooldown(), AbilityType);
+        finalAbilityDuration = EntitySpell.AdjustValue(baseAbilityDuration, AbilityType, StatType.Duration);
+        finalAbilityCooldown = EntitySpell.AdjustValue(baseAbilityCooldown, AbilityType, StatType.Cooldown);
     }
 
-    public override void Initialised(PlayerSpell spell)
-    {
+    public override void Initialised(EntitySpell spell)
+    {     
+        EntityMovement = spell.GetComponent<PlayerMovement>();
+        EntityInput = spell.GetComponent<EntityInput>();
+
+        Animator = spell.GetComponent<PlayerAnimator>();
+
+        Animator.SetAnimation(animationSetName, animationClips);
+
         base.Initialised(spell);
-        PlayerMovement = PlayerSpell.GetComponent<PlayerMovement>();
-        Animator = PlayerSpell.GetComponent<PlayerAnimator>();
-
-        Animator.SetAnimation(animationSetName, animationClips);        
     }
 
-    public virtual void OnAbilityStarted(InputAction.CallbackContext context)
+    public virtual void OnAbilityStarted()
     {
-        if (isAbilityActive) return;
-
-        PlayerMovement.StopMovement();
+        EntityMovement.StopMovement();
         Animator.SetAnimTrigger(triggerName);
     }
 
-    public virtual void OnAbilityEnded(InputAction.CallbackContext context) { OnAbilityEnd(); }
+    protected bool AbilityActive()
+    {
+        return isAbilityActive;
+    }
+
+    public virtual void OnAbilityEnded() { OnAbilityEnd(); }
 
     public virtual void OnAbilityEnd()
     {
-        PlayerMovement.StartMovement();
+        EntityMovement.StartMovement();
     }
 
     protected async Awaitable BeginCooldown()

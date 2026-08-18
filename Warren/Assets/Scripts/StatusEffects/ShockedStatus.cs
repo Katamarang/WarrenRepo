@@ -12,7 +12,7 @@ public class ShockedStatus : StatusEffect
 
     public override void OnStatusEnd()
     {
-        EntityHealth.TakeDamage(damage, DamageType);
+        EntityHealth.TakeDamage(damage);
 
         base.OnStatusEnd();
     }

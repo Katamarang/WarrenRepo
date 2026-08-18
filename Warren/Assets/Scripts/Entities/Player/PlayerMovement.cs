@@ -12,28 +12,31 @@ public class PlayerMovement : MonoBehaviour, IVariableValues
 
     Rigidbody2D rb;
     PlayerAnimator animator;
+    EntitySpell playerSpell;
+    EntityInput entityInput;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<PlayerAnimator>();
-
+        playerSpell = GetComponent<EntitySpell>();
+        entityInput = GetComponent<EntityInput>();
     }
 
     private void OnEnable()
     {
-        PlayerInput.OnMovePressed += (t) => { _direction = t.ReadValue<Vector2>().normalized; _facing = _direction; };
-        PlayerInput.OnMoveCanceled += (t) => _direction = Vector2.zero;
+        entityInput.OnMovePressed += (t) => { _direction = t.ReadValue<Vector2>().normalized; _facing = _direction; };
+        entityInput.OnMoveCanceled += () => _direction = Vector2.zero;
 
-        PlayerSpell.UpdateValues += UpdateValues;
+        playerSpell.UpdateValues += UpdateValues;
     } 
 
     private void OnDisable()
     {
-        PlayerInput.OnMovePressed -= (t) => { _direction = t.ReadValue<Vector2>().normalized; _facing = _direction; };
-        PlayerInput.OnMoveCanceled -= (t) => _direction = Vector2.zero;
+        entityInput.OnMovePressed -= (t) => { _direction = t.ReadValue<Vector2>().normalized; _facing = _direction; };
+        entityInput.OnMoveCanceled -= () => _direction = Vector2.zero;
 
-        PlayerSpell.UpdateValues -= UpdateValues;
+        playerSpell.UpdateValues -= UpdateValues;
     }
 
     private void FixedUpdate()
@@ -58,6 +61,6 @@ public class PlayerMovement : MonoBehaviour, IVariableValues
 
     public void UpdateValues()
     {
-        finalSpeed = PlayerSpell.AdjustValue<IAdjustSpeed>(baseSpeed, x => x.AdjustSpeed(), ModType.Player);
+        finalSpeed = playerSpell.AdjustValue(baseSpeed, ModType.Player, StatType.Speed);
     }
 }

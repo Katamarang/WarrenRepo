@@ -7,6 +7,12 @@
       "dependencies": {},
       "hash": "53de7d5c64d880781d5df5162f584eff1888368e"
     },
+    "com.kybernetik.ultevents": {
+      "version": "file:com.kybernetik.ultevents",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "13.0.4",
       "depth": 0,
